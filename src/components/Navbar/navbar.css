@@ -1,0 +1,13 @@
+.logo {
+  position: relative;
+  color: #9982DC;
+}
+
+.logo::before {
+  content: '💰EARN ';
+  position:absolute;
+  color: #BA5CE2;
+  right:-35px;
+  top:-10px;
+  font-size: 12px;
+}

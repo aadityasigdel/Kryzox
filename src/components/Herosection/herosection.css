@@ -1,0 +1,32 @@
+.title-container{
+    width: auto;
+    position:relative;
+    margin-bottom: 30px;
+}
+.title-container::after{
+content: '';
+position: absolute;
+height: 5px;
+width: 145px;
+bottom:0;
+left:40%;
+background-color: #C44DE3;
+text-align: center;
+margin-top: 20px;
+}
+
+.real-earning{
+    animation:topdown .7s ease-in infinite;
+    transition:0.5s;
+}
+@keyframes topdown {
+    0%{
+transform: translateY(-10px);
+    }
+    50%{
+        transform: translateY(0px);
+    }
+    100%{
+transform: translateY(-10px);
+    }
+}

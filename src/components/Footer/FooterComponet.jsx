@@ -7,7 +7,7 @@ const FooterComponet = ({data}) => {
                 return(
                 <li key={index}>
                     {index===0 ? <Link to={element.route || "#"} className="font-bold">{element.content}</Link>:
-                <Link to={element.route || "#"} className="text-gray-300">{element.content}</Link>
+                <Link to={element.route || "#"} className="text-gray-400">{element.content}</Link>
             }
                 </li>
                 )
