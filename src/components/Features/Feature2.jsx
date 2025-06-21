@@ -1,5 +1,5 @@
 import FeatureCard2 from "../../ui/FeatureCard2";
-import { DollarSign, TrendingUp, Bookmark, Trophy } from 'lucide-react';
+import { DollarSign, TrendingUp, Bookmark, Trophy } from "lucide-react";
 
 const Feature2 = () => {
   return (
@@ -8,7 +8,9 @@ const Feature2 = () => {
         Earn While You Play
       </h1>
       <p className="text-[20px] inline">Master these popular games and </p>
-      <p className="inline text-[20px] text-[#c130e1]">turn your skills into real money</p>
+      <p className="inline text-[20px] text-[#c130e1]">
+        turn your skills into real money
+      </p>
 
       <section className="flex flex-wrap gap-8 items-center justify-center mt-10">
         <FeatureCard2
@@ -16,24 +18,32 @@ const Feature2 = () => {
           icon={DollarSign}
           title="Free Fire"
           description="Master fast-paced battles and earn rewards for your survival skills"
+          content1="Battle Royale"
+          price="₹50-500/match"
         />
         <FeatureCard2
           bg="from-[#693891] to-[#341050]"
           icon={TrendingUp}
           title="PUBG/BGMI"
           description="Tactical gameplay meets earning potential in this skill-based arena"
+          content1="Battle Royale"
+          price="₹100-1000/match"
         />
         <FeatureCard2
           bg="from-[#50729A] to-[#2C2254]"
           icon={Bookmark}
           title="Ludo King"
           description="Classic board game with modern earning mechanics for strategic minds"
+          content1="Strategy"
+          price="₹25-250/match"
         />
         <FeatureCard2
           bg="from-[#321353] to-[#190F2E]"
           icon={Trophy}
           title="Chess Master"
           description="Intellectual warfare where every move can earn you real money"
+          content1="Strategy"
+          price="₹200-2000/match"
         />
       </section>
     </div>

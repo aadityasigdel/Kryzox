@@ -1,4 +1,6 @@
 import "./herosection.css";
+import Button1 from "../../ui/Button1";
+import Button2 from "../../ui/Button2";
 const HeroSection = () => {
   return (
     <div className="h-[auto] w-full bg-slate-900 text-white grid place-content-center pb-30 pt-20">
@@ -26,12 +28,8 @@ const HeroSection = () => {
       </div>
       {/* buttons */}
       <section className="flex gap-5 text-[18px] pt-8 justify-center items-center">
-        <button className="px-10 py-5 bg-[#B462E1] rounded-2xl text-white font-semibold">
-          Download For Android
-        </button>
-        <button className="px-10 py-5 border-2 border-[#79A5D5] rounded-2xl text-[#79A5D5] font-semibold">
-          Download For ios
-        </button>
+        <Button1>Download For Android</Button1>
+         <Button2>Download For ios</Button2>
       </section>
     </div>
   );
