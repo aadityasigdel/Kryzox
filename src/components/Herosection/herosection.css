@@ -1,32 +1,76 @@
-.title-container{
-    width: auto;
-    position:relative;
-    margin-bottom: 30px;
+.title-container {
+  width: auto;
+  position: relative;
+  margin-bottom: 30px;
 }
-.title-container::after{
-content: '';
-position: absolute;
-height: 5px;
-width: 145px;
-bottom:0;
-left:40%;
-background-color: #C44DE3;
-text-align: center;
-margin-top: 20px;
+.title-container::after {
+  content: "";
+  position: absolute;
+  height: 5px;
+  width: 145px;
+  bottom: 0;
+  left: 40%;
+  background-color: #c44de3;
+  text-align: center;
+  margin-top: 20px;
+}
+.ripple-hover-button {
+  position: relative;
+  overflow: hidden;
+  border-color: #79a5d5;
+  color: white;
+  cursor: pointer;
+  outline: none;
 }
 
-.real-earning{
-    animation:topdown .7s ease-in infinite;
-    transition:0.5s;
+.ripple-hover-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  pointer-events: none;
 }
-@keyframes topdown {
-    0%{
-transform: translateY(-10px);
-    }
-    50%{
-        transform: translateY(0px);
-    }
-    100%{
-transform: translateY(-10px);
-    }
+
+.ripple-hover-button:hover::before {
+  transform: translate(-50%, -50%) scale(1.5);
+  opacity: 1;
 }
+.kryzox {
+  position: relative;
+  background-image: linear-gradient(45deg, #79a5d5, #c84de5, #5e41a1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding-bottom: 30px;
+}
+.kryzox::after {
+  content: "";
+  position: absolute;
+  height: 7px;
+  width: 50%;
+  left: 50%;
+  bottom: 0px;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  background: linear-gradient(45deg, #79a5d5, #c84de5, #5e41a1);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* animation for tailwind css pulse */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+ .animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+} 
