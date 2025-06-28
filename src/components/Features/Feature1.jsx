@@ -18,7 +18,7 @@ const Feature1 = () => {
       <p className="text-[20px] inline">Discover how your gaming skills can </p>{" "}
       <p className="inline text-[20px] text-[#c130e1]">generate real income</p>
       {/* card section */}
-      <section className="grid grid-cols-1 px-5 gap-8  mt-10 md:place-items-center sm:grid-cols-2 lg:grid-cols-4 lg:px-20">
+      <section className="grid grid-cols-1 gap-8  mt-10 md:place-items-center sm:grid-cols-2 lg:grid-cols-4 lg:px-20">
         <FeatureCard1
           icon={DollarSign}
           title={"Real Money Rewards"}
