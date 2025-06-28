@@ -61,6 +61,17 @@
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+/* 4th line and 6th line circle design part */
+.secondLine::before{
+  content:"";
+  height:40px;
+  width:40px;
+  border-radius: 50%;
+  position: absolute;
+  background-color:red;
+  left:-50%;
+}
+
 /* animation for tailwind css pulse */
 @keyframes pulse {
   0%, 100% {
@@ -74,3 +85,4 @@
  .animate-pulse {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 } 
+

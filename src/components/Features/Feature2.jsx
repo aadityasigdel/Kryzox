@@ -4,15 +4,23 @@ import { DollarSign, TrendingUp, Bookmark, Trophy } from "lucide-react";
 const Feature2 = () => {
   return (
     <div className="h-auto w-full bg-[#241B3A] text-white text-center py-10 px-5">
-      <h1 className="text-[40px] font-semibold text-[#BA5CE2] pb-5">
-        Earn While You Play
-      </h1>
+      <h2 className="text-4xl md:text-5xl font-bold mb-6 relative">
+        <span
+          className="text-transparent bg-clip-text"
+          style={{
+            background: "linear-gradient(45deg, #c84de5, #79a5d5)",
+            WebkitBackgroundClip: "text",
+          }}
+        >
+          Earn While You Play
+        </span>
+      </h2>
       <p className="text-[20px] inline">Master these popular games and </p>
       <p className="inline text-[20px] text-[#c130e1]">
         turn your skills into real money
       </p>
-
-      <section className="flex flex-wrap gap-8  mt-10 md:items-center md:justify-center md:px-20">
+      {/* feature card section started */}
+      <section className="flex flex-wrap gap-8  mt-10 md:items-center md:justify-center">
         <FeatureCard2
           bg="from-[#428CA9] to-[#432D77]"
           icon={DollarSign}

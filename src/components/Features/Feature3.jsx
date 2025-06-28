@@ -1,40 +1,95 @@
-import Button1 from "../../ui/Button1";
-import Button2 from "../../ui/Button2";
 const Feature3 = () => {
   return (
     <div className="text-center py-20 bg-[#211F31]">
       <section className="max-w-[600px]  m-auto mb-5">
-        <h1 className="text-[30px] font-semibold text-[#BA5CE2] pb-5  md:text-[40px] lg:text[60px] md:text-left">
-          Ready to Dominate?
+        <h1 className="text-4xl  font-semibold text-[#BA5CE2] pb-5  md:text-6xl lg:text-6xl md:text-left">
+          <span
+            className="text-transparent bg-clip-text"
+            style={{
+              background: "linear-gradient(45deg, #c84de5, #79a5d5, #5e41a1)",
+              WebkitBackgroundClip: "text",
+            }}
+          >
+            Ready to Dominate?
+          </span>
         </h1>
         <p className=" text-[18px] inline text-[#d9cbcb] md:text-[25px]">
           Join millions of gamers and experience the future of competitive
           gaming with KRYZOX.
         </p>
       </section>
-      {/* button section */}
-      <section className="flex flex-wrap gap-5 items-center justify-center  mt-10">
-        <Button1>Join KRYZOX</Button1>
-        <Button2>Download Free</Button2>
+      {/* buttons */}
+      <section className="flex flex-wrap gap-5 text-lg pt-8 justify-center items-center font-semibold ">
+        <button
+          className="group relative px-12 py-4 rounded-xl font-bold text-xl transition-all duration-300 hover:scale-110 hover:shadow-xl"
+          style={{
+            background: "linear-gradient(to right, #c84de5, #79a5d5, #5e41a1)",
+            boxShadow: "0 0 30px rgba(200, 77, 229, 0.3)",
+          }}
+        >
+          <span className="relative z-10 text-white">Join KRYZOX</span>
+          <div
+            className="absolute inset-0 rounded-xl blur opacity-75 group-hover:opacity-100 transition-opacity duration-300"
+            style={{
+              background:
+                "linear-gradient(to right, #c84de5, #79a5d5, #5e41a1)",
+            }}
+          ></div>
+        </button>
+        <button
+          className="group relative px-12 py-4 border-2 rounded-xl font-bold text-xl transition-all duration-300 hover:scale-110 hover:shadow-xl"
+          style={{
+            borderColor: "#c84de5",
+            color: "#c84de5",
+          }}
+        >
+          <span className="group-hover:text-white transition-colors duration-300">
+            Download Free
+          </span>
+          <div
+            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"
+            style={{ backgroundColor: "rgba(200, 77, 229, 0.1)" }}
+          ></div>
+        </button>
       </section>
       {/* detail section */}
       <section className=" max-w-4xl mx-auto grid grid-cols-2 text-[#c4bfbf] mt-10 leading-8 md:grid-cols-4 gap-y-5 text-center">
-        <div className="">
-          <p className=" text-[#9684DB] font-bold tex-2xl md:text-4xl ">50M+</p>
-          <p>Active Players</p>
-        </div>
-        <div>
-          <p className=" text-[#9684DB] font-bold tex-2xl md:text-4xl ">1000+</p>
-          <p>Pro Teams</p>
-        </div>
-        <div>
-          <p className=" text-[#9684DB] font-bold tex-2xl md:text-4xl ">24/7</p>
-          <p>Support</p>
-        </div>
-        <div>
-          <p className=" text-[#9684DB] font-bold tex-2xl md:text-4xl ">99.9%</p>
-          <p>Uptime</p>
-        </div>
+                  <div>
+            <div 
+              className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text mb-2"
+              style={{ background: 'linear-gradient(to right, #79a5d5, #c84de5)', WebkitBackgroundClip: 'text' }}
+            >
+              50M+
+            </div>
+            <div className="text-gray-400">Active Players</div>
+          </div>
+          <div>
+            <div 
+              className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text mb-2"
+              style={{ background: 'linear-gradient(to right, #c84de5, #84147c)', WebkitBackgroundClip: 'text' }}
+            >
+              1000+
+            </div>
+            <div className="text-gray-400">Pro Teams</div>
+          </div>
+          <div>
+            <div 
+              className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text mb-2"
+              style={{ background: 'linear-gradient(to right, #5e41a1, #4b1670)', WebkitBackgroundClip: 'text' }}
+            >
+              24/7
+            </div>
+            <div className="text-gray-400">Support</div>
+          </div>
+          <div>
+            <div 
+              className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text mb-2"
+              style={{ background: 'linear-gradient(to right, #c84de5, #79a5d5)', WebkitBackgroundClip: 'text' }}
+            >
+              99.9%
+            </div>
+            <div className="text-gray-400">Uptime</div>
+          </div>
       </section>
     </div>
   );
