@@ -6,7 +6,7 @@ import Feature2 from '../components/Features/Feature2';
 import Feature3 from '../components/Features/Feature3';
 const Home = () => {
   return (
-    <div>
+    <div className="max-w-[1600px] m-auto">
     <NavBar />
     <HeroSection />
     <Feature1 />

@@ -3,7 +3,7 @@ import { DollarSign, TrendingUp, Bookmark, Trophy } from "lucide-react";
 
 const Feature2 = () => {
   return (
-    <div className="h-auto w-full bg-[#241B3A] text-white text-center py-10">
+    <div className="h-auto w-full bg-[#241B3A] text-white text-center py-10 px-5">
       <h1 className="text-[40px] font-semibold text-[#BA5CE2] pb-5">
         Earn While You Play
       </h1>
@@ -12,7 +12,7 @@ const Feature2 = () => {
         turn your skills into real money
       </p>
 
-      <section className="flex flex-wrap gap-8 items-center justify-center mt-10">
+      <section className="flex flex-wrap gap-8  mt-10 md:items-center md:justify-center md:px-20">
         <FeatureCard2
           bg="from-[#428CA9] to-[#432D77]"
           icon={DollarSign}
