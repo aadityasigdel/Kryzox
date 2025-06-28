@@ -4,7 +4,7 @@ import { DollarSign, TrendingUp, Bookmark, Trophy } from "lucide-react";
 const Feature1 = () => {
   return (
     <div className="h-[auto] w-full bg-[#121a2e] text-white text-center py-10 px-5 md:px-10">
-      <h1 className="text-[50px] font-semibold text-[#BA5CE2] pb-5">
+      <h1 className="text-[30px] md:text-[50px] font-semibold text-[#BA5CE2] pb-5">
         <span
           className="text-transparent bg-clip-text"
           style={{

@@ -3,8 +3,7 @@ import clsx from "clsx";
 import "./herosection.css";
 export default function HeroSection() {
   return (
-    <div className="relative min-h-screen w-full bg-[#0b001a] flex items-center justify-center text-white overflow-hidden font-sans pb-5">
-      <div className="absolute inset-0">
+    <div className="relative min-h-screen h-auto  w-full bg-[#0b001a] flex items-center justify-center text-white overflow-hidden font-sans pb-10 md:pb-5">
         {/* ✅ Vertical Lines */}
         {[...Array(7)].map((_, i) => (
           <div
@@ -49,12 +48,12 @@ export default function HeroSection() {
         />
 
         {/* ✨ Small Floating Glowing Dots */}
-        {[...Array(10)].map((_, i) => {
-          let sizeOfCircle = Math.floor(Math.random() * 12 + 4);
+        {[...Array(20)].map((_, i) => {
+          let sizeOfCircle = Math.floor(Math.random() * 6 + 4);
           return (
             <div
               key={`dot-${i}`}
-              className="absolute bg-[violet] rounded-full blur-sm opacity-100 animate-bounce z-0"
+              className="absolute bg-[violet] rounded-full blur-xs opacity-100 animate-bounce z-0"
               style={{
                 height: `${sizeOfCircle}px`,
                 width: `${sizeOfCircle}px`,
@@ -67,16 +66,16 @@ export default function HeroSection() {
         })}
 
         {/* 💸 Floating Currency Symbols */}
-        <div className="absolute top-[15%] text-purple-400 text-xl animate-bounce z-0">
+        <div className="absolute top-[1%] left-[10%] text-purple-400 text-3xl animate-bounce z-0">
           $
         </div>
-        <div className="absolute top-[35%] right-[8%] text-pink-400 text-lg animate-bounce">
+        <div className="absolute top-[20%] right-[8%] text-pink-400 text-3xl animate-bounce">
           ₹
         </div>
-        <div className="absolute bottom-[10%] left-[25%] text-purple-300 text-2xl animate-bounce">
+        <div className="absolute bottom-[15%] left-[15%] text-purple-300 text-3xl animate-bounce">
           $
         </div>
-        <div className="absolute bottom-[15%] right-[10%] text-blue-400 text-xl animate-bounce">
+        <div className="absolute bottom-[20%] right-[10%] text-blue-400 text-3xl animate-bounce">
           ₹
         </div>
 
@@ -85,7 +84,7 @@ export default function HeroSection() {
 
         {/* 🚀 Hero Content */}
         <div className="flex flex-col items-center justify-center text-center px-4 mt-24 md:mt-32 relative z-10">
-          <h1 className="kryzox text-5xl sm:text-7xlmd:text-9xl font-extrabold">
+          <h1 className="kryzox text-5xl sm:text-7xlmd:text-9xl lg:text-[90px] font-extrabold">
             KRYZOX
           </h1>
 
@@ -113,7 +112,7 @@ export default function HeroSection() {
             <span className="animate-pulse">💰</span>
           </div>
           {/* buttons */}
-          <section className="flex flex-wrap gap-5 text-lg pt-8 justify-center items-center font-semibold ">
+          <section className="h-auto flex flex-wrap gap-5 text-lg pt-8 justify-center items-center font-semibold">
             <button
               className=" px-10 py-5 rounded-xl transition-all duration-500 hover:scale-110 hover:shadow-2xl bg-[length:200%_100%] hover:bg-[position:100%_0] mb-5"
               style={{
@@ -123,12 +122,11 @@ export default function HeroSection() {
             >
               Download For Android
             </button>
-            <button className="ripple-hover-button px-10 py-5 rounded-xl border-2 transition-colors duration-500 hover:scale-110 hover:shadow-2xl mb-5">
+            <button className="ripple-hover-button px-10 py-5 rounded-xl border-2 transition-colors duration-500 hover:scale-110 hover:shadow-2xl">
               Download For ios
             </button>
           </section>
         </div>
       </div>
-    </div>
   );
 }

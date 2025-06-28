@@ -40,6 +40,7 @@
   transform: translate(-50%, -50%) scale(1.5);
   opacity: 1;
 }
+/* styling of kryzox title */
 .kryzox {
   position: relative;
   background-image: linear-gradient(45deg, #79a5d5, #c84de5, #5e41a1);
@@ -62,19 +63,35 @@
 }
 
 /* 4th line and 6th line circle design part */
-.secondLine::before{
-  content:"";
-  height:40px;
-  width:40px;
+.secondLine::before ,.sixthLine::before{
+  content: "";
+  height: 25px;
+  width: 25px;
   border-radius: 50%;
   position: absolute;
-  background-color:red;
-  left:-50%;
+  background-image: linear-gradient(to right, #79a5d5, #c84de5, #5e41a1);
+  left: 50%;
+  top:10%;
+  transform: translate(-50%,0%);
+  animation:bounce-element 1s infinite;
 }
 
+.secondLine::after,.sixthLine::after {
+  content: "";
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  position: absolute;
+  background-image: linear-gradient(to right, #79a5d5, #c84de5, #5e41a1);
+  left: 50%;
+  bottom:20%;
+  transform: translate(-50%,0%);
+  animation:bounce-element 1s infinite;
+}
 /* animation for tailwind css pulse */
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -82,7 +99,19 @@
   }
 }
 
- .animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-} 
+/* animation for tailwind css bouncing */
+@keyframes bounce-element {
+  0%, 100% {
+    transform: translate(-50%,-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translate(-50%,0%);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
 
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
