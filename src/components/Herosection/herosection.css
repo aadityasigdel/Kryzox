@@ -82,7 +82,7 @@
   width: 20px;
   border-radius: 50%;
   position: absolute;
-  background-image: linear-gradient(to right, #79a5d5, #c84de5, #5e41a1);
+  background: #542986;
   left: 50%;
   bottom:20%;
   transform: translate(-50%,0%);

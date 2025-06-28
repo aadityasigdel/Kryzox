@@ -59,7 +59,7 @@ const Footer = () => {
     >
       <div className="h-auto w-auto text-white flex flex-wrap gap-20 border-b-1 border-b-[#c84de5] py-5 pb-20">
         <div className="flex flex-col gap-10 max-w-[400px]">
-          <div className="text-3xl font-bold mb-4">
+          <div className="text-3xl font-bold">
             <span
               className="text-transparent bg-clip-text"
               style={{

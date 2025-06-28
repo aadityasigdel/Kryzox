@@ -103,7 +103,7 @@ export default function HeroSection() {
             for your performance.
           </p>
 
-          <div className=" min-w[400px] w-full md:w-[800px]  font-semibold text-lg bg-[#482F6D]  rounded-2xl border border-[#883EA8] flex items-center justify-center gap-2 mt-5 py-7 sm:py-5 px-5 ">
+          <div className=" min-w-[400px] w-full md:w-[800px]  font-semibold text-lg bg-[#482F6D]  rounded-2xl border border-[#883EA8] flex items-center justify-center gap-2 mt-5 py-2 md:py-5 px-5 ">
             <span className="animate-pulse">💰</span>{" "}
             <span>Turn Your Gaming Skills Into</span>
             <span className="real-earning text-[#79A5D5] animate-bounce">
@@ -114,7 +114,7 @@ export default function HeroSection() {
           {/* buttons */}
           <section className="h-auto flex flex-wrap gap-5 text-lg pt-8 justify-center items-center font-semibold">
             <button
-              className=" px-10 py-5 rounded-xl transition-all duration-500 hover:scale-110 hover:shadow-2xl bg-[length:200%_100%] hover:bg-[position:100%_0] mb-5"
+              className=" px-10 py-5 rounded-xl transition-all duration-500 hover:scale-110 hover:shadow-2xl bg-[length:200%_100%] hover:bg-[position:100%_0] mb-2 md:mb-0"
               style={{
                 backgroundImage:
                   "linear-gradient(to right, #c84de5, #79a5d5, #5e41a1)",
@@ -122,7 +122,7 @@ export default function HeroSection() {
             >
               Download For Android
             </button>
-            <button className="ripple-hover-button px-10 py-5 rounded-xl border-2 transition-colors duration-500 hover:scale-110 hover:shadow-2xl">
+            <button className="ripple-hover-button py-5 px-10 rounded-xl border-2 transition-colors duration-500 hover:scale-110 hover:shadow-2xl">
               Download For ios
             </button>
           </section>
