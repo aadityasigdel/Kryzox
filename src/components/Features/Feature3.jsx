@@ -18,7 +18,7 @@ const Feature3 = () => {
         <Button2>Download Free</Button2>
       </section>
       {/* detail section */}
-      <section className="  grid grid-cols-2 text-[#c4bfbf] mt-10 leading-8 md:gap-30 md:grid-cols-4 gap-y-5">
+      <section className=" max-w-4xl mx-auto grid grid-cols-2 text-[#c4bfbf] mt-10 leading-8 md:grid-cols-4 gap-y-5 text-center">
         <div className="">
           <p className=" text-[#9684DB] font-bold tex-2xl md:text-4xl ">50M+</p>
           <p>Active Players</p>
