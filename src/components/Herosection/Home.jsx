@@ -3,7 +3,7 @@ import clsx from "clsx";
 import "./herosection.css";
 export default function HeroSection() {
   return (
-    <div className="relative min-h-screen h-auto  w-full bg-[#0b001a] flex items-center justify-center text-white overflow-hidden font-sans pb-10 md:pb-5">
+    <div className="relative min-h-screen h-auto  w-full bg-[#0b001a] text-white overflow-hidden font-sans pb-10 md:pb-5">
         {/* ✅ Vertical Lines */}
         {[...Array(7)].map((_, i) => (
           <div
@@ -84,7 +84,7 @@ export default function HeroSection() {
 
         {/* 🚀 Hero Content */}
         <div className="flex flex-col items-center justify-center text-center px-4 mt-24 md:mt-32 relative z-10">
-          <h1 className="kryzox text-5xl sm:text-7xlmd:text-9xl lg:text-[90px] font-extrabold">
+          <h1 className="kryzox text-5xl sm:text-7xl md:text-9xl lg:text-[90px] font-extrabold">
             KRYZOX
           </h1>
 
@@ -103,7 +103,7 @@ export default function HeroSection() {
             for your performance.
           </p>
 
-          <div className=" min-w-[400px] w-full md:w-[800px]  font-semibold text-lg bg-[#482F6D]  rounded-2xl border border-[#883EA8] flex items-center justify-center gap-2 mt-5 py-2 md:py-5 px-5 ">
+          <div className=" w-full md:max-w-[800px]  font-semibold text-lg bg-[#482F6D]  rounded-2xl border border-[#883EA8] flex items-center justify-center gap-2 mt-5 py-3 md:py-5 px-5 ">
             <span className="animate-pulse">💰</span>{" "}
             <span>Turn Your Gaming Skills Into</span>
             <span className="real-earning text-[#79A5D5] animate-bounce">
