@@ -1,4 +1,4 @@
-import FeatureCard2 from "../../ui/FeatureCard2";
+import FeatureCard2 from "../../../ui/FeatureCard2";
 import { DollarSign, TrendingUp, Bookmark, Trophy } from "lucide-react";
 
 const Feature2 = () => {
