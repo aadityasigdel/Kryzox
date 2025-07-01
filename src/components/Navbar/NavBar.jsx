@@ -3,7 +3,7 @@ import { AlignJustify as Hamburger } from "lucide-react"; //handlebar
 import "./navbar.css";
 const NavBar = () => {
   return (
-    <nav className="h-[80px] w-full bg-[#0B0811] text-white flex items-center justify-between px-3 border-b-3 border-b-[#c84de5] md:px-15 lg:px-35">
+    <nav className="h-[80px] w-full fixed top-0 z-20  bg-[#0B0811] text-white flex items-center justify-between px-3 border-b-3 border-b-[#c84de5] md:px-15 lg:px-35">
       <div className="logo flex relative items-center space-x-2 font-bold text-2xl ">
         <span>KRYZOX</span>
         <span className="top-logo-container">

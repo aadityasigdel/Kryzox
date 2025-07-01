@@ -8,11 +8,13 @@ const Home = () => {
   return (
     <div className="max-w-[1600px] m-auto">
     <NavBar />
+    <div className="pt-[80px] w-full">
     <HeroSection />
     <Feature1 />
     <Feature2 />
     <Feature3 />
     <Footer />
+    </div>
     </div>
   )
 }
