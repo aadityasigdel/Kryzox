@@ -3,7 +3,11 @@ import "./Feature2.css";
 
 const Feature2 = () => {
   return (
-    <div className="h-auto w-full bg-[#241B3A] text-white text-center py-10 px-5">
+    <div className="h-auto w-full relative bg-[#241B3A] text-white text-center py-10 px-5">
+      {/* particles moving animation effect */}
+       <div className="absolute top-20 left-20 text-4xl animate-bounce opacity-40" style={{ color: '#c84de5' }}>💰</div>
+        <div className="absolute top-40 right-40 text-3xl animate-bounce opacity-40" style={{ color: '#79a5d5', animationDelay: '1s' }}>💎</div>
+      {/* paricle moving section ends here */}
       <h2 className="text-4xl md:text-5xl font-bold mb-6 relative">
         <span
           className="text-transparent bg-clip-text"
