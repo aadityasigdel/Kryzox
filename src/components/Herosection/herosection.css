@@ -75,6 +75,11 @@
   transform: translate(-50%,0%);
   animation:bounce-element 1s infinite;
 }
+.sixthLine::before{
+  height: 15px;
+  width: 15px;
+  background: #AB35B9;
+}
 
 .secondLine::after,.sixthLine::after {
   content: "";
