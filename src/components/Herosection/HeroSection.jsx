@@ -71,7 +71,7 @@ export default function HeroSection() {
       />
 
       {/* ✨ Small Floating Glowing Dots */}
-      {[...Array(20)].map((_, i) => {
+      {[...Array(15)].map((_, i) => {
         let sizeOfCircle = Math.floor(Math.random() * 6 + 4);
         return (
           <div

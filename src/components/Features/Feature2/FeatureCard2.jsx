@@ -42,7 +42,7 @@ const FeatureCard2 = ({ icon, title, description, bg, content1, price }) => {
           {price || "test message"}
         </div>
         <div className="h-[60px] w-[60px] rounded-md text-white grid place-content-center transition ease-in-out duration-500 shadow-lg group-hover:scale-120">
-          <span className="text-8xl group-hover:scale-110 transition-transform duration-500 relative">
+          <span className=" group-hover:scale-110 transition-transform duration-500 relative text-6xl md:text-7xl">
             {icon}
           </span>
         </div>
