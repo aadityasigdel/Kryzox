@@ -1,12 +1,35 @@
-import FeatureCard2 from "../../../ui/FeatureCard2";
+import FeatureCard2 from "./FeatureCard2";
 import "./Feature2.css";
 
 const Feature2 = () => {
   return (
-    <div className="h-auto w-full relative bg-[#241B3A] text-white text-center py-10 px-5">
+    <div
+      className="h-auto w-full relative bg-[#241B3A] text-white text-center py-10 px-5"
+      id="games"
+    >
+      {/* Enhanced animated background */}
+      <div className="absolute inset-0">
+        <div
+          className="absolute top-0 left-0 w-full h-full animate-pulse"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(132, 20, 124, 0.2), rgba(200, 77, 229, 0.2), rgba(121, 165, 213, 0.2))",
+          }}
+        ></div>
+      </div>
       {/* particles moving animation effect */}
-       <div className="absolute top-20 left-20 text-4xl animate-bounce opacity-40" style={{ color: '#c84de5' }}>💰</div>
-        <div className="absolute top-40 right-40 text-3xl animate-bounce opacity-40" style={{ color: '#79a5d5', animationDelay: '1s' }}>💎</div>
+      <div
+        className="absolute top-20 left-20 text-4xl animate-bounce opacity-40"
+        style={{ color: "#c84de5" }}
+      >
+        💰
+      </div>
+      <div
+        className="absolute top-40 right-40 text-3xl animate-bounce opacity-40"
+        style={{ color: "#79a5d5", animationDelay: "1s" }}
+      >
+        💎
+      </div>
       {/* paricle moving section ends here */}
       <h2 className="text-4xl md:text-5xl font-bold mb-6 relative">
         <span
@@ -24,7 +47,7 @@ const Feature2 = () => {
         turn your skills into real money
       </p>
       {/* feature card section started */}
-      <section className="flex flex-wrap gap-8  mt-16 mb-10 md:items-center md:justify-center">
+      <section className="flex flex-wrap  mt-16 mb-10 md:items-center md:justify-center gap-10 md:gap-8">
         <FeatureCard2
           bg="linear-gradient(135deg, #c84de5, #79a5d5, #5e41a1"
           icon={"🔥"}

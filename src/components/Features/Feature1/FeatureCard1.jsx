@@ -11,7 +11,7 @@ const FeatureCard1 = ({
   return (
     <div
       className={clsx(
-        "group relative parent-container z-10 group min-h-[320px] w-full border border-[#443860] md:max-w-[300px] bg-[#28194A] rounded-xl text-left flex flex-col gap-5 pt-8 duration-500 ease-in-out hover:scale-110 px-7"
+        "group relative parent-container z-10 group min-h-[320px] w-full border border-[#443860] md:max-w-[300px] bg-[#28194A] rounded-xl text-left flex flex-col gap-5 pt-8 duration-500 ease-in-out hover:scale-105 md:hover:scale-110 px-7"
       )}
       style={{
         backgroundColor: "rgba(43, 32, 85, 0.6)",

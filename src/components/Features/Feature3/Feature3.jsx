@@ -1,6 +1,28 @@
 const Feature3 = () => {
   return (
-    <div className="text-center py-20 bg-[#211F31]">
+    <div className="relative text-center py-20 bg-[#07060a]">
+      {/* Background effects */}
+      <div className="absolute inset-0">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to right, rgba(200, 77, 229, 0.2), rgba(121, 165, 213, 0.2), rgba(132, 20, 124, 0.2))",
+          }}
+        ></div>
+        <div
+          className="absolute top-0 left-1/4 w-96 h-96 rounded-full blur-3xl animate-pulse"
+          style={{ backgroundColor: "rgba(200, 77, 229, 0.1)" }}
+        ></div>
+        <div
+          className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full blur-3xl animate-pulse"
+          style={{
+            backgroundColor: "rgba(121, 165, 213, 0.1)",
+            animationDelay: "1s",
+          }}
+        ></div>
+      </div>
+
       <section className="max-w-[600px]  m-auto mb-5">
         <h1 className="text-4xl  font-semibold text-[#BA5CE2] pb-5  md:text-6xl lg:text-6xl md:text-left">
           <span
@@ -54,42 +76,54 @@ const Feature3 = () => {
       </section>
       {/* detail section */}
       <section className=" max-w-4xl mx-auto grid grid-cols-2 text-[#c4bfbf] mt-10 leading-8 md:grid-cols-4 gap-y-5 text-center">
-                  <div>
-            <div 
-              className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text mb-2"
-              style={{ background: 'linear-gradient(to right, #79a5d5, #c84de5)', WebkitBackgroundClip: 'text' }}
-            >
-              50M+
-            </div>
-            <div className="text-gray-400">Active Players</div>
+        <div>
+          <div
+            className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text mb-2"
+            style={{
+              background: "linear-gradient(to right, #79a5d5, #c84de5)",
+              WebkitBackgroundClip: "text",
+            }}
+          >
+            50M+
           </div>
-          <div>
-            <div 
-              className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text mb-2"
-              style={{ background: 'linear-gradient(to right, #c84de5, #84147c)', WebkitBackgroundClip: 'text' }}
-            >
-              1000+
-            </div>
-            <div className="text-gray-400">Pro Teams</div>
+          <div className="text-gray-400">Active Players</div>
+        </div>
+        <div>
+          <div
+            className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text mb-2"
+            style={{
+              background: "linear-gradient(to right, #c84de5, #84147c)",
+              WebkitBackgroundClip: "text",
+            }}
+          >
+            1000+
           </div>
-          <div>
-            <div 
-              className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text mb-2"
-              style={{ background: 'linear-gradient(to right, #5e41a1, #4b1670)', WebkitBackgroundClip: 'text' }}
-            >
-              24/7
-            </div>
-            <div className="text-gray-400">Support</div>
+          <div className="text-gray-400">Pro Teams</div>
+        </div>
+        <div>
+          <div
+            className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text mb-2"
+            style={{
+              background: "linear-gradient(to right, #5e41a1, #4b1670)",
+              WebkitBackgroundClip: "text",
+            }}
+          >
+            24/7
           </div>
-          <div>
-            <div 
-              className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text mb-2"
-              style={{ background: 'linear-gradient(to right, #c84de5, #79a5d5)', WebkitBackgroundClip: 'text' }}
-            >
-              99.9%
-            </div>
-            <div className="text-gray-400">Uptime</div>
+          <div className="text-gray-400">Support</div>
+        </div>
+        <div>
+          <div
+            className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text mb-2"
+            style={{
+              background: "linear-gradient(to right, #c84de5, #79a5d5)",
+              WebkitBackgroundClip: "text",
+            }}
+          >
+            99.9%
           </div>
+          <div className="text-gray-400">Uptime</div>
+        </div>
       </section>
     </div>
   );

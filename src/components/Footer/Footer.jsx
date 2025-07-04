@@ -52,6 +52,7 @@ const Footer = () => {
   return (
     <footer
       className="h-auto w-auto px-10 py-10 md:px-20 lg:px-35"
+      id="contact"
       style={{
         backgroundColor: "#1D0A2E",
         borderColor: "rgba(200, 77, 229, 0.3)",

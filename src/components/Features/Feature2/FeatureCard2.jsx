@@ -3,7 +3,8 @@ const FeatureCard2 = ({ icon, title, description, bg, content1, price }) => {
   // content1 is for top section first div
   // price is for second div of top section of the card
   return (
-    <div className="group relative min-h-[410px] w-full md:max-w-[300px] bg-[#28194A] rounded-3xl border-[.1px] border-[#552555] text-left flex flex-col gap-5  duration-500 ease-in-out hover:scale-110">
+    <div className="group relative min-h-[410px] w-full md:max-w-[300px] bg-[#28194A] rounded-3xl border-[.1px] border-[#552555] text-left flex flex-col gap-5  duration-500 ease-in-out hover:scale-105 md:hover:scale-110">
+
       <section
         className={`min-h-[200px] bg-gradient-to-r grid place-content-center relative border-[#552555] rounded-t-3xl font-semibold text-sm overflow-hidden`}
         style={{ background: bg }}

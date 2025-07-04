@@ -1,19 +1,38 @@
 import { div } from "framer-motion/client";
 import clsx from "clsx";
-import "./herosection.css";
+import "./heroSection.css";
 export default function HeroSection() {
   return (
-    <div className="relative min-h-screen h-auto  w-full bg-[#07060a] text-white overflow-hidden font-sans pb-10 md:pb-5">
+    <div
+      className="relative min-h-screen h-auto flex items-center justify-center  w-full bg-[#07060a] text-white overflow-hidden font-sans pb-10 md:pb-5"
+      id="home"
+    >
+      {/* Enhanced animated background */}
+      <div className="absolute inset-0">
+        <div
+          className="absolute inset-0 bg-gradient-to-br opacity-30 animate-pulse"
+          style={{
+            background:
+              "linear-gradient(135deg, #240d39 0%, #2b2055 25%, #4b1670 50%, #5e41a1 75%, #79a5d5 100%)",
+          }}
+        ></div>
+      </div>
+
       {/* ✅ Vertical Lines */}
       {[...Array(7)].map((_, i) => (
         <div
           key={i}
           className={clsx(
-            "absolute top-0 bottom-0 w-px bg-white/10 z-0",
+            "absolute top-0 bottom-0 w-px  z-0 animate-pulse opacity-20 ",
             i === 1 && "secondLine",
             i === 5 && "sixthLine"
           )}
-          style={{ left: `${(i + 1) * 12}%` }}
+          style={{
+            left: `${(i + 1) * 12}%`,
+            background:
+              "linear-gradient(to bottom, #c84de5, #79a5d5, transparent)",
+            animationDelay: `${i * 0.5}s`,
+          }}
         />
       ))}
 
@@ -84,7 +103,15 @@ export default function HeroSection() {
       </div>
 
       {/* 🔶 Diagonal Ray */}
-      <div className="absolute w-[300px] h-px bg-white/10 rotate-45 top-[18%] left-[18%]" />
+      <div
+        className="absolute w-32 h-px bg-white/10 rotate-45 top-[20%] left-[25%] opacity-60 animate-pulse"
+        style={{
+          background:
+            "linear-gradient(to right, transparent, #c84de5, transparent)",
+  
+          animationDuration: "1.5s",
+        }}
+      />
 
       {/* 🚀 Hero Content */}
       <div className="flex flex-col items-center justify-center text-center px-4 mt-24 md:mt-32 relative z-10">
