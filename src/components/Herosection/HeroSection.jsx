@@ -1,4 +1,4 @@
-import { div } from "framer-motion/client";
+
 import clsx from "clsx";
 import "./heroSection.css";
 export default function HeroSection() {
