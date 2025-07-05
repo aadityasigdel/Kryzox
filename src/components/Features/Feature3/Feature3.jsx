@@ -1,6 +1,9 @@
 const Feature3 = () => {
   return (
-    <div className="relative w-full text-center py-20 bg-[#07060a] overflow-hidden">
+    <div
+      className="relative w-full text-center py-20 bg-[#07060a] overflow-hidden border-b"
+      style={{ borderColor: "rgba(200, 77, 229, 0.3)" }}
+    >
       {/* Background effects */}
       <div className="absolute inset-0">
         <div

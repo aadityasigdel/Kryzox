@@ -31,7 +31,7 @@ const data3 = [
   { content: "Help Center" },
   { content: "Contact" },
   { content: "Bug Reports" },
-  { content: "Feedback" }
+  { content: "Feedback" },
 ];
 
 const data4 = [
@@ -58,7 +58,10 @@ const Footer = () => {
         borderColor: "rgba(200, 77, 229, 0.3)",
       }}
     >
-      <div className="h-auto w-auto text-white flex flex-wrap gap-20 border-b-1 border-b-[#c84de5] py-5 pb-20">
+      <div
+        className="h-auto w-auto text-white flex flex-wrap gap-20 border-b  py-5 pb-20"
+        style={{ borderColor: "rgba(200, 77, 229, 0.3)" }}
+      >
         <div className="flex flex-col gap-10 max-w-[400px]">
           <div className="text-3xl font-bold">
             <span

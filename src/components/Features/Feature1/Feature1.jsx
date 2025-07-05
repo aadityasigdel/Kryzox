@@ -1,3 +1,4 @@
+
 import React from "react";
 import FeatureCard1 from "./FeatureCard1";
 import "./Feature1.css"; // Assuming you have some styles in this file
@@ -24,11 +25,10 @@ const Feature1 = () => {
       </div>
       {/* geometry shape eft hand side*/}
       <div
-        className="absolute top-10 left-10 w-20 h-20 border rotate-45 animate-spin"
+        className="absolute top-10 left-10 w-20 h-20 border rotate-45 custom-spin-reverse"
         style={{
           borderColor: "rgba(121, 165, 213, 0.3)",
-          animationDuration: "50s",
-          animationDelay: "0s",
+          animationDuration: "100s",
         }}
       ></div>
       <span className="absolute top-20 left-20 text-3xl animate-bounce">
