@@ -14,7 +14,7 @@ const navLinks = [
 // logo design
 const Logo = () => {
   return (
-    <div className="logo flex relative font-bold text-2xl">
+    <div className="logo flex relative font-bold text-2xl shadow-2xl">
       <span>KRYZOX</span>
       <span className="top-logo-container">
         <span className="logo-dollar animate-pulse z-10">💰</span>

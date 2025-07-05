@@ -8,6 +8,16 @@ const Feature1 = () => {
       className=" relative h-[auto] w-full bg-[#240d39] text-white text-center py-20 px-5 md:px-10 overflow-hidden"
       id="features"
     >
+      {/* Enhanced background with moving elements */}
+      <div className="absolute inset-0">
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(43, 32, 85, 0.1), rgba(75, 22, 112, 0.1))",
+          }}
+        ></div>
+      </div>
       {/* grid design*/}
       <div className="absolute inset-0 opacity-20 z-0">
         <div
@@ -30,7 +40,10 @@ const Feature1 = () => {
           animationDuration: "100s",
         }}
       ></div>
-      <span className="absolute top-20 left-20 text-3xl animate-bounce">
+      <span
+        className="absolute top-20 left-20 text-3xl opacity-30 animate-bounce"
+        style={{ color: "#c84de5" }}
+      >
         💰
       </span>
       {/* geometry shape right hand side */}
@@ -41,10 +54,21 @@ const Feature1 = () => {
             borderColor: "rgba(121, 165, 213, 0.3)",
           }}
         ></div>
-        <span className="absolute top-40 right-40 text-2xl z-0 animate-bounce">
+        <span
+          className="absolute top-40 right-40 text-2xl z-0  opacity-30 animate-bounce"
+          style={{ color: "#79a5d5", animationDelay: "1s" }}
+        >
           💎
         </span>
       </div>
+      {/* geometry shape bottom hand side */}
+      <div
+        className="absolute bottom-10 left-20 md:bottom-20 md:left-22 w-12 h-12 border rotate-45 animate-pulse"
+        style={{
+          borderColor: "rgba(121, 165, 213, 0.3)",
+          background: "linear-gradient(135deg, #4b1670, #84147c)",
+        }}
+      ></div>
       <h1 className="heading-text text-[30px] md:text-[50px] font-semibold text-[#BA5CE2] z-10 pb-5">
         <span
           className=" text-transparent bg-clip-text"
