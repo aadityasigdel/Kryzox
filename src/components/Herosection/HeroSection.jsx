@@ -1,6 +1,6 @@
 
 import clsx from "clsx";
-import "./heroSection.css";
+import "./HeroSection.css";
 export default function HeroSection() {
   return (
     <div
