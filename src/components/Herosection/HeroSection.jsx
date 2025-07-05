@@ -19,7 +19,7 @@ export default function HeroSection() {
       </div>
 
       {/* ✅ Vertical Lines */}
-      {[...Array(7)].map((_, i) => (
+      {[...Array(7)].map((_, i) => ( 
         <div
           key={i}
           className={clsx(

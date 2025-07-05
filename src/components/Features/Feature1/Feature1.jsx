@@ -1,12 +1,11 @@
-
 import React from "react";
 import FeatureCard1 from "./FeatureCard1";
-import "./Feature1.css"; // Assuming you have some styles in this file
+import "./Feature1.css";
 import { DollarSign, TrendingUp, Bookmark, Trophy } from "lucide-react";
 const Feature1 = () => {
   return (
     <div
-      className="feature1-container relative h-[auto] w-full bg-[#240d39] text-white text-center py-20 px-5 md:px-10 overflow-hidden z-[-20]"
+      className=" relative h-[auto] w-full bg-[#240d39] text-white text-center py-20 px-5 md:px-10 overflow-hidden"
       id="features"
     >
       {/* grid design*/}
@@ -35,15 +34,17 @@ const Feature1 = () => {
         💰
       </span>
       {/* geometry shape right hand side */}
-      <div
-        className="absolute top-40 right-20 w-15 h-15 border  animate-bounce"
-        style={{
-          borderColor: "rgba(121, 165, 213, 0.3)",
-        }}
-      ></div>
-      <span className="absolute top-40 right-40 text-2xl z-[-10] animate-bounce">
-        💎
-      </span>
+      <div className="z-0">
+        <div
+          className="absolute top-40 right-20 w-15 h-15 border  animate-bounce"
+          style={{
+            borderColor: "rgba(121, 165, 213, 0.3)",
+          }}
+        ></div>
+        <span className="absolute top-40 right-40 text-2xl z-0 animate-bounce">
+          💎
+        </span>
+      </div>
       <h1 className="heading-text text-[30px] md:text-[50px] font-semibold text-[#BA5CE2] z-10 pb-5">
         <span
           className=" text-transparent bg-clip-text"
@@ -55,8 +56,14 @@ const Feature1 = () => {
           Earning Features
         </span>
       </h1>
-      <p className="text-[20px] inline z-10">Discover how your gaming skills can </p>{" "}
-      <p className="inline text-[20px] text-[#c130e1] z-10">generate real income</p>
+      <div className="relative z-10">
+        <p className="text-[20px] inline z-10">
+          Discover how your gaming skills can{" "}
+        </p>{" "}
+        <p className="inline text-[20px] text-[#c130e1] z-10">
+          generate real income
+        </p>
+      </div>
       {/* card section */}
       <section className="grid grid-cols-1 gap-10 md:gap-8  mt-10 md:place-items-center sm:grid-cols-2 lg:grid-cols-4 lg:px-20">
         <FeatureCard1
