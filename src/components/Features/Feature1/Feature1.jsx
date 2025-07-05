@@ -89,7 +89,8 @@ const Feature1 = () => {
         </p>
       </div>
       {/* card section */}
-      <section className="grid grid-cols-1 gap-10 md:gap-8  mt-10 md:place-items-center sm:grid-cols-2 lg:grid-cols-4 lg:px-20">
+      {/* <section className="grid grid-cols-1 gap-10 md:gap-8  mt-10 md:place-items-center sm:grid-cols-2 lg:grid-cols-4 lg:px-20"> */}
+      <section className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-10 md:gap-8  mt-10 md:place-items-center  lg:px-20">
         <FeatureCard1
           icon={DollarSign}
           iconBgColor={"linear-gradient(135deg, #c84de5, #79a5d5)"}
