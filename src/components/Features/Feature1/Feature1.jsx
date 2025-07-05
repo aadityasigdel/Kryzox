@@ -41,10 +41,10 @@ const Feature1 = () => {
           borderColor: "rgba(121, 165, 213, 0.3)",
         }}
       ></div>
-      <span className="absolute top-40 right-40 text-2xl animate-bounce">
+      <span className="absolute top-40 right-40 text-2xl z-0 animate-bounce">
         💎
       </span>
-      <h1 className="heading-text text-[30px] md:text-[50px] font-semibold text-[#BA5CE2] pb-5">
+      <h1 className="heading-text text-[30px] md:text-[50px] font-semibold text-[#BA5CE2] z-10 pb-5">
         <span
           className=" text-transparent bg-clip-text"
           style={{
@@ -55,8 +55,8 @@ const Feature1 = () => {
           Earning Features
         </span>
       </h1>
-      <p className="text-[20px] inline">Discover how your gaming skills can </p>{" "}
-      <p className="inline text-[20px] text-[#c130e1]">generate real income</p>
+      <p className="text-[20px] inline z-10">Discover how your gaming skills can </p>{" "}
+      <p className="inline text-[20px] text-[#c130e1] z-10">generate real income</p>
       {/* card section */}
       <section className="grid grid-cols-1 gap-10 md:gap-8  mt-10 md:place-items-center sm:grid-cols-2 lg:grid-cols-4 lg:px-20">
         <FeatureCard1

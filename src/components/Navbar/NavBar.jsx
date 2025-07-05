@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { Link as ScrollLink } from "react-scroll";
 
-import { AlignJustify as Hamburger } from "lucide-react"; //handlebar
+import { AlignJustify as Hamburger, X } from "lucide-react"; //handlebar
 import "./navbar.css";
 // navbar links
 const navLinks = [
@@ -10,24 +11,67 @@ const navLinks = [
   { name: "Earnings", path: "#", id: "earnings" },
   { name: "Contact", path: "#", id: "contact" },
 ];
+// logo design
+const Logo = () => {
+  return (
+    <div className="logo flex relative font-bold text-2xl">
+      <span>KRYZOX</span>
+      <span className="top-logo-container">
+        <span className="logo-dollar animate-pulse z-10">💰</span>
+        <span className="top-logo animate-pulse">EARN</span>
+      </span>
+    </div>
+  );
+};
+
+// design navigation for mobile
+const MobileNavigation = ({ setIsMobileNavOpen }) => {
+  return (
+    <div className="fixed inset-0  gap-10 w-full h-full bg-gray-900 bg-opacity-90 z-50 flex flex-col pt-10 px-10 overflow-hidden">
+      <X
+        size={30}
+        className="absolute top-5 right-5 text-white cursor-pointer"
+        onClick={() => setIsMobileNavOpen(false)}
+      />
+
+      {/* logo section */}
+      <div className="flex inset-0">
+        <Logo />
+      </div>
+      <div className="flex flex-col gap-10 mt-10">
+        {navLinks.map((item, index) => (
+          <ScrollLink
+            key={index}
+            smooth={true}
+            duration={500}
+            spy={true}
+            onClick={() => setIsMobileNavOpen(false)}
+            to={item.id}
+            className="text-gray-300 hover:text-white transition-all duration-500"
+          >
+            {item.name}
+          </ScrollLink>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const NavBar = () => {
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   return (
     <nav className="h-[80px] w-full fixed top-0 z-20  bg-[#0B0811] text-white flex items-center justify-between px-3 border-b border-b-[#c84de5] md:px-15 lg:px-35">
-      <div className="logo flex relative items-center space-x-2 font-bold text-2xl ">
-        <span>KRYZOX</span>
-        <span className="top-logo-container">
-          <span className="logo-dollar animate-pulse z-10">💰</span>
-          <span className="top-logo animate-pulse">EARN</span>
-        </span>
-      </div>
-
+      {/* logo section */}
+      <Logo />
       <ul className="list-none h-auto w-auto bg font-semibold text-gray-300 hidden md:gap-5 lg:gap-10 md:flex">
         {navLinks.map((link) => (
           <li key={link.name} className="cursor-pointer">
-            <ScrollLink to={link.id} 
-            className="link group relative"
-            smooth={true} duration={500} spy={true} 
+            <ScrollLink
+              to={link.id}
+              className="link group relative"
+              smooth={true}
+              duration={500}
+              spy={true}
             >
               {/* this is for the link hover for background effect */}
               <span
@@ -43,7 +87,14 @@ const NavBar = () => {
         ))}
       </ul>
       {/* hamburger menu for mobile devices */}
-      <Hamburger className="block md:hidden" size={30} />
+      {isMobileNavOpen && (
+        <MobileNavigation setIsMobileNavOpen={setIsMobileNavOpen} />
+      )}
+      <Hamburger
+        className="block md:hidden"
+        size={30}
+        onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
+      />
     </nav>
   );
 };

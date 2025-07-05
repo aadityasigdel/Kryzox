@@ -50,7 +50,7 @@ const FeatureCard2 = ({ icon, title, description, bg, content1, price }) => {
       <section className="pl-7 pr-5">
         <h1 className="text-xl font-bold">{title}</h1>
         <p className="text-gray-300 py-5 pb-7 text-sm">{description}</p>
-        <button class="bg-gradient-to-r from-[#D974FB] to-[#A5BDFE] text-white font-semibold py-3 px-20 rounded-xl">
+        <button className="bg-gradient-to-r from-[#D974FB] to-[#A5BDFE] text-white font-semibold py-3 px-20 rounded-xl">
           Play & Earn
         </button>
       </section>

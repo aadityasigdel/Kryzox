@@ -1,6 +1,6 @@
 const Feature3 = () => {
   return (
-    <div className="relative text-center py-20 bg-[#07060a]">
+    <div className="relative w-full text-center py-20 bg-[#07060a] overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0">
         <div
@@ -11,11 +11,11 @@ const Feature3 = () => {
           }}
         ></div>
         <div
-          className="absolute top-0 left-1/4 w-96 h-96 rounded-full blur-3xl animate-pulse"
+          className="absolute top-0 left-1/4 h-60 w-60 md:w-96 md:h-96 rounded-full blur-3xl animate-pulse"
           style={{ backgroundColor: "rgba(200, 77, 229, 0.1)" }}
         ></div>
         <div
-          className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full blur-3xl animate-pulse"
+          className="absolute bottom-0 right-1/4 h-60 w-60 md:w-96 md:h-96 rounded-full blur-3xl animate-pulse"
           style={{
             backgroundColor: "rgba(121, 165, 213, 0.1)",
             animationDelay: "1s",
