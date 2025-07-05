@@ -6,7 +6,7 @@ import { DollarSign, TrendingUp, Bookmark, Trophy } from "lucide-react";
 const Feature1 = () => {
   return (
     <div
-      className="feature1-container relative h-[auto] w-full bg-[#240d39] text-white text-center py-20 px-5 md:px-10 overflow-hidden"
+      className="feature1-container relative h-[auto] w-full bg-[#240d39] text-white text-center py-20 px-5 md:px-10 overflow-hidden z-[-20]"
       id="features"
     >
       {/* grid design*/}
@@ -41,7 +41,7 @@ const Feature1 = () => {
           borderColor: "rgba(121, 165, 213, 0.3)",
         }}
       ></div>
-      <span className="absolute top-40 right-40 text-2xl z-0 animate-bounce">
+      <span className="absolute top-40 right-40 text-2xl z-[-10] animate-bounce">
         💎
       </span>
       <h1 className="heading-text text-[30px] md:text-[50px] font-semibold text-[#BA5CE2] z-10 pb-5">
