@@ -30,7 +30,7 @@ const MobileNavigation = ({ setIsMobileNavOpen, isMobileNavOpen }) => {
   return (
     <div
       className={clsx(
-        "fixed inset-0  gap-10 w-full h-full bg-gray-900 bg-opacity-90 z-50 flex flex-col pt-10 px-10 overflow-hidden translate-x-[-100%] transition-transform duration-500 ease-in-out",
+        "fixed inset-0  gap-10 w-full h-full bg-gray-900 bg-opacity-90 z-50 flex flex-col pt-10 px-10 overflow-hidden translate-x-[-100%] transition-transform duration-500 ease-in-out md:hidden",
         {
           "translate-x-[0%]": isMobileNavOpen,
           "translate-x-[100%] pointer-events-none": !isMobileNavOpen,
@@ -39,7 +39,7 @@ const MobileNavigation = ({ setIsMobileNavOpen, isMobileNavOpen }) => {
     >
       <X
         size={30}
-        className="absolute top-5 right-5 text-white cursor-pointer"
+        className="absolute top-5 right-5 text-white cursor-pointer block md:hidden"
         onClick={() => setIsMobileNavOpen(false)}
       />
 
