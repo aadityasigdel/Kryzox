@@ -3,6 +3,7 @@ import { Link as ScrollLink } from "react-scroll";
 
 import { AlignJustify as Hamburger, X } from "lucide-react"; //handlebar
 import "./navbar.css";
+import clsx from "clsx";
 // navbar links
 const navLinks = [
   { name: "Home", path: "#", id: "home" },
@@ -25,9 +26,17 @@ const Logo = () => {
 };
 
 // design navigation for mobile
-const MobileNavigation = ({ setIsMobileNavOpen }) => {
+const MobileNavigation = ({ setIsMobileNavOpen, isMobileNavOpen }) => {
   return (
-    <div className="fixed inset-0  gap-10 w-full h-full bg-gray-900 bg-opacity-90 z-50 flex flex-col pt-10 px-10 overflow-hidden">
+    <div
+      className={clsx(
+        "fixed inset-0  gap-10 w-full h-full bg-gray-900 bg-opacity-90 z-50 flex flex-col pt-10 px-10 overflow-hidden translate-x-[-100%] transition-transform duration-500 ease-in-out",
+        {
+          "translate-x-[0%]": isMobileNavOpen,
+          "translate-x-[100%] pointer-events-none": !isMobileNavOpen,
+        }
+      )}
+    >
       <X
         size={30}
         className="absolute top-5 right-5 text-white cursor-pointer"
@@ -87,9 +96,11 @@ const NavBar = () => {
         ))}
       </ul>
       {/* hamburger menu for mobile devices */}
-      {isMobileNavOpen && (
-        <MobileNavigation setIsMobileNavOpen={setIsMobileNavOpen} />
-      )}
+      <MobileNavigation
+        setIsMobileNavOpen={setIsMobileNavOpen}
+        isMobileNavOpen={isMobileNavOpen}
+      />
+
       <Hamburger
         className="block md:hidden"
         size={30}
