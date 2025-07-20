@@ -1,0 +1,21 @@
+/* profile seciton css */
+.admin-heading::after{
+     content:"";
+    position: absolute;
+    height: 2px;
+    width: 144.22px;
+    background-image: linear-gradient(to right,#B05BDB,#80FFDB,#FFFFFF,#FFFFFF,#80FFDB,#B05BDB);
+    bottom:0;
+    left :50%;
+    transform:translateX(-50%);
+}
+.profile::before{
+     content:"";
+    position: absolute;
+    height: 100%;
+    width: 2px;
+    background-image: linear-gradient(to bottom,#B05BDB,#80FFDB,#FFFFFF,#FFFFFF,#80FFDB,#B05BDB);
+    bottom:0;
+    left :50%;
+    transform:translateX(-50%);
+}
