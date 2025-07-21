@@ -7,8 +7,38 @@ import RecentActivities from "./ui/RecentActivities";
 import "./style.css";
 import HeadingSection from "../ui/shared/HeadingSection";
 
-// profile section design
-const Profile = () => {
+// static datas
+ const CardData = [
+    {
+      gradientColor: { color1: "#B05BDB", color2: "#202020" },
+      heading: "Active Users",
+      totalData: "12,000",
+      totalPercentage: "+ 10%",
+      icon: "/admin/overview/icon1.png",
+    },
+    {
+      gradientColor: { color1: "#800080", color2: "#202020" },
+      heading: "Active Rooms",
+      totalData: "1234",
+      totalPercentage: "+ 8%",
+      icon: "/admin/overview/icon2.png",
+    },
+    {
+      gradientColor: { color1: "#BA55D3", color2: "#202020" },
+      heading: "Tournaments",
+      totalData: "89",
+      totalPercentage: "+ 16%",
+      icon: "/admin/overview/icon3.png",
+    },
+    {
+      gradientColor: { color1: "#7400BB", color2: "#202020" },
+      heading: "Revenue",
+      totalData: "$24,344",
+      totalPercentage: "+ 24%",
+      icon: "/admin/overview/icon4.png",
+    },
+  ];
+ 
   const profileDetail = [
     {
       username: "Krisha Sharma",
@@ -23,7 +53,10 @@ const Profile = () => {
         datetime2: "23 June at 04:34",
       },
     },
-  ];
+  ]; 
+  
+// profile section design
+const Profile = () => {
   return (
     <section className="flex items-center justify-evenly mt-5">
       {/* left section */}
@@ -82,36 +115,6 @@ const Profile = () => {
 };
 
 const Overview = () => {
-  const CardData = [
-    {
-      gradientColor: { color1: "#B05BDB", color2: "#202020" },
-      heading: "Active Users",
-      totalData: "12,000",
-      totalPercentage: "+ 10%",
-      icon: "/admin/overview/icon1.png",
-    },
-    {
-      gradientColor: { color1: "#800080", color2: "#202020" },
-      heading: "Active Rooms",
-      totalData: "1234",
-      totalPercentage: "+ 8%",
-      icon: "/admin/overview/icon2.png",
-    },
-    {
-      gradientColor: { color1: "#BA55D3", color2: "#202020" },
-      heading: "Tournaments",
-      totalData: "89",
-      totalPercentage: "+ 16%",
-      icon: "/admin/overview/icon3.png",
-    },
-    {
-      gradientColor: { color1: "#7400BB", color2: "#202020" },
-      heading: "Revenue",
-      totalData: "$24,344",
-      totalPercentage: "+ 24%",
-      icon: "/admin/overview/icon4.png",
-    },
-  ];
   return (
     <div className="min-h-[1024px] w-full min-w-[1148px] px-[72px] pt-[65px] bg-[#000] grid place-content-center">
       <HeadingSection heading={"Dashboard Overview"} subheading={"  Welcome Back! Here’s what’s happening in your gaming hub"} btn1Content={"Create Room"} btn2Content={"New Tournament"} icon1={Plus} icon2={Anvil} component={"overview"}/>
@@ -126,6 +129,7 @@ const Overview = () => {
               totalData={item.totalData}
               totalPercentage={item.totalPercentage}
               icon={item.icon}
+              component={"overview"}
             />
           );
         })}
