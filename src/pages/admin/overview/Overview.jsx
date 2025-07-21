@@ -1,11 +1,11 @@
-import React from "react";
-import Button from "./ui/Button";
+
 import { Anvil } from "lucide-react";
 import { Plus } from "lucide-react";
-import Card from "./ui/Card";
+import Card from "../ui/shared/Card";
 import AnalyticsChart from "./ui/Chart";
 import RecentActivities from "./ui/RecentActivities";
 import "./style.css";
+import HeadingSection from "../ui/shared/HeadingSection";
 
 // profile section design
 const Profile = () => {
@@ -114,30 +114,7 @@ const Overview = () => {
   ];
   return (
     <div className="min-h-[1024px] w-full min-w-[1148px] px-[72px] pt-[65px] bg-[#000] grid place-content-center">
-      {/* heading */}
-      <h1 className="text-[36px] font-semibold text-[#80FFDB]">
-        Dashboard Overview
-      </h1>
-      <section className="w-full flex justify-between">
-        <p className="text-[18px] text-[#B05BDB] font-semibold">
-          Welcome Back! Here’s what’s happening in your gaming hub
-        </p>
-        {/* buttons section */}
-        <div className="flex gap-5">
-          <Button>
-            <span>
-              <Plus size={18} />
-            </span>
-            <span>Create Room</span>
-          </Button>
-          <Button>
-            <span>
-              <Anvil size={18} />
-            </span>
-            <span>New Tournament</span>
-          </Button>
-        </div>
-      </section>
+      <HeadingSection heading={"Dashboard Overview"} subheading={"  Welcome Back! Here’s what’s happening in your gaming hub"} btn1Content={"Create Room"} btn2Content={"New Tournament"} icon1={Plus} icon2={Anvil} component={"overview"}/>
       {/* card section */}
       <section className="flex gap-10 mt-10">
         {CardData.map((item, index) => {
@@ -154,7 +131,7 @@ const Overview = () => {
         })}
       </section>
       {/* chart or analytical section */}
-      <section className="mt-10 flex gap-10">
+      <section className="w-full mt-10 flex justify-between">
         <AnalyticsChart />
         <RecentActivities />
       </section>
