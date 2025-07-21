@@ -1,4 +1,3 @@
-
 .element::after {
   content: "";
   position: absolute;
@@ -6,5 +5,21 @@
   bottom: 0;
   height: 2px;
   width: 100%;
-  background: linear-gradient(to right, #B05BDB, #80FFDB, #FFFFFF, #FFFFFF, #80FFDB, #B05BDB);
+  background: linear-gradient(
+    to right,
+    #b05bdb,
+    #80ffdb,
+    #ffffff,
+    #ffffff,
+    #80ffdb,
+    #b05bdb
+  );
+}
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }

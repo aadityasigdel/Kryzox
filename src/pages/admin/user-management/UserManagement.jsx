@@ -63,7 +63,7 @@ const SearchComponent = () => {
       }}
     >
       {/* Search bar  */}
-      <div className="relative flex-1 max-w-[847px] h-[58px]">
+      <div className="relative flex-1 min-w-[847px] h-[58px]">
         <img
           src="/admin/user-management/searchIcon.png"
           alt="Search"
@@ -172,7 +172,7 @@ const UserTable = () => {
 const UserManagement = () => {
   return (
     <div
-      className="h-[1024px] w-[1148px] bg-[#000] pt-[65px] px-[72px] flex flex-col"
+      className="h-screen overflow-y-auto w-full bg-[#000] pt-[65px] px-[72px] flex flex-col justify-center"
       style={{
         background: "linear-gradient(to bottom, #000000, #202020)",
       }}

@@ -1,11 +1,11 @@
 import React from "react";
-import Button from "../../overview/ui/Button";
+import Button from "./Button";
 
 const HeadingSection = ({
   heading,
   subheading,
-  btn1Content,
-  btn2Content,
+  btn1Content=undefined,
+  btn2Content = undefined,
   icon1: Icon1,
   icon2: Icon2,
   component,
@@ -18,24 +18,24 @@ const HeadingSection = ({
         <p className="text-[18px] text-[#B05BDB] font-semibold">{subheading}</p>
         {/* buttons section */}
         <div className="flex gap-5">
-          <Button>
-            {component === "overview" && (
-              <span>
-                <Icon1 size={18} />
-              </span>
-            )}
-            <span>{btn1Content}</span>
-          </Button>
-          {component === "overview" &&
-            btn2Content !== null &&
-            Icon2 !== null && (
-              <Button>
+          {btn1Content && (
+            <Button>
+              {component === "overview" && (
                 <span>
-                  <Icon2 size={18} />
+                  <Icon1 size={18} />
                 </span>
-                <span>{btn2Content}</span>
-              </Button>
-            )}
+              )}
+              <span>{btn1Content}</span>
+            </Button>
+          )}
+          {component === "overview" && btn2Content && Icon2 && (
+            <Button>
+              <span>
+                <Icon2 size={18} />
+              </span>
+              <span>{btn2Content}</span>
+            </Button>
+          )}
         </div>
       </section>
     </div>
