@@ -10,7 +10,10 @@ const Card = ({
 }) => {
   return (
     <div
-      className={clsx("h-[144px] w-[228px] flex items-center justify-between gap-4 px-[23px] ",component==="overview" && "pt-[26px]")}
+      className={clsx(
+        "h-[144px] w-[228px] flex items-center justify-between gap-4 px-[23px] ",
+        component === "overview" && "pt-[26px]"
+      )}
       style={{
         borderRadius: "12px",
         backgroundImage: `linear-gradient(to right,${gradientColor.color1},${gradientColor.color2})`,
