@@ -35,7 +35,7 @@ const RecentActivities = () => {
         backgroundImage: "linear-gradient(to bottom,#000000,#202020)",
       }}
     >
-      <div className="flex justify-between">
+      <div className="flex justify-between px-[14px] pt-[18px]">
         <h1 className=" font-semibold text-[#80FFDB]">Recent Activities</h1>
         <p className="text-[10px] text-[#4D8ACA] font-semibold">View All</p>
       </div>

@@ -29,7 +29,11 @@ const NavData = [
     link: "/admin/live-management",
     icon: "/admin/adminsidebaricons/pc.png",
   },
-  { label: "Tournaments", link: "#", icon: "/admin/adminsidebaricons/cup.png" },
+  {
+    label: "Tournaments",
+    link: "/admin/tournaments",
+    icon: "/admin/adminsidebaricons/cup.png",
+  },
   {
     label: "Top-up Manage",
     link: "/admin/top-up-manage",
@@ -65,7 +69,8 @@ const SideNavLink = ({ icon, label, url }) => {
     <div
       className={clsx(
         "sidenav-link group relative h-[53px] w-[241px] flex items-center gap-3 pl-6 hover:bg-[#4D8ACA] hover:rounded-2xl hover:text-[#80FFDB]  transition-all duration-500",
-        (pathname === url || pathname===url+"/") && "active-link bg-[#4D8ACA] text-[#80FFDB] rounded-2xl"
+        (pathname === url || pathname === url + "/") &&
+          "active-link bg-[#4D8ACA] text-[#80FFDB] rounded-2xl"
       )}
     >
       <div className="h-5 w-5 rounded-full grid place-content-center text-[18px]">

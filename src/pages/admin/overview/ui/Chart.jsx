@@ -25,7 +25,7 @@ const AnalyticsChart = () => {
         backgroundImage: "linear-gradient(to bottom,#000000,#202020)",
       }}
     >
-      <h1 className="absolute left-0 top-5 font-semibold text-[#80FFDB]">
+      <h1 className="absolute left-0 top-5 font-semibold text-[#80FFDB] pl-[14px]">
         Performance analytics
       </h1>
       <BarChart
