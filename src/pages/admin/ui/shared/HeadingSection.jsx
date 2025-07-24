@@ -14,7 +14,7 @@ const HeadingSection = ({
     <div className="h-auto w-full">
       {/* heading */}
       <h1 className="text-[36px] font-semibold text-[#80FFDB]">{heading}</h1>
-      <section className="w-full flex justify-between">
+      <section className="w-full flex flex-wrap justify-between">
         <p className="text-[18px] text-[#B05BDB] font-semibold">{subheading}</p>
         {/* buttons section */}
         <div className="flex gap-5">

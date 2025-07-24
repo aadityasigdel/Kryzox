@@ -51,21 +51,21 @@ const NavData = [
 
 const GamingManagement = () => {
   return (
-    <div className=" h-[143px] w-[252px] text-center bg-[#242424] flex flex-col justify-center items-center rounded-sm">
+    <div className=" h-[143px] w-[252px] text-center flex flex-col justify-center items-center rounded-sm">
       <p className="text-white text-[18px]">Admin Panel</p>
       <p className=" text-[12px] text-[#C0C0C0]">Gaming Hub Management</p>
     </div>
   );
 };
-const SideNavLink = ({ icon, label,url }) => {
+const SideNavLink = ({ icon, label, url }) => {
   const location = useLocation();
   const { pathname } = location;
-  console.log({pathname})
+  console.log({ pathname });
   return (
     <div
       className={clsx(
-        "group h-[53px] w-[241px] mx-auto flex items-center gap-5 pl-6 hover:bg-[#4D8ACA] hover:rounded-2xl hover:text-[#80FFDB] transition-all duration-500",
-        pathname === url && "bg-[#4D8ACA] text-[#80FFDB] rounded-2xl"
+        "sidenav-link group relative h-[53px] w-[241px] flex items-center gap-3 pl-6 hover:bg-[#4D8ACA] hover:rounded-2xl hover:text-[#80FFDB]  transition-all duration-500",
+        (pathname === url || pathname===url+"/") && "active-link bg-[#4D8ACA] text-[#80FFDB] rounded-2xl"
       )}
     >
       <div className="h-5 w-5 rounded-full grid place-content-center text-[18px]">
@@ -77,25 +77,29 @@ const SideNavLink = ({ icon, label,url }) => {
 };
 const SideNav = () => {
   return (
-    <div className="w-[292px] h-screen overflow-y-auto border-r bg-[#212121] flex flex-col">
+    <div className="hide-scrollbar min-h-screen w-[292px] overflow-y-scroll border-r bg-[#212121] flex flex-col">
       {/* top heading */}
-      <div className="sticky element top-0 z-10 bg-[#212121] w-full h-20 flex justify-between items-center px-5">
+      <div className=" border-bottom sticky h-20 w-full top-0 z-10 bg-[#212121] flex justify-between items-center px-5">
         <h1 className="text-[18px] text-white">Kryzox Admin Panel</h1>
         <X size={30} color="#80FFDB" />
       </div>
 
       {/* scrollable nav section */}
-      <div className="hide-scrollbar flex-1 overflow-y-auto flex flex-col justify-between items-center pt-10">
-        <div className="flex flex-col gap-5">
+      <div className=" h-[914px] w-full  flex flex-col justify-between items-center pt-10">
+        <div className="flex  flex-col gap-5">
           {NavData.map((item, index) => (
             <Link key={index} to={item.link}>
-              <SideNavLink label={item.label} icon={item.icon} url={item.link} />
+              <SideNavLink
+                label={item.label}
+                icon={item.icon}
+                url={item.link}
+              />
             </Link>
           ))}
         </div>
 
         {/* footer */}
-        <div className="mt-auto">
+        <div className="h-auto w-auto mt-auto">
           <GamingManagement />
         </div>
       </div>

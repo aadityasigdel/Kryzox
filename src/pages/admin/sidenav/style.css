@@ -1,4 +1,4 @@
-.element::after {
+.border-bottom::after {
   content: "";
   position: absolute;
   left: 0;
@@ -22,4 +22,30 @@
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
+}
+
+
+.sidenav-link::before{
+content:"";
+position:absolute;
+height:0%;
+width:2px;
+background-color: #80FFDB;
+top:50%;
+right:-5px;
+transform:translateY(-50%);
+transition:.3s linear;
+transform-origin: top;
+}
+.sidenav-link:hover:before{
+  height:40%
+}
+.active-link::before{
+content:"";
+position:absolute;
+height:40%;
+width:2px;
+background-color: #80FFDB;
+top:50%;
+right:-5px;
 }

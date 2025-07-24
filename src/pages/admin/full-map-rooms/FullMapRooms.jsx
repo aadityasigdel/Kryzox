@@ -73,7 +73,7 @@ const TabNav = ["Active", "Scheduled", "Completed"];
 const FullMapRooms = () => {
   return (
     <section
-      className="h-[1024px] w-[1148px] px-[72px] pt-[65px]"
+      className="w-full px-[72px] pt-[65px]"
       style={{
         background: "linear-gradient(to bottom, #000000, #202020)",
       }}

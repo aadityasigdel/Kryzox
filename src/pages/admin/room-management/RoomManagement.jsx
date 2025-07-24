@@ -93,7 +93,7 @@ const completedRoomDataRight = [
 const RoomManagement = () => {
   return (
     <div
-      className="min-h-[1024px] w-full min-w-[1148px] px-[72px] pt-[65px]"
+      className=" w-full px-[72px] pt-[65px]"
       style={{
         background: "linear-gradient(to bottom, #000000, #202020)",
       }}
@@ -182,7 +182,7 @@ const RoomManagement = () => {
           </div>
         </div>
         {/* button */}
-        <div className="flex justify-center my-10">
+        <div className="flex justify-center mt-10 pb-10">
           <Button onclick={() => {}}> Confirm the payment</Button>
         </div>
       </div>

@@ -116,7 +116,7 @@ const Profile = () => {
 const Overview = () => {
   return (
     <div
-      className="min-h-[1024px] w-full min-w-[1148px] px-[72px] pt-[65px] bg-[#000] grid place-content-center"
+      className="w-full xl:px-[72px] pt-[65px] bg-[#000] grid place-content-center"
       style={{
         background: "linear-gradient(to bottom, #000000, #202020)",
       }}
@@ -133,7 +133,7 @@ const Overview = () => {
         component={"overview"}
       />
       {/* card section */}
-      <section className="flex gap-10 mt-10">
+      <section className="h-auto w-full flex flex-wrap gap-10 mt-10">
         {CardData.map((item, index) => {
           return (
             <Card
@@ -149,7 +149,7 @@ const Overview = () => {
         })}
       </section>
       {/* chart or analytical section */}
-      <section className="w-full mt-10 flex justify-between">
+      <section className="h-auto w-full mt-10 flex flex-wrap justify-between">
         <AnalyticsChart />
         <RecentActivities />
       </section>
@@ -161,7 +161,7 @@ const Overview = () => {
           backgroundImage: "linear-gradient(to bottom,#000000,#202020)",
         }}
       >
-        <div className="flex-1 h-full pt-5">
+        <div className="flex-1 h-full pt-5 mb-5">
           <h1 className="admin-heading relative text-[28px] font-semibold text-[#80FFDB]">
             Admin
           </h1>

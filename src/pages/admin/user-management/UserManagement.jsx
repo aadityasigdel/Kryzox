@@ -114,7 +114,7 @@ const ProfileData = ({ name, email, appId, profile }) => {
 // table component
 const UserTable = () => {
   return (
-    <div className="flex-1 overflow-y-auto rounded-tl-2xl rounded-tr-2xl">
+    <div className="h-[493px] overflow-y-auto rounded-tl-2xl rounded-tr-2xl mb-20">
       <table className="relative min-w-full bg-white">
         <thead className="table-heading h-[74px] w-full sticky top-0 bg-[#242424] text-[#fff] ">
           <tr className="">
@@ -172,7 +172,7 @@ const UserTable = () => {
 const UserManagement = () => {
   return (
     <div
-      className="h-screen overflow-y-auto w-full bg-[#000] pt-[65px] px-[72px] flex flex-col justify-center"
+      className=" w-full bg-[#000] pt-[65px] px-[72px] flex flex-col justify-center"
       style={{
         background: "linear-gradient(to bottom, #000000, #202020)",
       }}
