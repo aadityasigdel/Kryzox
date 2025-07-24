@@ -1,11 +1,8 @@
-import React from 'react'
-import { useSelector , useDispatch} from 'react-redux';
-import { login,logout } from '../store/slices/auth.slice';
-import Home from '../pages/Home';
-import RouteHandler from '../routes/routes';
+
+import { useSelector } from 'react-redux';
+import RouteHandler from "../routes/Routes";
 const App = () => {
   const {isAuthenticate}=useSelector(state=>state.auth);
-  const dispatch=useDispatch();
   console.log({isAuthenticate});
   return (
     <div>
@@ -18,4 +15,4 @@ const App = () => {
   )
 }
 
-export default App
+export default App;
