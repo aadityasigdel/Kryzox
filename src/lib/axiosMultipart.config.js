@@ -2,14 +2,11 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-const useAxios=({errorMessage})=>{
-  const BASE_URL=import.meta.env.VITE_BASE_URL;
-  const navigate=useNavigate();
+const useAxiosMultipart=({errorMessage})=>{
+    const BASE_URL=import.meta.env.VITE_BASE_URL;
+  const navigate=useNavigate
 const axiosInstance = axios.create({
   baseURL: BASE_URL, 
-  headers: {
-    "Content-Type": "application/json",
-  },
   withCredentials: true,
 });
 
@@ -28,4 +25,4 @@ axiosInstance.interceptors.response.use(
 }
 
 
-export default useAxios;
+export default useAxiosMultipart;
