@@ -13,6 +13,7 @@ import Tournaments from "../pages/admin/tournaments/Tournaments";
 import TopUpManage from "../pages/admin/top-up-manage/TopUpManage";
 import Notification from "../pages/admin/notication/Notification";
 import Analytics from "../pages/admin/analytics/Analytics";
+import LegalCompliance from "../components/Footer/LeagalDoc/LegalCompliance";
 
 // Auth pages
 import LoginPage from "../components/auth/Login";
@@ -27,7 +28,7 @@ const RouteHandler = () => {
     <Routes>
       {/* Public Route */}
       <Route exact path="/" element={<Home />} />
-
+      <Route path="/privacy/legal" element={<LegalCompliance />} />
       {/* Auth Routes */}
       <Route path="/auth">
         <Route path="register" element={<Register />} />

@@ -1,7 +1,7 @@
 import FooterComponet from "./FooterComponet";
-import FooterIcons from "./FooterIcons";
 import { Github, Twitter, MSquare, Youtube } from "lucide-react";
 import { Link } from "react-router-dom";
+import SocialMediaLinks from "./SocialMediaLinks";
 const data1 = [
   {
     content: "Products",
@@ -43,10 +43,30 @@ const data4 = [
 ];
 
 const icons = [
-  { icon: Github, color: "text-gray-400" },
-  { icon: Twitter, color: "text-[#79a5d5]" },
-  { icon: MSquare, color: "text-[#c84de5]" },
-  { icon: Youtube, color: "text-[#84147C]" },
+  {
+    icon: "/home/social_media_links/instagram.png",
+    alternative: "instagram",
+    color: "text-gray-400",
+    link: "https://shorturl.at/XjavH",
+  },
+  {
+    icon: "/home/social_media_links/facebook.png",
+    alternative: "facebook",
+    color: "text-[#79a5d5]",
+    link: "https://shorturl.at/Pa2l5",
+  },
+  {
+    icon: "/home/social_media_links/tiktok.png",
+    alternative: "tiktok",
+    color: "text-[#c84de5]",
+    link: "https://shorturl.at/Mg34q",
+  },
+  {
+    icon: "/home/social_media_links/youtube.png",
+    alternative: "youtube",
+    color: "text-[#84147C]",
+    link: "https://shorturl.at/whnI9 ",
+  },
 ];
 const Footer = () => {
   return (
@@ -63,7 +83,12 @@ const Footer = () => {
         style={{ borderColor: "rgba(200, 77, 229, 0.3)" }}
       >
         <div className="flex flex-col gap-10 max-w-[400px]">
-          <div className="text-3xl font-bold">
+          <div className="flex items-center gap-4 text-3xl font-bold">
+            <img
+              src="/home/logo/logo.png"
+              alt="KRYZOX Logo"
+              className="w-14 h-14 rounded-full"
+            />
             <span
               className="text-transparent bg-clip-text"
               style={{
@@ -80,10 +105,12 @@ const Footer = () => {
           </p>
           <div className="flex gap-5">
             {icons.map((element, index) => (
-              <FooterIcons
+              <SocialMediaLinks
                 key={index}
                 icon={element.icon}
+                alternative={element.alternative}
                 color={element.color}
+                link={element.link}
               />
             ))}
           </div>
@@ -103,7 +130,7 @@ const Footer = () => {
         <div>
           <ul className="text-sm list-none flex flex-col mt-15  gap-5 md:mt-0 md:flex-wrap md:flex-row">
             <li className="hover:text-white transition-colors duration-300">
-              <Link to="#">Privacy Policy</Link>
+              <Link to="/privacy/legal">Privacy Policy</Link>
             </li>
             <li className="hover:text-white transition-colors duration-300">
               <Link to="#">Terms of Service</Link>

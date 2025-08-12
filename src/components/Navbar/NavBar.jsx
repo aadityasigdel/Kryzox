@@ -15,15 +15,31 @@ const navLinks = [
 // logo design
 const Logo = () => {
   return (
-    <div className="logo flex relative font-bold text-2xl shadow-2xl">
-      <span>KRYZOX</span>
-      <span className="top-logo-container">
-        <span className="logo-dollar animate-pulse z-10">💰</span>
-        <span className="top-logo animate-pulse">EARN</span>
-      </span>
+    <div className="flex items-center gap-4">
+      <img
+        src="/home/logo/logo.png"
+        alt="logo"
+        className="h-14 w-14 object-cover rounded-full"
+      />
+      <div className="logo flex relative font-bold text-2xl shadow-2xl ">
+        <span>KRYZOX</span>
+        <span className="top-logo-container">
+          <span className="logo-dollar animate-pulse z-10">💰</span>
+          <span className="top-logo animate-pulse">EARN</span>
+        </span>
+      </div>
     </div>
   );
 };
+
+// logo section
+//  const Logo=()=>{
+//   return(
+//     <div className="h-[60px] w-[60px]">
+// <img src="/home/logo/logo.png"alt="logo"className="object-cover rounded-full" />
+//     </div>
+//   )
+//  }
 
 // design navigation for mobile
 const MobileNavigation = ({ setIsMobileNavOpen, isMobileNavOpen }) => {

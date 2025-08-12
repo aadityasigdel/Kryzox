@@ -71,7 +71,7 @@ export default function HeroSection() {
       />
 
       {/* ✨ Small Floating Glowing Dots */}
-      {[...Array(15)].map((_, i) => {
+      {[...Array(10)].map((_, i) => {
         let sizeOfCircle = Math.floor(Math.random() * 6 + 4);
         return (
           <div
@@ -161,7 +161,7 @@ export default function HeroSection() {
 
             {/* This text will now be visible correctly */}
             <span className="relative z-10 text-white">
-              Download For Android
+              Coming soon For Android
             </span>
           </button>
 
@@ -173,7 +173,7 @@ export default function HeroSection() {
             }}
           >
             <span className="group-hover:text-white transition-colors duration-500 relative z-10">
-              Download For iOS
+              Coming soon For iOS
             </span>
             {/* Enhanced ripple effect */}
             <div
