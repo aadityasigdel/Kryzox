@@ -28,5 +28,5 @@
 }
 
 .animate-custom-pulse {
-  animation: custom-pulse 2s ease-in-out infinite;
+  animation: custom-pulse 1.5s ease-in-out infinite;
 }
