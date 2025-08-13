@@ -6,6 +6,7 @@ const Feature1 = lazy(() => import("../components/Features/Feature1/Feature1"));
 const Feature2 = lazy(() => import("../components/Features/Feature2/Feature2"));
 const Feature3 = lazy(() => import("../components/Features/Feature3/Feature3"));
 import ErrorBoundry from "../utils/ErrorBoundry";
+import ContactUsForm from "../components/contactus/ContactUs";
 const Home = () => {
   return (
     <div className="max-w-[1600px] m-auto">
@@ -25,6 +26,7 @@ const Home = () => {
             <Feature3 />
           </Suspense>
         </ErrorBoundry>
+        <ContactUsForm />
         <Footer />
       </div>
     </div>
