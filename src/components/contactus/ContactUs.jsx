@@ -19,7 +19,7 @@ function ContactUsForm() {
   }, [state.succeeded]);
 
   return (
-    <div className="w-full bg-[#241B3A] py-16">
+    <div className="w-full bg-[#241B3A] py-16" id="contactUs">
       {/* Heading */}
       <section className="max-w-2xl m-auto px-4">
         <h1 className="text-4xl font-semibold text-[#BA5CE2] pb-5 md:text-6xl lg:text-6xl md:text-left">

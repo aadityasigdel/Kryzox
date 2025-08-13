@@ -10,7 +10,7 @@ const navLinks = [
   { name: "Games", path: "#", id: "games" },
   { name: "Features", path: "#", id: "features" },
   { name: "Earnings", path: "#", id: "earnings" },
-  { name: "Contact", path: "#", id: "contact" },
+  { name: "ContactUs", path: "#", id: "contactUs" },
 ];
 // logo design
 const Logo = () => {
