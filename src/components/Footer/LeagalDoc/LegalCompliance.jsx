@@ -1,3 +1,6 @@
+import NavBar from "../../Navbar/NavBar";
+import Footer from "../Footer";
+
 export const LegalCompliance = () => {
   const addendums = [
     {
@@ -144,109 +147,116 @@ export const LegalCompliance = () => {
   ];
 
   return (
-    <section
-      style={{
-        maxWidth: 900,
-        margin: "3rem auto",
-        padding: "1rem 2rem",
-        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-        color: "#e0e0e0",
-        backgroundColor: "#1a0a3d",
-        borderRadius: 8,
-      }}
-    >
-      <h2
+    <div>
+      <NavBar />
+      
+      <div className="h-full bg-[#07060a] pt-[80px]">
+      <section
         style={{
-          fontSize: "2.25rem",
-          fontWeight: "700",
-          marginBottom: "1rem",
-          color: "#a18eff",
+          maxWidth: 900,
+          margin: "3rem auto",
+          padding: "1rem 2rem",
+          fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+          color: "#e0e0e0",
+          backgroundColor: "#1a0a3d",
+          borderRadius: 8,
         }}
       >
-        🌐 Country-Specific Legal Addendums
-      </h2>
-      <p
-        style={{
-          fontSize: "1.1rem",
-          lineHeight: 1.6,
-          marginBottom: "2rem",
-          color: "#c0b7f2",
-        }}
-      >
-        These addendums supplement our global Terms and Privacy Policy by
-        addressing specific laws and regulations in the countries and regions
-        where Kryzox operates or is accessed. We are committed to maintaining
-        the highest standards of legal compliance worldwide.
-      </p>
-
-      {addendums.map(({ flag, country, laws, points }) => (
-        <article
-          key={country}
+        <h2
           style={{
-            marginBottom: "2.5rem",
-            borderBottom: "1px solid #3b2c70",
-            paddingBottom: "1.5rem",
+            fontSize: "2.25rem",
+            fontWeight: "700",
+            marginBottom: "1rem",
+            color: "#a18eff",
           }}
         >
-          <h3
+          🌐 Country-Specific Legal Addendums
+        </h2>
+        <p
+          style={{
+            fontSize: "1.1rem",
+            lineHeight: 1.6,
+            marginBottom: "2rem",
+            color: "#c0b7f2",
+          }}
+        >
+          These addendums supplement our global Terms and Privacy Policy by
+          addressing specific laws and regulations in the countries and regions
+          where Kryzox operates or is accessed. We are committed to maintaining
+          the highest standards of legal compliance worldwide.
+        </p>
+
+        {addendums.map(({ flag, country, laws, points }) => (
+          <article
+            key={country}
             style={{
-              fontSize: "1.5rem",
-              fontWeight: "600",
-              color: "#d1c4e9",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
+              marginBottom: "2.5rem",
+              borderBottom: "1px solid #3b2c70",
+              paddingBottom: "1.5rem",
             }}
           >
-            <span>{flag}</span> {country}
-          </h3>
-          {laws && (
-            <p
+            <h3
               style={{
-                fontSize: "1rem",
-                fontStyle: "italic",
-                color: "#a296c7",
-                marginBottom: "0.8rem",
+                fontSize: "1.5rem",
+                fontWeight: "600",
+                color: "#d1c4e9",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
               }}
             >
-              Applicable Laws: {laws}
-            </p>
-          )}
-          <ul
-            style={{
-              listStyleType: "disc",
-              paddingLeft: "1.5rem",
-              color: "#e6e1f5",
-              lineHeight: 1.5,
-            }}
-          >
-            {points.map((point, i) => (
-              <li key={i} style={{ marginBottom: "0.5rem" }}>
-                {point}
-              </li>
-            ))}
-          </ul>
-        </article>
-      ))}
+              <span>{flag}</span> {country}
+            </h3>
+            {laws && (
+              <p
+                style={{
+                  fontSize: "1rem",
+                  fontStyle: "italic",
+                  color: "#a296c7",
+                  marginBottom: "0.8rem",
+                }}
+              >
+                Applicable Laws: {laws}
+              </p>
+            )}
+            <ul
+              style={{
+                listStyleType: "disc",
+                paddingLeft: "1.5rem",
+                color: "#e6e1f5",
+                lineHeight: 1.5,
+              }}
+            >
+              {points.map((point, i) => (
+                <li key={i} style={{ marginBottom: "0.5rem" }}>
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
 
-      <footer
-        style={{
-          marginTop: "3rem",
-          fontSize: "0.9rem",
-          color: "#8a7bc9",
-        }}
-      >
-        For any country-specific legal inquiries or compliance questions,
-        please contact us at{" "}
-        <a
-          href="mailto:kryzox@gmail.com"
-          style={{ color: "#c299ff", textDecoration: "underline" }}
+        <footer
+          style={{
+            marginTop: "3rem",
+            fontSize: "0.9rem",
+            color: "#8a7bc9",
+          }}
         >
-          kryzox@gmail.com
-        </a>
-        .
-      </footer>
-    </section>
+          For any country-specific legal inquiries or compliance questions,
+          please contact us at{" "}
+          <a
+            href="mailto:kryzox@gmail.com"
+            style={{ color: "#c299ff", textDecoration: "underline" }}
+          >
+            kryzox@gmail.com
+          </a>
+          .
+        </footer>
+      </section>
+      </div>
+      <Footer />
+    </div>
   );
 };
 export default LegalCompliance;
