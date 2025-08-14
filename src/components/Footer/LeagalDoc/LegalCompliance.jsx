@@ -150,14 +150,14 @@ export const LegalCompliance = () => {
     <div className="h-auto w-auto flex flex-col">
       <NavBar />
       
-      <div className="h-full bg-[#241B3A] pt-[80px] flex-1">
+      <div className="h-full bg-[#241B3A] md:pt-[80px] flex-1">
       <section
-      className="bg-[#1B1230] border border-purple-500/30 rounded-xl p-5 mx-auto my-10 text-gray-500"
+      className="bg-[#1B1230] border border-purple-500/30 rounded-xl  p-5 mx-auto my-10 text-gray-500"
         style={{
           maxWidth: 900,
         }}
       >
-        <h1 className="text-4xl font-semibold text-[#BA5CE2] pb-5 md:text-left">
+        <h1 className="text-4xl font-semibold text-[#BA5CE2] pt-14 md:pt-0 pb-10 md:text-left">
           <span
             className="text-transparent bg-clip-text"
             style={{
