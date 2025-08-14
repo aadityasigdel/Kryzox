@@ -147,31 +147,27 @@ export const LegalCompliance = () => {
   ];
 
   return (
-    <div>
+    <div className="h-auto w-auto flex flex-col">
       <NavBar />
       
-      <div className="h-full bg-[#07060a] pt-[80px]">
+      <div className="h-full bg-[#241B3A] pt-[80px] flex-1">
       <section
+      className="bg-[#1B1230] border border-purple-500/30 rounded-xl p-5 mx-auto my-10 text-gray-500"
         style={{
           maxWidth: 900,
-          margin: "3rem auto",
-          padding: "1rem 2rem",
-          fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-          color: "#e0e0e0",
-          backgroundColor: "#1a0a3d",
-          borderRadius: 8,
         }}
       >
-        <h2
-          style={{
-            fontSize: "2.25rem",
-            fontWeight: "700",
-            marginBottom: "1rem",
-            color: "#a18eff",
-          }}
-        >
-          🌐 Country-Specific Legal Addendums
-        </h2>
+        <h1 className="text-4xl font-semibold text-[#BA5CE2] pb-5 md:text-left">
+          <span
+            className="text-transparent bg-clip-text"
+            style={{
+              background: "linear-gradient(45deg, #c84de5, #79a5d5, #5e41a1)",
+              WebkitBackgroundClip: "text",
+            }}
+          >
+            🌐 Country-Specific Legal Addendums
+          </span>
+          </h1>
         <p
           style={{
             fontSize: "1.1rem",
