@@ -85,7 +85,7 @@ const MobileNavigation = ({ setIsMobileNavOpen, isMobileNavOpen }) => {
 const NavBar = () => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   return (
-    <nav className="h-[80px] w-full max-w-[1600px] fixed top-0 z-20  bg-[#0B0811] text-white flex items-center justify-between px-3 border-b border-b-[#c84de5] md:px-15 lg:px-35">
+    <nav className="h-[80px] w-full max-w-[1600px] fixed top-0 z-20  bg-[#0B0811] text-white flex items-center justify-between px-3 border-b border-b-[#c84de5] md:px-7 lg:px-35">
       {/* logo section */}
       <Logo />
       <ul className="list-none h-auto w-auto bg font-semibold text-gray-300 hidden md:gap-5 lg:gap-10 md:flex">
