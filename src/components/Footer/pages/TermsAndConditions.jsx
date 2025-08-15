@@ -6,8 +6,16 @@ const TermsAndConditions = () => {
     <div className="bg-[#1B1233] text-white px-6 md:px-16 lg:px-32 py-12">
       <div className="max-w-5xl mx-auto">
         {/* Page Title */}
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">
-          Terms and Conditions
+          <h1 className="text-4xl md:text-5xl font-bold text-center mb-2 relative">
+          <span
+            className="text-transparent bg-clip-text"
+            style={{
+              background: "linear-gradient(45deg, #c84de5, #79a5d5)",
+              WebkitBackgroundClip: "text",
+            }}
+          >
+            Terms and Conditions
+          </span>
         </h1>
         <div className="text-sm text-center text-gray-400 mb-12 space-y-1">
           <p>

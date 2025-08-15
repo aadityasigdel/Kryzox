@@ -5,8 +5,16 @@ const PrivacyPolicy = () => {
     <div className="bg-[#1B1233] text-white px-6 md:px-16 lg:px-32 py-12">
       <div className="max-w-5xl">
         {/* Page Title */}
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">
-          Privacy Policy
+          <h1 className="text-4xl md:text-5xl font-bold text-center mb-2 relative">
+          <span
+            className="text-transparent bg-clip-text"
+            style={{
+              background: "linear-gradient(45deg, #c84de5, #79a5d5)",
+              WebkitBackgroundClip: "text",
+            }}
+          >
+            Privacy Policy
+          </span>
         </h1>
         <p className="text-sm text-center text-gray-400 mb-12">
           Effective Date: [Insert Launch Date] | Last Updated: [Insert Update
