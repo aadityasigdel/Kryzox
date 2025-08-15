@@ -3,43 +3,35 @@ import { Github, Twitter, MSquare, Youtube } from "lucide-react";
 import { Link } from "react-router-dom";
 import SocialMediaLinks from "./SocialMediaLinks";
 const data1 = [
-  {
-    content: "Products",
-  },
-  {
-    content: "Games",
-  },
-  {
-    content: "Features",
-  },
-  {
-    content: "Download",
-  },
-  {
-    content: "System Requirements",
-  },
+  { content: "Products", link: "/products" },
+  { content: "Games", link: "/games" },
+  { content: "Features", link: "/features" },
+  { content: "Download", link: "/download" },
+  { content: "System Requirements", link: "/system-requirements" },
 ];
+
 const data2 = [
-  { content: "Community" },
-  { content: "Discord" },
-  { content: "Forums" },
-  { content: "Tournaments" },
-  { content: "Leaderboards" },
+  { content: "Community", link: "/community" },
+  { content: "Discord", link: "/discord" },
+  { content: "Forums", link: "/forums" },
+  { content: "Tournaments", link: "/tournaments" },
+  { content: "Leaderboards", link: "/leaderboards" },
 ];
+
 const data3 = [
-  { content: "Support" },
-  { content: "Help Center" },
-  { content: "Contact" },
-  { content: "Bug Reports" },
-  { content: "Feedback" },
+  { content: "Support", link: "/support" },
+  { content: "Help Center", link: "/help-center" },
+  { content: "Contact", link: "/contact" },
+  { content: "Bug Reports", link: "/bug-reports" },
+  { content: "Feedback", link: "/feedback" },
 ];
 
 const data4 = [
-  { content: "Company" },
-  { content: "About" },
-  { content: "Careers" },
-  { content: "Press" },
-  { content: "Partners" },
+  { content: "Company", link: "/company" },
+  { content: "About", link: "/about-us" },
+  { content: "Careers", link: "/careers" },
+  { content: "Press", link: "/press" },
+  { content: "Partners", link: "/partners" },
 ];
 
 const icons = [
@@ -130,13 +122,13 @@ const Footer = () => {
         <div>
           <ul className="text-sm list-none flex flex-col mt-15  gap-5 md:mt-0 md:flex-wrap md:flex-row">
             <li className="hover:text-white transition-colors duration-300">
-              <Link to="/privacy/legal">Privacy Policy</Link>
+              <Link to="/privacy-policy">Privacy Policy</Link>
             </li>
             <li className="hover:text-white transition-colors duration-300">
-              <Link to="#">Terms of Service</Link>
+              <Link to="/terms-and-conditions">Terms of Service</Link>
             </li>
             <li className="hover:text-white transition-colors duration-300">
-              <Link to="#">Cookie Policy</Link>
+              <Link to="cookie-policy">Cookie Policy</Link>
             </li>
           </ul>
         </div>

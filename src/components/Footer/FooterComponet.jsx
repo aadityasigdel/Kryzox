@@ -22,7 +22,7 @@ const FooterComponet = ({ data }) => {
                 </ScrollLink>
               ) : (
                 <Link
-                  to={element.route || "#"}
+                  to={element.link || "#"}
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   {element.content}

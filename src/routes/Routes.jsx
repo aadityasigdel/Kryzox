@@ -13,7 +13,6 @@ import Tournaments from "../pages/admin/tournaments/Tournaments";
 import TopUpManage from "../pages/admin/top-up-manage/TopUpManage";
 import Notification from "../pages/admin/notication/Notification";
 import Analytics from "../pages/admin/analytics/Analytics";
-import LegalCompliance from "../components/Footer/LeagalDoc/LegalCompliance";
 
 // Auth pages
 import LoginPage from "../components/auth/Login";
@@ -22,13 +21,36 @@ import Register from "../components/auth/Register";
 
 // Protection
 import AdminProtection from "./AdminProtection";
+import TermsAndConditions from "../components/Footer/pages/TermsAndConditions";
 
+// footer pages/components
+import LegalCompliance from "../components/Footer/LeagalDoc/LegalCompliance";
+import FooterLayout from "../components/Footer/layout/FooterLayout";
+import PrivacyPolicy from "../components/Footer/pages/PrivacyPolicy";
+import CookiePolicy from "../components/Footer/pages/CookiePolicy";
+import AboutUs from "../components/Footer/pages/AboutUs";
+import Disclaimer from "../components/Footer/pages/Disclaimer";
+import AcceptableUsePolicy from "../components/Footer/pages/AcceptableUsePolicy";
+import UserAgreement from "../components/Footer/pages/UserAgreement";
+import CountryComplianceMatrix from "../components/Footer/pages/CountryComplianceMatrix";
 const RouteHandler = () => {
   return (
     <Routes>
       {/* Public Route */}
       <Route exact path="/" element={<Home />} />
       <Route path="/privacy/legal" element={<LegalCompliance />} />
+     {/* footer layout */}
+     <Route element={<FooterLayout />}>
+     <Route path="terms-and-conditions" element={<TermsAndConditions />} /> 
+     <Route path="privacy-policy" element={<PrivacyPolicy />} />    
+     <Route path="cookie-policy"element={<CookiePolicy />} />
+     <Route path="about-us"element={<AboutUs />} /> 
+     <Route path="disclaimer" element={<Disclaimer />} />  
+     <Route path="acceptable-use-policy" element={<AcceptableUsePolicy />} />
+     <Route path="user-agreement" element={<UserAgreement />} />
+     <Route path="country-compliance-matrix" element={<CountryComplianceMatrix />} />                                                                        
+     </Route>
+
       {/* Auth Routes */}
       <Route path="/auth">
         <Route path="register" element={<Register />} />
