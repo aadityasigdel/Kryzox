@@ -1,9 +1,19 @@
 
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import RouteHandler from "../routes/Routes";
+import { login } from '../store/slices/auth.slice';
+import { useEffect } from 'react';
 const App = () => {
-  const {isAuthenticate}=useSelector(state=>state.auth);
+  const {isLoggedIn,isAuthenticate}=useSelector(state=>state.auth);
+    const dispatch=useDispatch();
   console.log({isAuthenticate});
+  useEffect(()=>{
+if(!isLoggedIn){
+  if(localStorage.getItem("token")){
+    dispatch(login());
+  }
+}
+  },[])
   return (
     <div>
       {/* {

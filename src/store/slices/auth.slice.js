@@ -4,22 +4,26 @@ const initialState = {
   isLoggedIn:false,
   isAuthenticate: false,
   role:"ROLE_NORMAL",
+  loggedInUserInfo:{}
 };
 
 const authSlices = createSlice({
   name: "authslice",
   initialState,
   reducers: {
-    login: (state, action) => {
+    login: (state) => {
       state.isLoggedIn = true;
     },
-    logout: (state, action) => {
+    logout: (state) => {
       state.isLoggedIn = false;
     },
-    setRole:(state,action)=>{
+    setRole:(_,action)=>{
       state.role=action.payload.role;
+    },
+    setLoggedData:(state,action)=>{
+      state.loggedInUserInfo=action.payload;
     }
   },
 });
-export const { login, logout ,setRole} = authSlices.actions;
+export const { login, logout ,setRole,setLoggedData} = authSlices.actions;
 export default authSlices.reducer;

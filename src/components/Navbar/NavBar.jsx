@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link as ScrollLink } from "react-scroll";
-
+import { useSelector } from "react-redux";
 import { AlignJustify as Hamburger, X } from "lucide-react"; //handlebar
 import "./navbar.css";
 import clsx from "clsx";
+import { NavLink } from "react-router-dom";
+import { use } from "react";
 // navbar links
 const navLinks = [
   { name: "Home", path: "#", id: "home" },
@@ -41,8 +43,35 @@ const Logo = () => {
 //   )
 //  }
 
+// login button
+
+const LoginBtn = ({ children, className }) => {
+  return (
+    <button
+      className={clsx(
+        "px-7 py-2 text-white font-semibold rounded-xl shadow-lg transition-all duration-500 bg-[length:200%_100%] hover:bg-[position:100%_0]",
+        className
+      )}
+      style={{
+        backgroundImage: "linear-gradient(to right, #c84de5, #79a5d5, #5e41a1)",
+      }}
+    >
+      {children}
+    </button>
+  );
+};
+
+// logged in user profile
+const LoggedInUserProfile = ({ userData }) => {
+  console.log({userName:userData?.name})
+  return (
+    <div className="flex gap-2">
+      <p className="text-white">{userData?.name || "Radhe"}</p>
+    </div>
+  );
+};
 // design navigation for mobile
-const MobileNavigation = ({ setIsMobileNavOpen, isMobileNavOpen }) => {
+const MobileNavigation = ({ setIsMobileNavOpen, isMobileNavOpen ,isLoggedIn,loggedInUserInfo }) => {
   return (
     <div
       className={clsx(
@@ -77,6 +106,13 @@ const MobileNavigation = ({ setIsMobileNavOpen, isMobileNavOpen }) => {
             {item.name}
           </ScrollLink>
         ))}
+        {!isLoggedIn ? (
+          <NavLink to="/auth/login">
+            <LoginBtn>Login</LoginBtn>
+          </NavLink>
+        ) : (
+          <LoggedInUserProfile userData={loggedInUserInfo} />
+        )}
       </div>
     </div>
   );
@@ -84,37 +120,53 @@ const MobileNavigation = ({ setIsMobileNavOpen, isMobileNavOpen }) => {
 
 const NavBar = () => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const { isLoggedIn, loggedInUserInfo } = useSelector((state) => state.auth);
+  console.log({ loggedInUserInfo });
   return (
     <nav className="h-[80px] w-full max-w-[1600px] fixed top-0 z-20  bg-[#0B0811] text-white flex items-center justify-between px-3 border-b border-b-[#c84de5] md:px-7 lg:px-35">
       {/* logo section */}
       <Logo />
-      <ul className="list-none h-auto w-auto bg font-semibold text-gray-300 hidden md:gap-5 lg:gap-10 md:flex">
-        {navLinks.map((link) => (
-          <li key={link.name} className="cursor-pointer">
-            <ScrollLink
-              to={link.id}
-              className="link group relative"
-              smooth={true}
-              duration={500}
-              spy={true}
-            >
-              {/* this is for the link hover for background effect */}
-              <span
-                className=" absolute inset-0 scale-0 group-hover:scale-100 transition-transform duration-500 rounded-lg blur-sm"
-                style={{
-                  background:
-                    "linear-gradient(to right, rgba(121, 165, 213, 0.3), rgba(200, 77, 229, 0.3))",
-                }}
-              ></span>
-              <span className="z-10">{link.name}</span>
-            </ScrollLink>
-          </li>
-        ))}
-      </ul>
+      {/* navlink contianer */}
+      <div className="flex gap-10 items-center">
+        <ul className="list-none h-auto w-auto bg font-semibold text-gray-300 hidden md:gap-5 lg:gap-10 md:flex">
+          {navLinks.map((link) => (
+            <li key={link.name} className="cursor-pointer">
+              <ScrollLink
+                to={link.id}
+                className="link group relative"
+                smooth={true}
+                duration={500}
+                spy={true}
+              >
+                {/* this is for the link hover for background effect */}
+                <span
+                  className=" absolute inset-0 scale-0 group-hover:scale-100 transition-transform duration-500 rounded-lg blur-sm"
+                  style={{
+                    background:
+                      "linear-gradient(to right, rgba(121, 165, 213, 0.3), rgba(200, 77, 229, 0.3))",
+                  }}
+                ></span>
+                <span className="z-10">{link.name}</span>
+              </ScrollLink>
+            </li>
+          ))}
+        </ul>
+        {!isLoggedIn ? (
+          <NavLink to="/auth/login">
+            <LoginBtn className="hidden md:block" userData={loggedInUserInfo}>
+              Login
+            </LoginBtn>
+          </NavLink>
+        ) : (
+          <LoggedInUserProfile userData={loggedInUserInfo}/>
+        )}
+      </div>
       {/* hamburger menu for mobile devices */}
       <MobileNavigation
         setIsMobileNavOpen={setIsMobileNavOpen}
         isMobileNavOpen={isMobileNavOpen}
+        isLoggedIn={isLoggedIn}
+        loggedInUserInfo={loggedInUserInfo}
       />
 
       <Hamburger

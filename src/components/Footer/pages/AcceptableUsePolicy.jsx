@@ -5,7 +5,6 @@ const AcceptableUsePolicy = () => {
     <div className="bg-[#1B1233] text-white px-6 md:px-16 lg:px-32 py-12">
       <div className="max-w-5xl mx-auto">
         {/* Page Title */}
-             {/* Page Title */}
       <h1 className="text-4xl md:text-5xl font-bold text-center mb-2 relative">
         <span
           className="text-transparent bg-clip-text"

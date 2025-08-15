@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import usePostData from "../../hooks/postData";
-import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
-import { login,setRole } from "../../store/slices/auth.slice";
+import { login, setRole,setLoggedData } from "../../store/slices/auth.slice";
 import { useNavigate } from "react-router-dom";
+import NavBar from "../Navbar/NavBar";
+import Footer from "../Footer/Footer";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -16,16 +17,22 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const { postData, result, responseError, loading, statusCode } =
     usePostData();
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
-    console.log({statusCodeFromLogin:statusCode});
     if (statusCode === 200) {
-      toast.success(result?.message || "Login successful");
-      localStorage.setItem("token", JSON.stringify("Bearer "+result?.token));
+      localStorage.setItem("token", JSON.stringify("Bearer " + result?.token));
       dispatch(login());
-      if(result?.user?.roles[0]?.name === "ROLE_ADMIN") {
+      if (result?.user?.roles[0]?.name === "ROLE_ADMIN") {
         dispatch(setRole({ role: "ROLE_ADMIN" }));
       }
+      setIsSuccess(true);
+      const timer = setTimeout(() => {
+        setIsSuccess(false);
+        dispatch(setLoggedData(result?.user));
+        navigate("/");
+      }, 3000);
+      return () => clearTimeout(timer);
     }
     if (responseError) {
       toast.error(responseError?.response?.data?.message || "Failed to login");
@@ -43,53 +50,86 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-black to-gray-900 px-4">
-      <div className="w-full max-w-md bg-gray-800 p-8 rounded-2xl shadow-2xl text-white space-y-6">
-        <h2 className="text-3xl font-bold text-center text-purple-400">
-          Login to Your Account
-        </h2>
-
-        <form className="space-y-5" onSubmit={loginHandler}>
-          <div>
-            <label htmlFor="username" className="block mb-1 text-sm text-gray-300">
-              Email Address
-            </label>
-            <input
-              type="email"
-              name="username"
-              placeholder="you@example.com"
-              onChange={handleInput}
-              required
-              className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="password"
-              className="block mb-1 text-sm text-gray-300"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              placeholder="••••••••"
-              onChange={handleInput}
-              required
-              className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-2 rounded-lg bg-purple-600 hover:bg-purple-700 transition font-semibold text-white"
+    <div className="">
+      <NavBar />
+      <div className="w-full min-h-screen bg-[#241B3A] flex items-center justify-center py-16 px-4 mt-[80px]">
+        <div className="w-full max-w-2xl bg-[#241B3A] p-10 rounded-3xl shadow-lg border border-purple-500/20 space-y-6">
+          {/* Heading */}
+          <h2
+            className="text-2xl font-semibold pb-2 md:text-4xl md:text-left text-center"
+            style={{
+              background: "linear-gradient(45deg, #c84de5, #79a5d5, #5e41a1)",
+              WebkitBackgroundClip: "text",
+              color: "transparent",
+            }}
           >
-            {loading ? <ClipLoader size={20} color="#fff" /> : "Login"}
-          </button>
-        </form>
+            Login to Your Account
+          </h2>
+          <p className="text-[14px] inline text-[#d9cbcb] md:text-[20px] md:text-left text-center">
+            Enter your credentials to access your account and join the action.
+          </p>
+
+          {/* Success Message */}
+          {isSuccess && (
+            <p className="text-center text-lg font-semibold text-green-400 mt-4">
+              ✅ Login successful!
+            </p>
+          )}
+
+          {/* Form */}
+          <form className="space-y-6 mt-5" onSubmit={loginHandler}>
+            {/* Email */}
+            <div>
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-purple-200 mb-2"
+              >
+                Email Address
+              </label>
+              <input
+                type="email"
+                name="username"
+                placeholder="you@example.com"
+                onChange={handleInput}
+                required
+                className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 rounded-xl text-white placeholder-purple-400 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
+              />
+            </div>
+
+            {/* Password */}
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-purple-200 mb-2"
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                placeholder="••••••••"
+                onChange={handleInput}
+                required
+                className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 rounded-xl text-white placeholder-purple-400 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
+              />
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 text-white font-semibold rounded-xl shadow-lg transition-all duration-500 bg-[length:200%_100%] hover:bg-[position:100%_0]"
+              style={{
+                backgroundImage:
+                  "linear-gradient(to right, #c84de5, #79a5d5, #5e41a1)",
+              }}
+            >
+              {loading ? <ClipLoader size={20} color="#fff" /> : "Login"}
+            </button>
+          </form>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }
