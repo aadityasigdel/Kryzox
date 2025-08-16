@@ -161,7 +161,7 @@ const Feature2 = () => {
       </div>
 
       {/* Heading */}
-      <h2 className="text-4xl md:text-5xl font-bold mb-6 relative">
+      <h1 className="text-4xl md:text-5xl font-bold mb-6 relative">
         <span
           className="text-transparent bg-clip-text"
           style={{
@@ -170,8 +170,8 @@ const Feature2 = () => {
           }}
         >
           Earn While You Play
-        </span>
-      </h2>
+        </span> 
+      </h1>
       <p className="text-[20px] inline">Master these popular games and </p>
       <p className="inline text-[20px] text-[#c130e1]">
         turn your skills into real money

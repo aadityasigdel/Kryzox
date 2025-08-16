@@ -62,9 +62,9 @@ const RouteHandler = () => {
       <Route
         path="/admin/*"
         element={
-          <AdminProtection>
+          // <AdminProtection>
             <SideNavLayout />
-          </AdminProtection>
+          // </AdminProtection>
         }
       >
         <Route index element={<Overview />} />

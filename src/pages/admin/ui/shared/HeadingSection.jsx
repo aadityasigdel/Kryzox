@@ -13,7 +13,17 @@ const HeadingSection = ({
   return (
     <div className="h-auto w-full">
       {/* heading */}
-      <h1 className="text-[36px] font-semibold text-[#80FFDB]">{heading}</h1>
+      <h1 className="text-4xl md:text-5xl font-bold mb-6 relative">
+        <span
+          className="text-transparent bg-clip-text"
+          style={{
+            background: "linear-gradient(45deg, #80FFDB, #B05BDB)",
+            WebkitBackgroundClip: "text",
+          }}
+        >
+          {heading}
+        </span>
+      </h1>
       <section className="w-full flex flex-wrap justify-between">
         <p className="text-[18px] text-[#B05BDB] font-semibold">{subheading}</p>
         {/* buttons section */}
