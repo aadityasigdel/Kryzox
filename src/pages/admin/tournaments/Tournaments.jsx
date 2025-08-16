@@ -1,6 +1,7 @@
 import React from "react";
 import HeadingSection from "../ui/shared/HeadingSection";
 import TournamentCard from "./ui/TournamentCard";
+import {TournamentCreationForm} from  "./ui/Form";
 const TournamentCardData = [
   {
     gradientColor: { color1: "#B05BDB", color2: "#202020" },
@@ -40,11 +41,14 @@ const Tournaments = () => {
       }}
     >
     {/* heading section */}
+    <div className="w-full flex justify-between items-center">
     <HeadingSection 
     heading={"Tournament Management"}
     subheading={"Create and mange tournaments across all games"}
-    btn1Content={"+ Create Tournament"}
     />
+    {/* testig drawer section */}
+    <div className="w-auto"><TournamentCreationForm /></div>
+    </div>
     {/* tourament card section */}
      <section className="flex gap-10 mt-10">
         {TournamentCardData.map((item, index) => {
