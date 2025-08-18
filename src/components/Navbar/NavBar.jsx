@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { Profiler, useState } from "react";
 import { Link as ScrollLink } from "react-scroll";
 import { useSelector } from "react-redux";
 import { AlignJustify as Hamburger, X } from "lucide-react"; //handlebar
 import "./navbar.css";
 import clsx from "clsx";
 import { NavLink } from "react-router-dom";
-import { use } from "react";
+import ProfileDropdown from "./ProfileDropdown";
+import LoginBtn from "./ui/LoginBtn";
+// import { ProfileDropdown } from "./ProfileDropdown";
 // navbar links
 const navLinks = [
   { name: "Home", path: "#", id: "home" },
@@ -45,31 +47,17 @@ const Logo = () => {
 
 // login button
 
-const LoginBtn = ({ children, className }) => {
-  return (
-    <button
-      className={clsx(
-        "px-7 py-2 text-white font-semibold rounded-xl shadow-lg transition-all duration-500 bg-[length:200%_100%] hover:bg-[position:100%_0]",
-        className
-      )}
-      style={{
-        backgroundImage: "linear-gradient(to right, #c84de5, #79a5d5, #5e41a1)",
-      }}
-    >
-      {children}
-    </button>
-  );
-};
+
 
 // logged in user profile
-const LoggedInUserProfile = ({ userData }) => {
-  console.log({userName:userData?.name})
-  return (
-    <div className="flex gap-2">
-      <p className="text-white">{userData?.name || "Radhe"}</p>
-    </div>
-  );
-};
+// const LoggedInUserProfile = ({ userData }) => {
+//   console.log({userName:userData?.name})
+//   return (
+//     <div className="flex gap-2">
+//       <p className="text-white">{userData?.name || "Radhe"}</p>
+//     </div>
+//   );
+// };
 // design navigation for mobile
 const MobileNavigation = ({ setIsMobileNavOpen, isMobileNavOpen ,isLoggedIn,loggedInUserInfo }) => {
   return (
@@ -111,7 +99,7 @@ const MobileNavigation = ({ setIsMobileNavOpen, isMobileNavOpen ,isLoggedIn,logg
             <LoginBtn>Login</LoginBtn>
           </NavLink>
         ) : (
-          <LoggedInUserProfile userData={loggedInUserInfo} />
+          <ProfileDropdown userData={loggedInUserInfo} />
         )}
       </div>
     </div>
@@ -158,7 +146,8 @@ const NavBar = () => {
             </LoginBtn>
           </NavLink>
         ) : (
-          <LoggedInUserProfile userData={loggedInUserInfo}/>
+           <div className="hidden md:block"><ProfileDropdown userData={loggedInUserInfo}/></div>
+          // <NavLink to="/admin"><ProfileDropdown /></NavLink>
         )}
       </div>
       {/* hamburger menu for mobile devices */}

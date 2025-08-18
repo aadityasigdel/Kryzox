@@ -21,7 +21,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (statusCode === 200) {
-      localStorage.setItem("token", JSON.stringify("Bearer " + result?.token));
+      localStorage.setItem("token", JSON.stringify("Sandip " + result?.token));
       dispatch(login());
       if (result?.user?.roles[0]?.name === "ROLE_ADMIN") {
         dispatch(setRole({ role: "ROLE_ADMIN" }));

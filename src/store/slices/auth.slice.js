@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isLoggedIn:true,
-  isAuthenticate: true,
-  role:"ROLE_ADMIN",
+  isLoggedIn:false,
+  isAuthenticate: false,
+  role:"ROLE_NORMAL",
   loggedInUserInfo:{}
 };
 
@@ -17,7 +17,7 @@ const authSlices = createSlice({
     logout: (state) => {
       state.isLoggedIn = false;
     },
-    setRole:(_,action)=>{
+    setRole:(state ,action)=>{
       state.role=action.payload.role;
     },
     setLoggedData:(state,action)=>{

@@ -42,10 +42,20 @@ const Tournaments = () => {
     >
     {/* heading section */}
     <div className="w-full flex justify-between items-center">
-    <HeadingSection 
-    heading={"Tournament Management"}
-    subheading={"Create and mange tournaments across all games"}
-    />
+      <div>
+      <h1 className="text-4xl md:text-5xl font-bold mb-6 relative">
+        <span
+          className="text-transparent bg-clip-text"
+          style={{
+            background: "linear-gradient(45deg, #80FFDB, #B05BDB)",
+            WebkitBackgroundClip: "text",
+          }}
+        >
+          Tournament Management
+        </span>
+      </h1>
+      <p className="text-[18px] text-[#B05BDB] font-semibold">Create and manage tournaments across all games</p>
+      </div>
     {/* testig drawer section */}
     <div className="w-auto"><TournamentCreationForm /></div>
     </div>
