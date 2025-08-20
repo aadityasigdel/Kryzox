@@ -1,6 +1,6 @@
 "use client";
 import useAxios from "../lib/axios.config";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 const useGetData = () => {
   const [result, setResult] = useState([]);
   const [responseError, setResponseError] = useState(null);
@@ -22,6 +22,6 @@ const useGetData = () => {
       setLoading(false);
     }
   };
-  return { getData, result, responseError, loading,errorCode };
+  return { getData, result, responseError, loading,errorCode ,statusCode};
 };
 export default useGetData;
