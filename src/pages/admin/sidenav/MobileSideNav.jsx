@@ -55,7 +55,7 @@ const SideNavLink = ({ icon, label, url }) => {
     <div
       className={clsx(
         " group relative h-[53px] w-[241px] flex items-center gap-3 pl-6 hover:bg-[#4D8ACA] hover:rounded-2xl hover:text-[#80FFDB]  transition-all duration-500",
-        (pathname === url || pathname === url + "/") &&
+        (pathname === url || pathname === url + "/") && 
           "bg-[#4D8ACA] text-[#80FFDB] rounded-2xl"
       )}
     >

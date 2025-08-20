@@ -15,6 +15,7 @@ const usePostData = () => {
       setStatusCode(res.status);
       setResult(res.data);
     } catch (error) {
+      console.log(error.response?.data?.message || "Something went wrong")
       setResponseError(error.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);

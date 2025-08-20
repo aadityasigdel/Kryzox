@@ -6,6 +6,7 @@ import { login, setRole,setLoggedData } from "../../store/slices/auth.slice";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../Navbar/NavBar";
 import Footer from "../Footer/Footer";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -20,6 +21,7 @@ export default function LoginPage() {
   const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
+    console.log({responseError})
     if (statusCode === 200) {
       localStorage.setItem("token", JSON.stringify("Sandip " + result?.token));
       dispatch(login());
@@ -35,7 +37,8 @@ export default function LoginPage() {
       return () => clearTimeout(timer);
     }
     if (responseError) {
-      toast.error(responseError?.response?.data?.message || "Failed to login");
+      console.log("responseerror occured")
+      toast.error(responseError|| "Failed to login");
     }
   }, [responseError, result]);
 
