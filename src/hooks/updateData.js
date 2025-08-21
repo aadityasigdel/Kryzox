@@ -1,16 +1,16 @@
 "use client";
 import useAxios from "@/lib/axios.config";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 const useUpdateData = () => {
   const [result, setResult] = useState([]);
   const [responseError, setResponseError] = useState(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState < boolean > false;
   const [statusCode, setStatusCode] = useState(null);
-  const axiosInstance=useAxios();
+  const axiosInstance = useAxios();
   const updateData = async (url, updateData) => {
     try {
       setLoading(true);
-      const res= await axiosInstance.patch(url, updateData);
+      const res = await axiosInstance.patch(url, updateData);
       setStatusCode(res.status);
       setResult(res.data);
     } catch (error) {
@@ -19,6 +19,13 @@ const useUpdateData = () => {
       setLoading(false);
     }
   };
-  return { updateData, result, responseError, loading };
-}; 
+  return {
+    updateData,
+    result,
+    responseError,
+    setResponseError,
+    loading,
+    statusCode,
+  };
+};
 export default useUpdateData;

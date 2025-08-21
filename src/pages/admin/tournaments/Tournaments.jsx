@@ -43,6 +43,8 @@ const Tournaments = () => {
     "prize-pool": { loading: false, totalData: "0k", data: [] },
   });
 
+  // this state is to detect whether the tournament is created or not if yes then fetch fresh data
+  const [isTournamentCreated, setIsTournamentCreated] = useState(false);
   // active tournament
   const {
     getData: getActiveTournamentData,
@@ -86,6 +88,16 @@ const Tournaments = () => {
       await getActiveTournamentData("/posts/status/PENDING");
     })();
   }, []);
+  useEffect(() => {
+    if (isTournamentCreated) {
+      (async () => {
+        await getActiveTournamentData("/posts/status/PENDING");
+      })();
+      setTimeout(()=>{
+        setIsTournamentCreated(false);
+      },1000);
+    }
+  }, [isTournamentCreated]);
   useEffect(() => {
     if (activeTournamentStatusCode === 200) {
       setDynamicData((prev) => ({
@@ -203,7 +215,9 @@ const Tournaments = () => {
           </p>
         </div>
         <div className="w-auto">
-          <TournamentCreationForm />
+          <TournamentCreationForm
+            setIsTournamentCreated={setIsTournamentCreated}
+          />
         </div>
       </div>
 
