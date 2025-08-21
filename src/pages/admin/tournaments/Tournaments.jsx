@@ -3,6 +3,7 @@ import HeadingSection from "../ui/shared/HeadingSection";
 import TournamentCard from "./ui/TournamentCard";
 import { TournamentCreationForm } from "./ui/Form";
 import useGetData from "../../../hooks/getData";
+
 // static data
 const baseTournamentCardData = [
   {
@@ -36,35 +37,86 @@ const baseTournamentCardData = [
 ];
 
 const Tournaments = () => {
-   const { getData, result, responseError, loading, errorCode, statusCode } =
-    useGetData();
   const [dynamicData, setDynamicData] = useState({
     "active-tournaments": { loading: true, totalData: "0", data: [] },
-    "total-participant": { loading: false, totalData: "2.4k", data: [] }, // fallback static values
-    upcoming: { loading: false, totalData: "12", data: [] },
-    "prize-pool": { loading: false, totalData: "KX.45k", data: [] },
+    "total-participant": { loading: false, totalData: "0", data: [] }, // fallback static values
+    upcoming: { loading: false, totalData: "0", data: [] },
+    "prize-pool": { loading: false, totalData: "0k", data: [] },
   });
 
+  //this is for active tournament
+  const {
+    getData: getActiveTournamentData,
+    result: activeTournamentResult,
+    responseError: activeTournamentResponseError,
+    loading: activeTournamentLoading,
+    errorCode,
+    statusCode: activeTournamentStatusCode,
+  } = useGetData();
+
+  // this is for total participant
+  const {
+    getData: getTotalParticipantData,
+    result: totalParticipantResult,
+    responseError: totalparticipantResponseError,
+    loading: totalParticipantLoading,
+    statusCode: totalParticipantStatusCode,
+  } = useGetData();
+
+  // active tournament section starts from here
   useEffect(() => {
     (async () => {
-      await getData("/posts/status/PENDING");
+      await getActiveTournamentData("/posts/status/PENDING");
     })();
   }, []);
   useEffect(() => {
-    if (statusCode === 200) {
+    if (activeTournamentStatusCode === 200) {
       setDynamicData((prev) => ({
         ...prev,
         "active-tournaments": {
-          totalData: result.totalElements,
-          data: result,
-          loading:loading
+          totalData: activeTournamentResult.totalElements,
+          data: activeTournamentResult,
+          loading: activeTournamentLoading,
         },
       }));
-      console.log({ errorCode });
-      console.log({ result });
     }
-    if (responseError) console.log({ responseError });
-  }, [result, responseError, statusCode]);
+    if (activeTournamentResponseError)
+      console.log({ activeTournamentResponseError });
+  }, [
+    activeTournamentResult,
+    activeTournamentResponseError,
+    activeTournamentStatusCode,
+  ]);
+
+  // End of active tournament section
+
+  // Total participant section starts from here
+  useEffect(() => {
+    (async () => {
+      // route will be provided later
+      await getTotalParticipantData("/"); 
+    })();
+  }, []);
+  useEffect(() => {
+    if (totalParticipantStatusCode === 200) {
+      setDynamicData((prev) => ({
+        ...prev,
+        "total-participant": {
+          totalData: totalParticipantResult.totalElements,
+          data: totalParticipantResult,
+          loading: totalParticipantLoading,
+        },
+      }));
+    }
+    if (totalparticipantResponseError)
+      console.log({ totalparticipantResponseError });
+  }, [
+    totalParticipantResult,
+    totalparticipantResponseError,
+    totalParticipantStatusCode,
+  ]);
+
+  // End of total participant section
   return (
     <div
       className=" w-full h-full px-[72px] pt-[65px]"
