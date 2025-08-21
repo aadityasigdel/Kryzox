@@ -1,53 +1,50 @@
-import React, { useEffect } from "react";
+import { useState, useEffect } from "react";
 import HeadingSection from "../ui/shared/HeadingSection";
 import TournamentCard from "./ui/TournamentCard";
 import { TournamentCreationForm } from "./ui/Form";
 import useGetData from "../../../hooks/getData";
-let TournamentCardData = [
+// static data
+const baseTournamentCardData = [
   {
+    key: "active-tournaments",
     gradientColor: { color1: "#B05BDB", color2: "#202020" },
-    key:"active-tournaments",
     heading: "Active Tournaments",
-    totalData: "8",
     icon: "/admin/tournament/medal.png",
     bottomContent: "Currently running",
-    loading:false,
-    data:[]
   },
   {
+    key: "total-participant",
     gradientColor: { color1: "#800080", color2: "#202020" },
-    key:"total-participant",
     heading: "Total Participants",
-    totalData: "2.4k",
     icon: "/admin/tournament/group.png",
     bottomContent: "Across all tournaments",
-    loading:false,
-    data:[]
   },
   {
+    key: "upcoming",
     gradientColor: { color1: "#BA55D3", color2: "#202020" },
-    key:"upcoming",
     heading: "Upcoming",
-    totalData: "12",
     icon: "/admin/tournament/event.png",
     bottomContent: "Starting this month",
-    loading:false,
-    data:[]
   },
   {
+    key: "prize-pool",
     gradientColor: { color1: "#7400BB", color2: "#202020" },
-    key:"prize-pool",
     heading: "Prize Pool",
-    totalData: "KX.45k",
     icon: "/admin/tournament/dollar.png",
     bottomContent: "Total active pools",
-    loading:false,
-    data:[]
   },
 ];
+
 const Tournaments = () => {
-  const { getData, result, responseError, loading, errorCode, statusCode } =
+   const { getData, result, responseError, loading, errorCode, statusCode } =
     useGetData();
+  const [dynamicData, setDynamicData] = useState({
+    "active-tournaments": { loading: true, totalData: "0", data: [] },
+    "total-participant": { loading: false, totalData: "2.4k", data: [] }, // fallback static values
+    upcoming: { loading: false, totalData: "12", data: [] },
+    "prize-pool": { loading: false, totalData: "KX.45k", data: [] },
+  });
+
   useEffect(() => {
     (async () => {
       await getData("/posts/status/PENDING");
@@ -55,15 +52,19 @@ const Tournaments = () => {
   }, []);
   useEffect(() => {
     if (statusCode === 200) {
-      TournamentCardData=TournamentCardData.map(ele=>{
-        if(ele.key==="active-tournaments") return {...ele,totalData:[result.totalElements],data:[result]};
-        return ele;
-      });
-      console.log({errorCode})
+      setDynamicData((prev) => ({
+        ...prev,
+        "active-tournaments": {
+          totalData: result.totalElements,
+          data: result,
+          loading:loading
+        },
+      }));
+      console.log({ errorCode });
       console.log({ result });
-      if (responseError) console.log({ responseError });
     }
-  }, [result, responseError,statusCode]);
+    if (responseError) console.log({ responseError });
+  }, [result, responseError, statusCode]);
   return (
     <div
       className=" w-full h-full px-[72px] pt-[65px]"
@@ -96,20 +97,19 @@ const Tournaments = () => {
       </div>
       {/* tourament card section */}
       <section className="flex gap-10 mt-10">
-        {TournamentCardData.map((item, index) => {
+        {baseTournamentCardData.map((item, index) => {
           return (
             <TournamentCard
               key={index}
               gradientColor={item.gradientColor}
               heading={item.heading}
-              totalData={ item.totalData}
+              totalData={dynamicData[item.key]?.totalData}
               icon={item.icon}
               bottomContent={item.bottomContent}
-              data={item.data}
-              loading={loading}
+              data={dynamicData[item.key]?.data}
+              loading={dynamicData[item.key]?.loading}
             />
           );
-
         })}
       </section>
     </div>
