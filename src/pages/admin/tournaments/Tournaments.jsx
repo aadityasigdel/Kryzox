@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import HeadingSection from "../ui/shared/HeadingSection";
 import TournamentCard from "./ui/TournamentCard";
 import { TournamentCreationForm } from "./ui/Form";
 import useGetData from "../../../hooks/getData";
@@ -39,22 +38,21 @@ const baseTournamentCardData = [
 const Tournaments = () => {
   const [dynamicData, setDynamicData] = useState({
     "active-tournaments": { loading: true, totalData: "0", data: [] },
-    "total-participant": { loading: false, totalData: "0", data: [] }, // fallback static values
+    "total-participant": { loading: false, totalData: "0", data: [] },
     upcoming: { loading: false, totalData: "0", data: [] },
     "prize-pool": { loading: false, totalData: "0k", data: [] },
   });
 
-  //this is for active tournament
+  // active tournament
   const {
     getData: getActiveTournamentData,
     result: activeTournamentResult,
     responseError: activeTournamentResponseError,
     loading: activeTournamentLoading,
-    errorCode,
     statusCode: activeTournamentStatusCode,
   } = useGetData();
 
-  // this is for total participant
+  // total participant
   const {
     getData: getTotalParticipantData,
     result: totalParticipantResult,
@@ -63,7 +61,26 @@ const Tournaments = () => {
     statusCode: totalParticipantStatusCode,
   } = useGetData();
 
-  // active tournament section starts from here
+  // upcoming
+  const {
+    getData: getUpcomingTournamentData,
+    result: upcomingTournamentResult,
+    responseError: upcomingTournamentResponseError,
+    loading: upcomingTournamentLoading,
+    statusCode: upcomingTournamentStatusCode,
+  } = useGetData();
+
+  // prize pool
+  const {
+    getData: getPrizePoolData,
+    result: prizePoolResult,
+    responseError: prizePoolResponseError,
+    loading: prizePoolLoading,
+    statusCode: prizePoolStatusCode,
+  } = useGetData();
+
+  // ================================
+  // Active tournament API
   useEffect(() => {
     (async () => {
       await getActiveTournamentData("/posts/status/PENDING");
@@ -88,13 +105,11 @@ const Tournaments = () => {
     activeTournamentStatusCode,
   ]);
 
-  // End of active tournament section
-
-  // Total participant section starts from here
+  // ================================
+  // Total participant API
   useEffect(() => {
     (async () => {
-      // route will be provided later
-      await getTotalParticipantData("/"); 
+      await getTotalParticipantData("/"); // replace with actual route
     })();
   }, []);
   useEffect(() => {
@@ -116,13 +131,58 @@ const Tournaments = () => {
     totalParticipantStatusCode,
   ]);
 
-  // End of total participant section
+  // ================================
+  // Upcoming tournament API
+  useEffect(() => {
+    (async () => {
+      await getUpcomingTournamentData("/posts/status/UPCOMING");
+    })();
+  }, []);
+  useEffect(() => {
+    if (upcomingTournamentStatusCode === 200) {
+      setDynamicData((prev) => ({
+        ...prev,
+        upcoming: {
+          totalData: upcomingTournamentResult.totalElements,
+          data: upcomingTournamentResult,
+          loading: upcomingTournamentLoading,
+        },
+      }));
+    }
+    if (upcomingTournamentResponseError)
+      console.log({ upcomingTournamentResponseError });
+  }, [
+    upcomingTournamentResult,
+    upcomingTournamentResponseError,
+    upcomingTournamentStatusCode,
+  ]);
+
+  // ================================
+  // Prize pool API
+  useEffect(() => {
+    (async () => {
+      await getPrizePoolData("/posts/prizepool"); // replace with actual route
+    })();
+  }, []);
+  useEffect(() => {
+    if (prizePoolStatusCode === 200) {
+      setDynamicData((prev) => ({
+        ...prev,
+        "prize-pool": {
+          totalData: prizePoolResult.totalElements || prizePoolResult.amount,
+          data: prizePoolResult,
+          loading: prizePoolLoading,
+        },
+      }));
+    }
+    if (prizePoolResponseError) console.log({ prizePoolResponseError });
+  }, [prizePoolResult, prizePoolResponseError, prizePoolStatusCode]);
+
+  // ================================
   return (
     <div
-      className=" w-full h-full px-[72px] pt-[65px]"
-      style={{
-        background: "linear-gradient(to bottom, #000000, #202020)",
-      }}
+      className="w-full h-full px-[72px] pt-[65px]"
+      style={{ background: "linear-gradient(to bottom, #000000, #202020)" }}
     >
       {/* heading section */}
       <div className="w-full flex justify-between items-center">
@@ -142,27 +202,25 @@ const Tournaments = () => {
             Create and manage tournaments across all games
           </p>
         </div>
-        {/* testig drawer section */}
         <div className="w-auto">
           <TournamentCreationForm />
         </div>
       </div>
-      {/* tourament card section */}
+
+      {/* tournament card section */}
       <section className="flex gap-10 mt-10">
-        {baseTournamentCardData.map((item, index) => {
-          return (
-            <TournamentCard
-              key={index}
-              gradientColor={item.gradientColor}
-              heading={item.heading}
-              totalData={dynamicData[item.key]?.totalData}
-              icon={item.icon}
-              bottomContent={item.bottomContent}
-              data={dynamicData[item.key]?.data}
-              loading={dynamicData[item.key]?.loading}
-            />
-          );
-        })}
+        {baseTournamentCardData.map((item, index) => (
+          <TournamentCard
+            key={index}
+            gradientColor={item.gradientColor}
+            heading={item.heading}
+            totalData={dynamicData[item.key]?.totalData}
+            icon={item.icon}
+            bottomContent={item.bottomContent}
+            data={dynamicData[item.key]?.data}
+            loading={dynamicData[item.key]?.loading}
+          />
+        ))}
       </section>
     </div>
   );
