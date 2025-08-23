@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
-import usePostData from "../../hooks/postData";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import ClipLoader from "react-spinners/ClipLoader";
-import { login, setRole,setLoggedData } from "../../store/slices/auth.slice";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../Navbar/NavBar";
+import ClipLoader from "react-spinners/ClipLoader";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import usePostData from "../../hooks/postData";
+import { login, setLoggedData, setRole } from "../../store/slices/auth.slice";
 import Footer from "../Footer/Footer";
+import NavBar from "../Navbar/NavBar";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({

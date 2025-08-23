@@ -8,6 +8,7 @@ const HeadingSection = ({
   btn2Content = undefined,
   icon1: Icon1,
   icon2: Icon2,
+  onBtn1Click,
   component,
 }) => {
   return (
@@ -29,7 +30,7 @@ const HeadingSection = ({
         {/* buttons section */}
         <div className="flex gap-5">
           {btn1Content && (
-            <Button>
+            <Button func={onBtn1Click}>
               {component === "overview" && (
                 <span>
                   <Icon1 size={18} />
