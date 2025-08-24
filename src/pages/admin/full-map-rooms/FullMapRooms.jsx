@@ -6,8 +6,8 @@ import HeadingSection from "../ui/shared/HeadingSection";
 import CreateRoom from "./ui/CreateRoom";
 import FullMapRoomsCard from "./ui/FullMapRoomCard";
 import TabCard from "./ui/TabCard";
+import { useNavigate } from "react-router-dom";
 
-// Static overview cards
 const cardData = [
     {
         gradientColor: { color1: "#B05BDB", color2: "#202020" },
@@ -48,20 +48,20 @@ const statusMap = {
 };
 
 const FullMapRooms = () => {
+    const navi = useNavigate();
     const { getData, result, responseError, loading } = useGetData();
     const [openForm, setOpenForm] = useState(false);
     const [tournaments, setTournaments] = useState([]);
     const [selectedTab, setSelectedTab] = useState("Active");
 
-    // Fetch tournaments on mount
     useEffect(() => {
         getData(`/fullmaps/status/PENDING`);
     }, []);
 
-    // Transform API data into expected format
     useEffect(() => {
         if (result?.content) {
             const apiTournaments = result.content.map((item) => ({
+                fullmapId: item.fullmapId,
                 title: item.title,
                 content: item.content,
                 game: { name: item.game?.gameTitle },
@@ -79,12 +79,10 @@ const FullMapRooms = () => {
         }
     }, [result]);
 
-    // Filter tournaments by selected tab
     const filteredTournaments = tournaments.filter(
         (t) => t.status === selectedTab
     );
 
-    // Prepare tournament data for TabCard
     const getTabCardData = (tournament) => [
         { left: "Title:", right: tournament.title },
         { left: "Game:", right: tournament.game?.name || "N/A" },
@@ -156,16 +154,24 @@ const FullMapRooms = () => {
                         </p>
                     ) : (
                         filteredTournaments.map((tournament, index) => (
-                            <TabCard
+                            <div
                                 key={index}
-                                TabCardData={getTabCardData(tournament)}
-                            />
+                                className="cursor-pointer hover:scale-105 transition-transform"
+                                onClick={() =>
+                                    navi(
+                                        `approvals/${tournament.fullmapId}`
+                                    )
+                                }
+                            >
+                                <TabCard
+                                    TabCardData={getTabCardData(tournament)}
+                                />
+                            </div>
                         ))
                     )}
                 </div>
             </div>
 
-            {/* Create Room modal */}
             <CreateRoom open={openForm} setOpen={setOpenForm} />
         </section>
     );
