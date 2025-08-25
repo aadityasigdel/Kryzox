@@ -49,8 +49,9 @@ const UpcomingTournamentsCard = ({ tournament, onRemove }) => {
     }
   }, [rejectStatusCode, rejectResponseError]);
 
-  const acceptTournament = async () => {
-    await acceptData(`/turnmentApp/approve/${tournament.postId}`);
+  const acceptTournament = async ({gameID,gamePw}) => {
+    console.log({gameID,gamePw});
+    await acceptData(`/turnmentApp/approve/${tournament.postId}`,{gameID,gamePw});
   };
 
   const rejectTournament = async () => {
@@ -112,7 +113,7 @@ const UpcomingTournamentsCard = ({ tournament, onRemove }) => {
                shadow-lg shadow-purple-700/50
                transition-all duration-300 hover:scale-105 hover:shadow-purple-500/80"
             disabled={acceptLoading}
-            onClick={acceptTournament}
+            onClick={()=>{acceptTournament({gameID:tournament?.gameID,gamePw:tournament?.gamePw})}}
           >
             {acceptLoading ? <ClipLoader size={20} color="white" /> : "Accept"}
           </button>
