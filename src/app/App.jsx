@@ -3,6 +3,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import RouteHandler from "../routes/Routes";
 import { login } from '../store/slices/auth.slice';
 import { useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
 const App = () => {
   const {isLoggedIn,isAuthenticate}=useSelector(state=>state.auth);
     const dispatch=useDispatch();
@@ -21,6 +22,7 @@ if(!isLoggedIn){
       <div><p>Please login to continue </p><button onClick={()=>dispatch(login())}>login</button></div>
       } */}
       <RouteHandler/>
+      <Toaster />
     </div>
   )
 }

@@ -1,11 +1,13 @@
 import clsx from "clsx";
-
+import ClipLoader from "react-spinners/ClipLoader";
 const TournamentCard = ({
   gradientColor,
   heading,
   totalData,
   icon,
   bottomContent,
+  data,
+  loading
 }) => {
   return (
     <div
@@ -21,7 +23,7 @@ const TournamentCard = ({
       </h1>
       {/*  icon section */}
       <div className="w-full pr-[27px] flex items-center justify-between">
-        <h3 className="text-[26px] font-semibold text-[#80FFDB]">{totalData}</h3>
+        <h3 className="text-[26px] font-semibold text-[#80FFDB]">{loading?<ClipLoader size={20} color="#80FFDB"/> :totalData}</h3>
         <span>
           <img src={icon} alt={heading}/>
         </span>

@@ -19,7 +19,7 @@ export default function ProfileDropdown({ userData }) {
         <NavigationMenuItem>
           {/* Plain text trigger */}
           <NavigationMenuTrigger
-            className="bg-transparent hover:bg-transparent focus:bg-transparent active:bg-transparent 
+            className="bg-transparent hover:bg-transparent active:bg-transparent 
                        p-0 h-auto font-semibold text-purple-300 shadow-none outline-none"
           >
             {userData?.name || "Ram"}
@@ -52,7 +52,7 @@ export default function ProfileDropdown({ userData }) {
               </li>
               <li>
                 <NavigationMenuLink asChild>
-                  <LogoutBtn func={()=>dispatch(logout)}>Logout</LogoutBtn>
+                  <LogoutBtn func={()=>dispatch(logout())}>Logout</LogoutBtn>
                 </NavigationMenuLink>
               </li>
             </ul>

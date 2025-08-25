@@ -33,23 +33,38 @@ const FormBtn = React.forwardRef(({ children, ...props }, ref) => {
   );
 });
 
-export function TournamentCreationForm() {
+export function TournamentCreationForm({setIsTournamentCreated}) {
   const [formData, setFormData] = useState({
     title: "",
     content: "",
     entryFee: "",
     startTime: "",
   });
-  const { loading, postData, responseError, result, statusCode } =
+  const [isOpen, setIsOpen] = useState(false); // New state to control dialog visibility
+
+  const { loading, postData, responseError,setResponseError, result, statusCode } =
     usePostData();
+
   // useEffect for data fetching
   useEffect(() => {
-    if (responseError)
+    if (responseError) {
       toast.error(
-        responseError?.response?.data?.message || "something went wrong!"
+        responseError || "something went wrong!"
       );
+      setTimeout(() => {
+        setResponseError(null);
+      }, 1000);
+    }
     if (statusCode === 201) {
+      setIsTournamentCreated(true);
       toast.success(result?.message || "tournament created successfully");
+      setIsOpen(false); // Close the dialog on success
+      setFormData({
+        title: "",
+        content: "",
+        entryFee: "",
+        startTime: "",
+      });
     }
   }, [responseError, statusCode]);
 
@@ -57,23 +72,24 @@ export function TournamentCreationForm() {
   useEffect(() => {
     console.log({ formData });
   }, [formData]);
+
   // handleinput function
   const handleInput = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
   const formHandler = async (e) => {
     e.preventDefault();
-    alert("this is test message");
     await postData("/user/1/game/1/gamemode/1/posts", formData);
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <FormBtn>+ Create Tournament</FormBtn>
+        <FormBtn onClick={() => setIsOpen(true)}>+ Create Tournament</FormBtn>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-xl bg-[#241B3A] border border-purple-500/20 rounded-3xl p-6 space-y-4">
+      <DialogContent className="sm:max-w-xl bg-[#241B3A] border border-purple-500/20 rounded-3xl p-6 space-y-4 text-white">
         <form className="text-white" onSubmit={formHandler}>
           <DialogHeader className="text-center md:text-left">
             <DialogTitle
@@ -86,7 +102,7 @@ export function TournamentCreationForm() {
             >
               Create Tournament
             </DialogTitle>
-            <DialogDescription className="text-sm text-[#d9cbcb] md:text-base">
+            <DialogDescription className="text-sm text-[#d9cbcb] md:text-base pb-5">
               Fill in the details for your new tournament.
             </DialogDescription>
           </DialogHeader>
@@ -104,6 +120,7 @@ export function TournamentCreationForm() {
                 name="title"
                 placeholder="enter title..."
                 onChange={handleInput}
+                value={formData.title}
                 required
                 className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 rounded-xl text-white placeholder-purple-400 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
               />
@@ -120,6 +137,7 @@ export function TournamentCreationForm() {
                 name="content"
                 placeholder="chance to win ..."
                 onChange={handleInput}
+                value={formData.content}
                 required
                 className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 rounded-xl text-white placeholder-purple-400 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
               />
@@ -134,8 +152,10 @@ export function TournamentCreationForm() {
               <Input
                 id="entryFee"
                 name="entryFee"
+                type="number" // Changed type to number for entry fee
                 placeholder="@example 700"
                 onChange={handleInput}
+                value={formData.entryFee}
                 required
                 className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 rounded-xl text-white placeholder-purple-400 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
               />
@@ -153,8 +173,9 @@ export function TournamentCreationForm() {
                 type="datetime-local"
                 placeholder="2025-07-17T16:00"
                 onChange={handleInput}
+                value={formData.startTime}
                 required
-                className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 rounded-xl text-white placeholder-purple-400 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
+                className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 rounded-xl text-white placeholder-purple-400 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all [&::-webkit-calendar-picker-indicator]:invert"
               />
             </div>
           </div>

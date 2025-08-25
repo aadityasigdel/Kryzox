@@ -1,12 +1,12 @@
 "use client";
 import useAxios from "@/lib/axios.config";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 const useDeleteData = () => {
   const [result, setResult] = useState([]);
   const [responseError, setResponseError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [statusCode, setStatusCode] = useState(null);
-  const axiosInstance=useAxios();
+  const axiosInstance = useAxios();
   const deleteData = async (url) => {
     try {
       setLoading(true);
@@ -19,6 +19,13 @@ const useDeleteData = () => {
       setLoading(false);
     }
   };
-  return { deleteData, result, responseError, loading };
+  return {
+    deleteData,
+    result,
+    responseError,
+    setResponseError,
+    loading,
+    statusCode,
+  };
 };
 export default useDeleteData;

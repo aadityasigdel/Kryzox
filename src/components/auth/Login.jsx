@@ -7,7 +7,11 @@ import "react-toastify/dist/ReactToastify.css";
 import usePostData from "../../hooks/postData";
 import { login, setLoggedData, setRole } from "../../store/slices/auth.slice";
 import Footer from "../Footer/Footer";
+<<<<<<< HEAD
 import NavBar from "../Navbar/NavBar";
+=======
+import toast from "react-hot-toast";
+>>>>>>> 54a2a50fe42616cb5cc547af87a51f621c086a6e
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -22,6 +26,7 @@ export default function LoginPage() {
   const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
+    console.log({responseError})
     if (statusCode === 200) {
       localStorage.setItem("token", JSON.stringify("Sandip " + result?.token));
       dispatch(login());
@@ -37,7 +42,8 @@ export default function LoginPage() {
       return () => clearTimeout(timer);
     }
     if (responseError) {
-      toast.error(responseError?.response?.data?.message || "Failed to login");
+      console.log("responseerror occured")
+      toast.error(responseError|| "Failed to login");
     }
   }, [responseError, result]);
 
