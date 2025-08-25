@@ -49,10 +49,10 @@ export function TournamentCreationForm({setIsTournamentCreated}) {
   useEffect(() => {
     if (responseError) {
       toast.error(
-        responseError?.response?.data?.message || "something went wrong!"
+        responseError || "something went wrong!"
       );
       setTimeout(() => {
-        setResponseError("");
+        setResponseError(null);
       }, 1000);
     }
     if (statusCode === 201) {

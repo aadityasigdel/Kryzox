@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import TournamentCard from "./ui/TournamentCard";
 import { TournamentCreationForm } from "./ui/Form";
 import useGetData from "../../../hooks/getData";
+import { NavLink } from "react-router-dom";
 
 // static data
 const baseTournamentCardData = [
@@ -11,6 +12,7 @@ const baseTournamentCardData = [
     heading: "Active Tournaments",
     icon: "/admin/tournament/medal.png",
     bottomContent: "Currently running",
+    path:"/admin/tournaments/active-tournaments"
   },
   {
     key: "total-participant",
@@ -18,6 +20,7 @@ const baseTournamentCardData = [
     heading: "Total Participants",
     icon: "/admin/tournament/group.png",
     bottomContent: "Across all tournaments",
+    path:"/admin/tournaments/total-participants"
   },
   {
     key: "upcoming",
@@ -25,6 +28,7 @@ const baseTournamentCardData = [
     heading: "Upcoming",
     icon: "/admin/tournament/event.png",
     bottomContent: "Starting this month",
+    path:"/admin/tournaments/upcoming-tournaments"
   },
   {
     key: "prize-pool",
@@ -32,14 +36,15 @@ const baseTournamentCardData = [
     heading: "Prize Pool",
     icon: "/admin/tournament/dollar.png",
     bottomContent: "Total active pools",
+    path:"/admin/tournaments/prize-pool"
   },
 ];
 
 const Tournaments = () => {
   const [dynamicData, setDynamicData] = useState({
-    "active-tournaments": { loading: true, totalData: "0", data: [] },
+    "active-tournaments": { loading: false, totalData: "0", data: [] },
     "total-participant": { loading: false, totalData: "0", data: [] },
-    upcoming: { loading: false, totalData: "0", data: [] },
+    upcoming: { loading: true, totalData: "0", data: [] },
     "prize-pool": { loading: false, totalData: "0k", data: [] },
   });
 
@@ -85,19 +90,10 @@ const Tournaments = () => {
   // Active tournament API
   useEffect(() => {
     (async () => {
-      await getActiveTournamentData("/posts/status/PENDING");
+      await getActiveTournamentData("/posts/status/");
     })();
   }, []);
-  useEffect(() => {
-    if (isTournamentCreated) {
-      (async () => {
-        await getActiveTournamentData("/posts/status/PENDING");
-      })();
-      setTimeout(()=>{
-        setIsTournamentCreated(false);
-      },1000);
-    }
-  }, [isTournamentCreated]);
+
   useEffect(() => {
     if (activeTournamentStatusCode === 200) {
       setDynamicData((prev) => ({
@@ -147,7 +143,7 @@ const Tournaments = () => {
   // Upcoming tournament API
   useEffect(() => {
     (async () => {
-      await getUpcomingTournamentData("/posts/status/UPCOMING");
+      await getUpcomingTournamentData("/posts/status/PENDING");
     })();
   }, []);
   useEffect(() => {
@@ -168,6 +164,17 @@ const Tournaments = () => {
     upcomingTournamentResponseError,
     upcomingTournamentStatusCode,
   ]);
+
+  useEffect(() => {
+    if (isTournamentCreated) {
+      (async () => {
+        await getUpcomingTournamentData("/posts/status/PENDING");
+      })();
+      setTimeout(() => {
+        setIsTournamentCreated(false);
+      }, 1000);
+    }
+  }, [isTournamentCreated]);
 
   // ================================
   // Prize pool API
@@ -224,16 +231,18 @@ const Tournaments = () => {
       {/* tournament card section */}
       <section className="flex gap-10 mt-10">
         {baseTournamentCardData.map((item, index) => (
-          <TournamentCard
-            key={index}
-            gradientColor={item.gradientColor}
-            heading={item.heading}
-            totalData={dynamicData[item.key]?.totalData}
-            icon={item.icon}
-            bottomContent={item.bottomContent}
-            data={dynamicData[item.key]?.data}
-            loading={dynamicData[item.key]?.loading}
-          />
+          <NavLink to={item.path}>
+            <TournamentCard
+              key={index}
+              gradientColor={item.gradientColor}
+              heading={item.heading}
+              totalData={dynamicData[item.key]?.totalData}
+              icon={item.icon}
+              bottomContent={item.bottomContent}
+              data={dynamicData[item.key]?.data}
+              loading={dynamicData[item.key]?.loading}
+            />
+          </NavLink>
         ))}
       </section>
     </div>
