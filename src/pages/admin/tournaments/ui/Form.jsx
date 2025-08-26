@@ -61,7 +61,7 @@ const SelectGame = ({ setSelectIds }) => {
       }}
     >
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select a game" />
+        <SelectValue placeholder="Select a game" className="text-white"/>
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
