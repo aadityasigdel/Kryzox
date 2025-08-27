@@ -85,10 +85,15 @@ const UpcomingTournamentsCard = ({ tournament, onRemove }) => {
               <span className="font-semibold text-[#c084fc]">Mode:</span>{" "}
               {tournament.gameMode?.modeName}
             </p>
+             <p className="flex items-center gap-2 text-[#d1d1d1]">
+              <span className="font-semibold text-[#c084fc]">Map:</span>{" "}
+              {tournament.map?.mapTitle}
+            </p>
             <p className="flex items-center gap-2 text-[#d1d1d1]">
               <span className="font-semibold text-[#c084fc]">Entry Fee:</span>{" "}
               {tournament.entryFee}
             </p>
+            
             <p className="flex items-center gap-2 text-[#d1d1d1]">
               <span className="font-semibold text-[#c084fc]">Start Time:</span>{" "}
               {new Date(
@@ -107,7 +112,7 @@ const UpcomingTournamentsCard = ({ tournament, onRemove }) => {
         </div>
 
         <div className="flex gap-5 flex-row">
-          <button
+          {/* <button
             className="w-full py-2 rounded-lg text-sm font-semibold text-white 
                bg-gradient-to-r from-purple-600 to-pink-500 
                shadow-lg shadow-purple-700/50
@@ -116,7 +121,7 @@ const UpcomingTournamentsCard = ({ tournament, onRemove }) => {
             onClick={()=>{acceptTournament({gameID:tournament?.gameID,gamePw:tournament?.gamePw})}}
           >
             {acceptLoading ? <ClipLoader size={20} color="white" /> : "Accept"}
-          </button>
+          </button> */}
 
           <button
             className="w-full py-2 rounded-lg text-sm font-semibold text-white 
@@ -126,7 +131,7 @@ const UpcomingTournamentsCard = ({ tournament, onRemove }) => {
             disabled={rejectLoading}
             onClick={rejectTournament}
           >
-            {rejectLoading ? <ClipLoader size={20} color="#fff" /> : "Reject"}
+            {rejectLoading ? <ClipLoader size={20} color="#fff" /> : "Delete Tournament"}
           </button>
         </div>
       </div>
