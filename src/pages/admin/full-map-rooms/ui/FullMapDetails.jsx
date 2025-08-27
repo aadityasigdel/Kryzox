@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useGetData from "../../../../hooks/getData.js";
-
+import NumberofApproved from "./NumberofApproved.jsx"
 const formatDate = (dateArr) => {
     if (!dateArr) return "N/A";
     const [year, month, day, hour, minute] = dateArr;
@@ -13,11 +13,8 @@ const formatDate = (dateArr) => {
 };
 
 
-
-// Single Tournament Card
 const TournamentCard = ({ tournament }) => (
     <div className="flex-1 bg-gray-900/80  rounded-xl shadow-md p-5 flex flex-col justify-between gap-4 max-h-full">
-
         <div className="flex justify-between items-start mb-3">
             <h2 className="text-teal-300 font-bold text-lg truncate">
                 {tournament.title}
@@ -35,7 +32,7 @@ const TournamentCard = ({ tournament }) => (
             </span>
         </div>
 
-        {/* Details */}
+   
         <div className="text-sm flex flex-col gap-1 text-gray-300">
             <p>
                 <span className="text-purple-400 font-semibold">Room ID:</span>{" "}
@@ -67,19 +64,26 @@ const TournamentCard = ({ tournament }) => (
                 <span className="text-purple-400 font-semibold">Date:</span>{" "}
                 {formatDate(tournament.addedDate)}
             </p>
+            <p>
+                <span className="text-purple-400 font-semibold">
+                    Total Players:
+                </span>{" "}
+                <NumberofApproved />/{tournament.maxplayer}
+            </p>
         </div>
     </div>
 );
 
 const FullMapDetails = () => {
-    const {fullmapId} = useParams();
-    
+    const { fullmapId } = useParams();
+
     const {
         getData,
         result: fullMapData,
         loading,
         responseError,
     } = useGetData();
+
 
     useEffect(() => {
         getData(`fullmaps/${fullmapId}`);

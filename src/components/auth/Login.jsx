@@ -7,11 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import usePostData from "../../hooks/postData";
 import { login, setLoggedData, setRole } from "../../store/slices/auth.slice";
 import Footer from "../Footer/Footer";
-<<<<<<< HEAD
 import NavBar from "../Navbar/NavBar";
-=======
-import toast from "react-hot-toast";
->>>>>>> 54a2a50fe42616cb5cc547af87a51f621c086a6e
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
