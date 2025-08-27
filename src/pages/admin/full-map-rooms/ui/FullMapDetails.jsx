@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useGetData from "../../../../hooks/getData.js";
-import NumberofApproved from "./NumberofApproved.jsx"
+import NumberofApproved from "./NumberofApproved.jsx";
+import Complete from "./Compete.jsx";
 const formatDate = (dateArr) => {
     if (!dateArr) return "N/A";
     const [year, month, day, hour, minute] = dateArr;
@@ -11,7 +12,6 @@ const formatDate = (dateArr) => {
         .toString()
         .padStart(2, "0")}`;
 };
-
 
 const TournamentCard = ({ tournament }) => (
     <div className="flex-1 bg-gray-900/80  rounded-xl shadow-md p-5 flex flex-col justify-between gap-4 max-h-full">
@@ -32,7 +32,6 @@ const TournamentCard = ({ tournament }) => (
             </span>
         </div>
 
-   
         <div className="text-sm flex flex-col gap-1 text-gray-300">
             <p>
                 <span className="text-purple-400 font-semibold">Room ID:</span>{" "}
@@ -71,6 +70,7 @@ const TournamentCard = ({ tournament }) => (
                 <NumberofApproved />/{tournament.maxplayer}
             </p>
         </div>
+        <Complete />
     </div>
 );
 
@@ -83,7 +83,6 @@ const FullMapDetails = () => {
         loading,
         responseError,
     } = useGetData();
-
 
     useEffect(() => {
         getData(`fullmaps/${fullmapId}`);
