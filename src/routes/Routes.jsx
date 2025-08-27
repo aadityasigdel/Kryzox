@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 // Pages
 import Home from "../pages/Home";
 
-// admin pages
+// Admin pages
 import Analytics from "../pages/admin/analytics/Analytics";
 import FullMapHandeling from "../pages/admin/full-map-rooms/FullMapHandeling";
 import FullMapRooms from "../pages/admin/full-map-rooms/FullMapRooms";
@@ -15,8 +15,6 @@ import RoomManagement from "../pages/admin/room-management/RoomManagement";
 import TopUpManage from "../pages/admin/top-up-manage/TopUpManage";
 import Tournaments from "../pages/admin/tournaments/Tournaments";
 import UserManagement from "../pages/admin/user-management/UserManagement";
-
-// admin tournament pages
 import { UpcomingTournaments } from "../pages/admin/tournaments/pages/UpcomingTournaments";
 import { ActiveTournaments } from "../pages/admin/tournaments/pages/ActiveTournaments";
 
@@ -28,7 +26,7 @@ import Register from "../components/auth/Register";
 // Protection
 import TermsAndConditions from "../components/Footer/pages/TermsAndConditions";
 
-// footer pages/components
+// Footer pages/components
 import LegalCompliance from "../components/Footer/LeagalDoc/LegalCompliance";
 import FooterLayout from "../components/Footer/layout/FooterLayout";
 import AboutUs from "../components/Footer/pages/AboutUs";
@@ -39,15 +37,18 @@ import Disclaimer from "../components/Footer/pages/Disclaimer";
 import PrivacyPolicy from "../components/Footer/pages/PrivacyPolicy";
 import UserAgreement from "../components/Footer/pages/UserAgreement";
 
+// Optional: import AdminProtection if you want to protect admin routes
+// import AdminProtection from "../components/auth/AdminProtection";
+
 const RouteHandler = () => {
   return (
     <Routes>
-      {/* Public Route */}
+      {/* Public Routes */}
       <Route exact path="/" element={<Home />} />
       <Route path="/test" element={<UpcomingTournaments />} />
       <Route path="/privacy/legal" element={<LegalCompliance />} />
 
-      {/* footer layout */}
+      {/* Footer Layout Routes */}
       <Route element={<FooterLayout />}>
         <Route path="terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
@@ -73,24 +74,25 @@ const RouteHandler = () => {
       <Route
         path="/admin/*"
         element={
-          <AdminProtection>
-            <SideNavLayout />
-          </AdminProtection>
+          // Uncomment the following line to enable admin protection
+          // <AdminProtection>
+          <SideNavLayout />
+          // </AdminProtection>
         }
       >
         <Route index element={<Overview />} />
         <Route path="user-management" element={<UserManagement />} />
         <Route path="full-map-rooms" element={<FullMapRooms />} />
+        <Route path="full-map-rooms/approvals/:fullmapId" element={<FullMapHandeling />} />
         <Route path="room-management" element={<RoomManagement />} />
         <Route path="live-management" element={<LiveManagement />} />
 
-        {/* tournament pages route starts from here */}
+        {/* Tournament Pages */}
         <Route path="tournaments">
           <Route index element={<Tournaments />} />
           <Route path="active-tournaments" element={<ActiveTournaments />} />
           <Route path="upcoming-tournaments" element={<UpcomingTournaments />} />
         </Route>
-        {/* tournament pages route ends here */}
 
         <Route path="top-up-manage" element={<TopUpManage />} />
         <Route path="notification" element={<Notification />} />

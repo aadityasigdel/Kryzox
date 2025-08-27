@@ -1,30 +1,29 @@
-
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import RouteHandler from "../routes/Routes";
-import { login } from '../store/slices/auth.slice';
-import { useEffect } from 'react';
-import { Toaster } from 'react-hot-toast';
+import { login } from "../store/slices/auth.slice";
+import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 const App = () => {
-  const {isLoggedIn,isAuthenticate}=useSelector(state=>state.auth);
-    const dispatch=useDispatch();
-  console.log({isAuthenticate});
-  useEffect(()=>{
-if(!isLoggedIn){
-  if(localStorage.getItem("token")){
-    dispatch(login());
-  }
-}
-  },[])
-  return (
-    <div>
-      {/* {
+    const { isLoggedIn, isAuthenticate } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+    console.log({ isAuthenticate });
+    useEffect(() => {
+        if (!isLoggedIn) {
+            if (localStorage.getItem("token")) {
+                dispatch(login());
+            }
+        }
+    }, []);
+    return (
+        <div>
+            {/* {
       isAuthenticate? <div><p>"Welcome to world of react js !!" </p><button onClick={()=>dispatch(logout())}>logout</button></div>:
       <div><p>Please login to continue </p><button onClick={()=>dispatch(login())}>login</button></div>
       } */}
-      <RouteHandler/>
-      <Toaster />
-    </div>
-  )
-}
+            <RouteHandler />
+            <Toaster />
+        </div>
+    );
+};
 
 export default App;

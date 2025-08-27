@@ -10,21 +10,6 @@ export default function FullMapHandeling() {
 
 
 
-    const handleApprove = (id) => {
-        setRooms((prev) =>
-            prev.map((room) =>
-                room.id === id ? { ...room, status: "Approved" } : room
-            )
-        );
-    };
-
-    const handleReject = (id) => {
-        setRooms((prev) =>
-            prev.map((room) =>
-                room.id === id ? { ...room, status: "Rejected" } : room
-            )
-        );
-    };
 
     if (error) return <div className="p-4 text-red-500">Error: {error}</div>;
 
