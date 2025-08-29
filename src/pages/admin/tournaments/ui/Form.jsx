@@ -272,6 +272,12 @@ export function TournamentCreationForm({ setIsTournamentCreated }) {
   // handleinput function
   const handleInput = (e) => {
     const { name, value } = e.target;
+     if (name === "gameID") {
+      if (value.includes(".")) {
+        toast.error("Game ID can only be an integer.");
+        return; // Stop here and don't update state
+      }
+    }
       setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
