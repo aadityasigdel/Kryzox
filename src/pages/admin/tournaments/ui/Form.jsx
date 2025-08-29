@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/shadcn-ui/dialog";
+import { Textarea } from "@/components/shadcn-ui/textarea";
 import {
   Select,
   SelectContent,
@@ -30,8 +31,6 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 import { useSelector } from "react-redux";
 
-// select option for game
-
 const SelectGame = ({ setSelectIds }) => {
   const {
     getData,
@@ -42,38 +41,54 @@ const SelectGame = ({ setSelectIds }) => {
     errorCode,
     statusCode,
   } = useGetData();
+
   useEffect(() => {
     (async () => {
       await getData("/games/");
     })();
   }, []);
+
   // to display the result of the games
   useEffect(() => {
     if (result) console.log({ games: result });
   }, [result]);
+
   const handleIds = (id) => {
     setSelectIds((prev) => ({ ...prev, gameId: id }));
   };
+
   return (
-    <Select
-      onValueChange={(id) => {
-        handleIds(id);
-      }}
-    >
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select a game" className="text-white"/>
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>GAMES</SelectLabel>
-          {result?.map((item) => {
-            return (
-              <SelectItem value={item?.gameId}>{item?.gameTitle}</SelectItem>
-            );
-          })}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+    <div className="w-full">
+      <Select
+        onValueChange={(id) => {
+          handleIds(id);
+        }}
+        className="text-white"
+      >
+        <SelectTrigger
+          className="w-full bg-[#1B1230]  border border-purple-500/30 
+                   text-white placeholder-purple-400 
+                  focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
+        >
+          {" "}
+          {/* Updated width */}
+          <SelectValue
+            placeholder="Select a game"
+            className="!text-white w-full "
+          />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>GAMES</SelectLabel>
+            {result?.map((item) => (
+              <SelectItem key={item?.gameId} value={item?.gameId}>
+                {item?.gameTitle}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </div>
   );
 };
 
@@ -107,8 +122,12 @@ const SelectGameMode = ({ setSelectIds }) => {
         handleIds(id);
       }}
     >
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select a game mode" />
+      <SelectTrigger
+        className="w-full bg-[#1B1230]  border border-purple-500/30 
+                   text-white placeholder-purple-400 
+                  focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
+      >
+        <SelectValue placeholder="Select a game mode" className="text-white" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
@@ -153,7 +172,11 @@ const SelectMap = ({ setSelectIds }) => {
         handleIds(id);
       }}
     >
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger
+        className="w-full bg-[#1B1230]  border border-purple-500/30 
+                   text-white placeholder-purple-400 
+                  focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
+      >
         <SelectValue placeholder="Select a map" />
       </SelectTrigger>
       <SelectContent>
@@ -199,7 +222,7 @@ export function TournamentCreationForm({ setIsTournamentCreated }) {
     gamePw: "",
     startTime: "",
   });
-const {loggedInUserInfo}=useSelector(state=>state.auth);
+  const { loggedInUserInfo } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false); // New state to control dialog visibility
 
   const {
@@ -214,7 +237,7 @@ const {loggedInUserInfo}=useSelector(state=>state.auth);
   // display ids of the games
   useEffect(() => {
     console.log({ selectIds });
-    console.log({loggedInUserInfo});
+    console.log({ loggedInUserInfo });
   }),
     [selectIds];
 
@@ -249,17 +272,17 @@ const {loggedInUserInfo}=useSelector(state=>state.auth);
   // handleinput function
   const handleInput = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+      setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const formHandler = async (e) => {
     e.preventDefault();
-    if (formData?.gamePw.length < 8) {
-      toast.error(formData.gamePw.length);
-      toast.error("gamePw length should be atleast 8");
-    } else {
-      await postData(`/user/${loggedInUserInfo?.id || 1}/game/${selectIds.gameId}/gamemode/${selectIds.modeId}/map/${selectIds.mapId}/posts`, formData);
-    }
+      await postData(
+        `/user/${loggedInUserInfo?.id || 1}/game/${selectIds.gameId}/gamemode/${
+          selectIds.modeId
+        }/map/${selectIds.mapId}/posts`,
+        formData
+      );
   };
 
   return (
@@ -267,13 +290,13 @@ const {loggedInUserInfo}=useSelector(state=>state.auth);
       <DialogTrigger asChild>
         <FormBtn onClick={() => setIsOpen(true)}>+ Create Tournament</FormBtn>
       </DialogTrigger>
-      {/* <DialogContent className="sm:max-w-xl bg-[#241B3A] border border-purple-500/20 rounded-3xl p-6 space-y-4 text-white"> */}
+
       <DialogContent
-        className="sm:max-w-xl bg-gradient-to-b from-[#2a1d47] to-[#1B1230] 
-             border border-purple-500/30 rounded-2xl 
-             p-6 space-y-4 text-white 
-             max-h-[90vh] overflow-y-auto my-2
-             scrollbar-thin scrollbar-thumb-purple-500/40 scrollbar-track-transparent"
+        className="sm:max-w-3xl w-full bg-gradient-to-b from-[#2a1d47] to-[#1B1230] 
+       border border-purple-500/30 rounded-2xl 
+       p-8 space-y-8 text-white 
+       max-h-[90vh] overflow-y-auto my-2
+       scrollbar-thin scrollbar-thumb-purple-500/40 scrollbar-track-transparent"
       >
         <form className="text-white" onSubmit={formHandler}>
           <DialogHeader className="text-center md:text-left">
@@ -292,156 +315,202 @@ const {loggedInUserInfo}=useSelector(state=>state.auth);
             </DialogDescription>
           </DialogHeader>
 
-          <div className="grid gap-4">
-            <div className="grid gap-2">
-              <Label
-                htmlFor="title"
-                className="block text-sm font-medium text-purple-200 mb-2"
-              >
-                Tournament Title
-              </Label>
-              <Input
-                id="title"
-                name="title"
-                placeholder="enter title..."
-                onChange={handleInput}
-                value={formData.title}
-                required
-                className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 rounded-xl text-white placeholder-purple-400 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label
-                htmlFor="content"
-                className="block text-sm font-medium text-purple-200 mb-2"
-              >
-                Description
-              </Label>
-              <Input
-                id="content"
-                name="content"
-                placeholder="chance to win ..."
-                onChange={handleInput}
-                value={formData.content}
-                required
-                className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 rounded-xl text-white placeholder-purple-400 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label
-                htmlFor="entryFee"
-                className="block text-sm font-medium text-purple-200 mb-2"
-              >
-                Entry Fee
-              </Label>
-              <Input
-                id="entryFee"
-                name="entryFee"
-                type="number" // Changed type to number for entry fee
-                placeholder="@example 700"
-                onChange={handleInput}
-                value={formData.entryFee}
-                required
-                className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 rounded-xl text-white placeholder-purple-400 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
-              />
-            </div>
-            {/* game id */}
-            <div className="grid gap-2">
-              <Label
-                htmlFor="gameID"
-                className="block text-sm font-medium text-purple-200 mb-2"
-              >
-                gameID
-              </Label>
-              <Input
-                id="gameID"
-                name="gameID"
-                type="number"
-                placeholder="enter gameID..."
-                onChange={handleInput}
-                value={formData.gameID}
-                required
-                className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 rounded-xl text-white placeholder-purple-400 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
-              />
-            </div>
-            {/* game password */}
-            <div className="grid gap-2">
-              <Label
-                htmlFor="gamePw"
-                className="block text-sm font-medium text-purple-200 mb-2"
-              >
-                gamePw
-              </Label>
-              <Input
-                id="gamePw"
-                name="gamePw"
-                placeholder="enter gamePw..."
-                onChange={handleInput}
-                value={formData.gamePw}
-                required
-                className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 rounded-xl text-white placeholder-purple-400 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
-              />
-            </div>
-            {/* SELECT SECTION */}
+          {/* ---------------- Basic Tournament Info ---------------- */}
+          <div className="space-y-5 my-5">
+            <h2 className="text-purple-300 font-semibold text-lg">
+              Basic Tournament Info
+            </h2>
+            <div className="grid gap-6">
+              {/* Tournament Title + Fee */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid gap-2">
+                  <Label
+                    htmlFor="title"
+                    className="text-sm font-medium text-purple-200"
+                  >
+                    Tournament Title
+                  </Label>
+                  <Input
+                    id="title"
+                    name="title"
+                    placeholder="enter title..."
+                    onChange={handleInput}
+                    value={formData.title}
+                    required
+                    className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 
+                  rounded-xl text-white placeholder-purple-400 
+                  focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label
+                    htmlFor="entryFee"
+                    className="text-sm font-medium text-purple-200"
+                  >
+                    Entry Fee
+                  </Label>
+                  <Input
+                    id="entryFee"
+                    name="entryFee"
+                    type="number"
+                    placeholder="@example 700"
+                    onChange={handleInput}
+                    value={formData.entryFee}
+                    step="1"
+                    required
+                    className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 
+                  rounded-xl text-white placeholder-purple-400 
+                  focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
+                  />
+                </div>
+              </div>
 
-            <div className="grid gap-2">
-              <Label
-                htmlFor="selectGame"
-                className="block text-sm font-medium text-purple-200 mb-2"
-              >
-                select game
-              </Label>
-              <SelectGame setSelectIds={setSelectIds} />
-            </div>
-            <div className="grid gap-2">
-              <Label
-                htmlFor="selectGameMode"
-                className="block text-sm font-medium text-purple-200 mb-2"
-              >
-                select game-mode
-              </Label>
-              <SelectGameMode setSelectIds={setSelectIds} />
-            </div>
-
-            <div className="grid gap-2">
-              <Label
-                htmlFor="selectMap"
-                className="block text-sm font-medium text-purple-200 mb-2"
-              >
-                select map
-              </Label>
-              <SelectMap setSelectIds={setSelectIds} />
-            </div>
-            {/* select section ends here */}
-            <div className="grid gap-2">
-              <Label
-                htmlFor="startTime"
-                className="block text-sm font-medium text-purple-200 mb-2"
-              >
-                Start Time
-              </Label>
-              <Input
-                id="startTime"
-                name="startTime"
-                type="datetime-local"
-                placeholder="2025-07-17T16:00"
-                onChange={handleInput}
-                value={formData.startTime}
-                required
-                className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 rounded-xl text-white placeholder-purple-400 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all [&::-webkit-calendar-picker-indicator]:invert"
-              />
+              {/* Description Full Width */}
+              <div className="grid gap-2">
+                <Label
+                  htmlFor="content"
+                  className="text-sm font-medium text-purple-200"
+                >
+                  Description
+                </Label>
+                <Textarea
+                  id="content"
+                  type="textarea"
+                  name="content"
+                  placeholder="chance to win ..."
+                  onChange={handleInput}
+                  value={formData.content}
+                  required
+                  className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 
+                rounded-xl text-white placeholder-purple-400 
+                focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
+                />
+              </div>
             </div>
           </div>
-          <DialogFooter className="flex-col sm:flex-row sm:justify-end mt-4">
+
+          {/* ---------------- Tournament Settings ---------------- */}
+          <div className="space-y-6 mt-10">
+            {" "}
+            {/* Margin-top for separation */}
+            <h2 className="text-purple-300 font-semibold text-lg">
+              Tournament Settings
+            </h2>
+            <div className="grid gap-6">
+              {/* Game ID + Game Pw */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid gap-2">
+                  <Label
+                    htmlFor="gameID"
+                    className="text-sm font-medium text-purple-200"
+                  >
+                    Game ID
+                  </Label>
+                  <Input
+                    id="gameID"
+                    name="gameID"
+                    type="number"
+                    placeholder="enter gameID..."
+                    onChange={handleInput}
+                    value={formData.gameID}
+                    required
+                    className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 
+                  rounded-xl text-white placeholder-purple-400 
+                  focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label
+                    htmlFor="gamePw"
+                    className="text-sm font-medium text-purple-200"
+                  >
+                    Game Pw
+                  </Label>
+                  <Input
+                    id="gamePw"
+                    name="gamePw"
+                    placeholder="enter gamePw..."
+                    onChange={handleInput}
+                    value={formData.gamePw}
+                    required
+                    className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 
+                  rounded-xl text-white placeholder-purple-400 
+                  focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
+                  />
+                </div>
+              </div>
+
+              {/* Select Game + Mode */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid gap-2">
+                  <Label
+                    htmlFor="selectGame"
+                    className="text-sm font-medium text-purple-200"
+                  >
+                    Select Game
+                  </Label>
+                  <SelectGame setSelectIds={setSelectIds} className="w-full" />
+                </div>
+                <div className="grid gap-2">
+                  <Label
+                    htmlFor="selectGameMode"
+                    className="text-sm font-medium text-purple-200"
+                  >
+                    Select Game Mode
+                  </Label>
+                  <SelectGameMode
+                    setSelectIds={setSelectIds}
+                    className="w-full"
+                  />
+                </div>
+              </div>
+
+              {/* Select Map + Start Time */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid gap-2">
+                  <Label
+                    htmlFor="selectMap"
+                    className="text-sm font-medium text-purple-200"
+                  >
+                    Select Map
+                  </Label>
+                  <SelectMap setSelectIds={setSelectIds} className="w-full" />
+                </div>
+                <div className="grid gap-2">
+                  <Label
+                    htmlFor="startTime"
+                    className="text-sm font-medium text-purple-200"
+                  >
+                    Start Time
+                  </Label>
+                  <Input
+                    id="startTime"
+                    name="startTime"
+                    type="datetime-local"
+                    placeholder="2025-07-17T16:00"
+                    onChange={handleInput}
+                    value={formData.startTime}
+                    required
+                    className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 
+                  rounded-xl text-white placeholder-purple-400 
+                  focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all [&::-webkit-calendar-picker-indicator]:invert"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer - Buttons on Same Line */}
+          <DialogFooter className="flex justify-end mt-12 gap-5">
             <DialogClose asChild>
-              <Button className="w-full sm:w-auto text-[#d9cbcb] bg-transparent border border-purple-500/30 rounded-xl hover:bg-transparent hover:text-white transition-all">
+              <Button className="px-6 py-3 text-[#d9cbcb] bg-transparent border border-purple-500/30 rounded-xl hover:bg-transparent hover:text-white transition-all">
                 Cancel
               </Button>
             </DialogClose>
             <Button
               type="submit"
               disabled={loading}
-              className="w-full sm:w-auto py-3 text-white font-semibold rounded-xl shadow-lg transition-all duration-500 bg-[length:200%_100%] hover:bg-[position:100%_0]"
+              className="px-6 py-3 text-white font-semibold rounded-xl shadow-lg transition-all duration-500 bg-[length:200%_100%] hover:bg-[position:100%_0]"
               style={{
                 backgroundImage:
                   "linear-gradient(to right, #c84de5, #79a5d5, #5e41a1)",
