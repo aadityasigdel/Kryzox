@@ -11,7 +11,7 @@ const Compete = () => {
     const [showConfirm, setShowConfirm] = useState(false);
 
     const handleComplete = () => {
-        setShowConfirm(true); // Show modal
+        setShowConfirm(true);
     };
 
     const confirmAction = async () => {
@@ -45,10 +45,11 @@ const Compete = () => {
             )}
 
             {infoMessage && (
-                <p className="text-green-500 text-sm text-center">{infoMessage}</p>
+                <p className="text-green-500 text-sm text-center">
+                    {infoMessage}
+                </p>
             )}
 
-        
             {showConfirm && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
                     <div className="bg-gradient-to-b from-gray-900 to-gray-800 rounded-lg p-5 w-80 max-w-[90%] text-center shadow-lg">
@@ -56,8 +57,10 @@ const Compete = () => {
                             Confirm Completion
                         </h2>
                         <p className="text-gray-300 mb-4 text-sm">
-                            Are you sure you want to complete this tournament? <br />
-                            You cannot make changes or add more players after completing.
+                            Are you sure you want to complete this tournament?{" "}
+                            <br />
+                            You cannot make changes or add more players after
+                            completing.
                         </p>
                         <div className="flex justify-between gap-3">
                             <button
