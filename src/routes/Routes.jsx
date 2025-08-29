@@ -6,6 +6,7 @@ import Home from "../pages/Home";
 // Admin pages
 import Analytics from "../pages/admin/analytics/Analytics";
 import FullMapHandeling from "../pages/admin/full-map-rooms/FullMapHandeling";
+import FullMapReward from "../pages/admin/full-map-rooms/FullMapReward";
 import FullMapRooms from "../pages/admin/full-map-rooms/FullMapRooms";
 import SideNavLayout from "../pages/admin/layout/SideNavLayout";
 import LiveManagement from "../pages/admin/live-management/LiveManagement";
@@ -84,6 +85,7 @@ const RouteHandler = () => {
         <Route path="user-management" element={<UserManagement />} />
         <Route path="full-map-rooms" element={<FullMapRooms />} />
         <Route path="full-map-rooms/approvals/:fullmapId" element={<FullMapHandeling />} />
+        <Route path="full-map-rooms/results/:fullmapId" element={< FullMapReward/>} />
         <Route path="room-management" element={<RoomManagement />} />
         <Route path="live-management" element={<LiveManagement />} />
 

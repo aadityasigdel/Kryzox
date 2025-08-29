@@ -70,7 +70,9 @@ const TournamentCard = ({ tournament }) => (
                 <NumberofApproved />/{tournament.maxplayer}
             </p>
         </div>
-        <Complete />
+         {tournament.status === "PENDING" && (
+            <Complete tournament={tournament} />
+        )}
     </div>
 );
 

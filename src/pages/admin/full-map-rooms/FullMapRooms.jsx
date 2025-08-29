@@ -1,12 +1,12 @@
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useGetData from "../../../hooks/getData.js";
 import Button from "../ui/shared/Button";
 import HeadingSection from "../ui/shared/HeadingSection";
 import CreateRoom from "./ui/CreateRoom";
 import FullMapRoomsCard from "./ui/FullMapRoomCard";
 import TabCard from "./ui/TabCard";
-import { useNavigate } from "react-router-dom";
 
 const cardData = [
     {
@@ -39,11 +39,10 @@ const cardData = [
     },
 ];
 
-const TabNav = ["Active", "Scheduled", "Completed"];
+const TabNav = ["Scheduled", "Completed"];
 
 const statusMap = {
     PENDING: "Scheduled",
-    ACTIVE: "Active",
     COMPLETED: "Completed",
 };
 
@@ -52,14 +51,25 @@ const FullMapRooms = () => {
     const { getData, result, responseError, loading } = useGetData();
     const [openForm, setOpenForm] = useState(false);
     const [tournaments, setTournaments] = useState([]);
-    const [selectedTab, setSelectedTab] = useState("Active");
+    const [selectedTab, setSelectedTab] = useState("Scheduled");
 
     useEffect(() => {
-        getData(`/fullmaps/status/PENDING`);
-    }, []);
+        console.log("Fetching tournaments for tab:", selectedTab);
 
+        setTournaments([]);
+
+        let url = "/fullmaps/status/PENDING";
+        if (selectedTab === "Completed") url = `/fullmaps/status/PRIVATE`;
+        else if (selectedTab === "Scheduled") url = `/fullmaps/status/PENDING`;
+
+        getData(url);
+    }, [selectedTab]);
+
+    // Map API results
     useEffect(() => {
         if (result?.content) {
+            console.log("Raw API result:", result.content);
+
             const apiTournaments = result.content.map((item) => ({
                 fullmapId: item.fullmapId,
                 title: item.title,
@@ -71,16 +81,32 @@ const FullMapRooms = () => {
                 pricePool: item.pricePool,
                 roomId: item.roomId,
                 roomPw: item.roomPw,
-                startTime: item.startTime.join("-"),
+                startTime: item.startTime
+                    ? new Date(item.startTime.join("-")).toLocaleString()
+                    : "N/A",
                 duration: item.duration,
-                status: statusMap[item.status] || "Scheduled",
+                status:
+                    selectedTab === "Completed"
+                        ? "Completed"
+                        : statusMap[item.status] || "Scheduled",
             }));
-            setTournaments(apiTournaments);
-        }
-    }, [result]);
 
+            console.log("Mapped tournaments:", apiTournaments);
+
+            setTournaments(apiTournaments);
+        } else {
+            console.log("No content from API");
+            setTournaments([]);
+        }
+    }, [result, selectedTab]);
+
+    // Filter tournaments
     const filteredTournaments = tournaments.filter(
         (t) => t.status === selectedTab
+    );
+    console.log(
+        `Filtered tournaments for ${selectedTab}:`,
+        filteredTournaments
     );
 
     const getTabCardData = (tournament) => [
@@ -101,7 +127,6 @@ const FullMapRooms = () => {
                 background: "linear-gradient(to bottom, #000000, #202020)",
             }}
         >
-            {/* Top heading with button */}
             <HeadingSection
                 heading="Full Map Rooms"
                 subheading="Manage multiplayer gaming sessions and tournaments"
@@ -110,11 +135,11 @@ const FullMapRooms = () => {
                 icon1={Plus}
             />
 
-            {/* Overview cards */}
+            {/*  cards */}
             <div className="flex gap-10 mt-10">
-                {cardData.map((item, index) => (
+                {cardData.map((item, idx) => (
                     <FullMapRoomsCard
-                        key={index}
+                        key={idx}
                         gradientColor={item.gradientColor}
                         status={item.status}
                         heading={item.heading}
@@ -124,7 +149,7 @@ const FullMapRooms = () => {
                 ))}
             </div>
 
-            {/* Tab section */}
+            {/*  tournament */}
             <div
                 className="h-max w-full mt-10 p-[30px]"
                 style={{
@@ -146,22 +171,38 @@ const FullMapRooms = () => {
                     ))}
                 </div>
 
-                {/* Tournaments list */}
+                {/* Loading/Error */}
+                {loading && (
+                    <p className="text-white">Loading tournaments...</p>
+                )}
+                {responseError && (
+                    <p className="text-red-500">{responseError}</p>
+                )}
+
+                {/* Tournament cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto h-[500px]">
-                    {filteredTournaments.length === 0 ? (
+                    {filteredTournaments.length === 0 && !loading ? (
                         <p className="text-white">
                             No {selectedTab.toLowerCase()} tournaments found.
                         </p>
                     ) : (
-                        filteredTournaments.map((tournament, index) => (
+                        filteredTournaments.map((tournament) => (
                             <div
-                                key={index}
-                                className="cursor-pointer hover:scale-105 transition-transform"
-                                onClick={() =>
-                                    navi(
-                                        `approvals/${tournament.fullmapId}`
-                                    )
-                                }
+                                key={tournament.fullmapId}
+                                className="cursor-pointer hover:scale-105 mt-4 ml-4 transition-transform"
+                                onClick={() => {
+                                    if (tournament.status === "Scheduled") {
+                                        navi(
+                                            `approvals/${tournament.fullmapId}`
+                                        );
+                                    } else if (
+                                        tournament.status === "Completed"
+                                    ) {
+                                        navi(
+                                            `results/${tournament.fullmapId}`
+                                        );
+                                    }
+                                }}
                             >
                                 <TabCard
                                     TabCardData={getTabCardData(tournament)}
@@ -172,6 +213,7 @@ const FullMapRooms = () => {
                 </div>
             </div>
 
+            {/* Create Room Modal */}
             <CreateRoom open={openForm} setOpen={setOpenForm} />
         </section>
     );

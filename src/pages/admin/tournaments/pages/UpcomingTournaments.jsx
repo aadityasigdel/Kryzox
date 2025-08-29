@@ -60,17 +60,12 @@ const SelectGame = ({ setGameId }) => {
         >
           {" "}
           {/* Updated width */}
-          <SelectValue
-            placeholder="Select a game"
-            className=" w-full "
-          />
+          <SelectValue placeholder="Select a game" className=" w-full " />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
             <SelectLabel>GAMES</SelectLabel>
-            <SelectItem value={777}>
-                all
-              </SelectItem>
+            <SelectItem value={777}>all</SelectItem>
             {result?.map((item) => (
               <SelectItem key={item?.gameId} value={item?.gameId}>
                 {item?.gameTitle}
@@ -228,7 +223,7 @@ const UpcomingTournamentsCard = ({ tournament, onRemove }) => {
 // -----------------------------
 export function UpcomingTournaments() {
   //  state for storing game id which is used to sorting the tournament
-  const [gameId, setGameId] = useState(null);
+  const [gameId, setGameId] = useState(777);
   const {
     getData: getSortData,
     result: sortResult,
@@ -247,31 +242,32 @@ export function UpcomingTournaments() {
   } = useGetData();
 
   const [tournaments, setTournaments] = useState([]);
-  const [page, setPage] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
-  const pageSize = 100;
+  // const [page, setPage] = useState(0);
+  // const [hasMore, setHasMore] = useState(true);
+  // const pageSize = 100;
 
   // Fetch tournaments
   const fetchTournaments = async () => {
-    const currentPage = page;
-    await getData(
-      `/posts/status/PENDING?pageNumber=${currentPage}&pageSize=${pageSize}`
-    );
+    // const currentPage = page;
+    // await getData(
+    //   `/posts/status/PENDING?pageNumber=${currentPage}&pageSize=${pageSize}`
+    // );
+    await getData("/posts/status/PENDING");
     // setPage((prev) => prev + 1);
   };
 
   // Watch result
   useEffect(() => {
     if (getResult?.content) {
-    //   setTournaments((prev) => {
-    //     const existingIds = new Set(prev.map((t) => t.postId));
-    //     const newItems = getResult.content.filter(
-    //       (t) => !existingIds.has(t.postId)
-    //     );
-    //     return [...prev, ...newItems];
-    //   });
-    //   setHasMore(!getResult.lastPage);
-    setTournaments(getResult.content);
+      //   setTournaments((prev) => {
+      //     const existingIds = new Set(prev.map((t) => t.postId));
+      //     const newItems = getResult.content.filter(
+      //       (t) => !existingIds.has(t.postId)
+      //     );
+      //     return [...prev, ...newItems];
+      //   });
+      //   setHasMore(!getResult.lastPage);
+      setTournaments(getResult.content);
     }
   }, [getResult]);
 
@@ -284,13 +280,10 @@ export function UpcomingTournaments() {
   }, [getResponseError]);
 
   // Remove tournament after accept/reject
-  const handleRemoveTournament = (postId) => {
-    setTournaments((prev) => {
-      const updated = prev.filter((t) => t.postId !== postId);
-      if (updated.length < pageSize && hasMore) {
-        fetchTournaments();
-      }
-      return updated;
+  const handleRemoveTournament =  (deleteId) => {
+    setTournaments(prev=>{
+      const removeData=prev.filter(ele=>ele.postId!==deleteId);
+      return removeData;
     });
   };
 
@@ -303,10 +296,9 @@ export function UpcomingTournaments() {
   useEffect(() => {
     console.log({ gameId });
     (async () => {
-      if (gameId !==777) {
+      if (gameId !== 777) {
         await getSortData(`/game/${gameId}/posts`);
-      }else{
-        console.log("this is from game id 777")
+      } else {
         fetchTournaments();
       }
     })();
@@ -315,7 +307,7 @@ export function UpcomingTournaments() {
   useEffect(() => {
     if (sortStatusCode === 200) {
       console.log({ sortResult });
-      const pendingData=sortResult.filter(ele=>(ele.status==="PENDING"));
+      const pendingData = sortResult.filter((ele) => ele.status === "PENDING");
       setTournaments(pendingData);
     }
   }, [sortResult]);
@@ -359,22 +351,23 @@ export function UpcomingTournaments() {
         </div>
       ) : (
         // Infinite Scroll for subsequent pages
-        <InfiniteScroll
-          dataLength={tournaments.length}
-          next={fetchTournaments}
-          hasMore={hasMore}
-          loader={
-            <h4 className="text-center text-purple-400 my-4">
-              Loading more tournaments...
-            </h4>
-          }
-          endMessage={
-            <p style={{ textAlign: "center" }}>
-              <b>Yay! You have seen it all</b>
-            </p>
-          }
-          className="h-auto w-full px-5 py-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
+        // <InfiniteScroll
+        //   dataLength={tournaments.length}
+        //   next={fetchTournaments}
+        //   hasMore={hasMore}
+        //   loader={
+        //     <h4 className="text-center text-purple-400 my-4">
+        //       Loading more tournaments...
+        //     </h4>
+        //   }
+        //   endMessage={
+        //     <p style={{ textAlign: "center" }}>
+        //       <b>Yay! You have seen it all</b>
+        //     </p>
+        //   }
+        //   className="h-auto w-full px-5 py-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        // >
+        <div className="h-auto w-full px-5 py-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {tournaments.map((tournament) => (
             <UpcomingTournamentsCard
               key={tournament.postId}
@@ -382,7 +375,7 @@ export function UpcomingTournaments() {
               onRemove={handleRemoveTournament}
             />
           ))}
-        </InfiniteScroll>
+        </div>
       )}
     </div>
   );
