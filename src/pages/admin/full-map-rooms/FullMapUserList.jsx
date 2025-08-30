@@ -2,7 +2,7 @@ import { useState } from "react";
 import FullMapDetails from "./ui/FullMapDetails";
 import RewardUser from "./ui/RewardUser";
 
-export default function FullMapReward() {
+export default function FullMapUserList() {
     const [rooms, setRooms] = useState([]);
     const [selectedRoom, setSelectedRoom] = useState(null);
     const [error, setError] = useState(null);

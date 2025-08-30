@@ -1,92 +1,93 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import useGetData from "../../../../hooks/getData.js";
 
-export default function RewardUser() {
-    const [screenshot, setScreenshot] = useState(null);
-    const [playerId, setPlayerId] = useState("");
-    const [coins, setCoins] = useState("");
+export default function ApprovedUsers() {
+    const { fullmapId } = useParams();
+    const { getData, result, loading, responseError } = useGetData();
+    const [selectedUsers, setSelectedUsers] = useState([]);
+    const nav = useNavigate();
 
-    const [screenshots, setScreenshots] = useState([
-        {
-            id: 1,
-            url: "https://via.placeholder.com/400x200?text=Screenshot+1",
-            player: "Player One",
-        },
-        {
-            id: 2,
-            url: "https://via.placeholder.com/400x200?text=Screenshot+2",
-            player: "Player Two",
-        },
-        {
-            id: 3,
-            url: "https://via.placeholder.com/400x200?text=Screenshot+3",
-            player: "Player Three",
-        },
-    ]);
+    useEffect(() => {
+        if (fullmapId) {
+            getData(`/fullmapApp/fullmap/${fullmapId}?status=CREATOR_APPROVED`);
+        }
+    }, [fullmapId]);
 
-    const handleRewardSubmit = (e) => {
-        e.preventDefault();
-        if (!playerId || !coins)
-            return alert("Enter player ID and coin amount");
+    const users = Array.isArray(result)
+        ? Array.from(
+              new Map(
+                  result.map((entry) => [
+                      entry.userId.id,
+                      {
+                          id: entry.userId.id,
+                          name:
+                              entry.userId.name ||
+                              entry.fullMap.user?.name ||
+                              `User ${entry.userId.id}`,
+                      },
+                  ])
+              ).values()
+          )
+        : [];
 
-        alert(`Rewarded ${coins} coins to player: ${playerId}`);
-        setPlayerId("");
-        setCoins("");
+    const toggleUser = (id) => {
+        setSelectedUsers((prev) =>
+            prev.includes(id) ? prev.filter((uid) => uid !== id) : [...prev, id]
+        );
     };
 
     return (
-        <div className="p-6 h-screen flex flex-col gap-8 text-white">
-            {/* Screenshot Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {screenshots.map((shot) => (
-                    <div
-                        key={shot.id}
-                        className="bg-gray-900/70 rounded-xl shadow-md overflow-hidden border border-gray-700 hover:scale-[1.02] transition"
-                    >
-                        <img
-                            src={shot.url}
-                            alt="Screenshot"
-                            className="w-full h-56 object-cover"
-                        />
-                        <div className="p-4 flex justify-between items-center">
-                            <span className="text-purple-300 font-semibold">
-                                {shot.player}
-                            </span>
-                        </div>
-                    </div>
-                ))}
+        <div className="p-6 text-white flex flex-col gap-6 h-full">
+            <h2 className="text-2xl font-bold text-teal-300">Approved Users</h2>
+
+            {loading && <p className="text-gray-400">Loading users...</p>}
+            {responseError && <p className="text-red-400">{responseError}</p>}
+
+            {users.length === 0 && !loading && !responseError && (
+                <p className="text-gray-400">No users found.</p>
+            )}
+
+            {/* Scrollable user list container */}
+            <div className="max-h-96 overflow-y-auto">
+                <ul className="space-y-3">
+                    {users.map((user) => (
+                        <li
+                            key={user.id}
+                            className="bg-gray-900/70 flex justify-between items-center border border-gray-700 rounded-lg p-4 shadow-md hover:bg-gray-800 transition"
+                        >
+                            <div className="flex items-center gap-x-4">
+                                <span className="text-purple-400 font-semibold text-lg">
+                                    {user.id}.
+                                </span>
+                                <span className="text-gray-400 font-medium">
+                                    Name:
+                                </span>
+                                <span className="text-teal-400 font-semibold text-lg">
+                                    {user.name}
+                                </span>
+                            </div>
+                            <input
+                                type="checkbox"
+                                checked={selectedUsers.includes(user.id)}
+                                onChange={() => toggleUser(user.id)}
+                                className="h-5 w-5 text-teal-400 accent-teal-400"
+                            />
+                        </li>
+                    ))}
+                </ul>
             </div>
 
-            {/* Reward Player */}
-            <div className="bg-gray-900/50 rounded-lg p-4 shadow-md">
-                <h3 className="text-xl font-semibold text-teal-300 mb-3">
-                    Reward a Player
-                </h3>
-                <form
-                    onSubmit={handleRewardSubmit}
-                    className="flex flex-col gap-3"
-                >
-                    <input
-                        type="text"
-                        placeholder="Enter Player ID"
-                        value={playerId}
-                        onChange={(e) => setPlayerId(e.target.value)}
-                        className="px-3 py-2 rounded-md bg-gray-800 text-gray-200 placeholder-gray-400 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    />
-                    <input
-                        type="number"
-                        placeholder="Enter Coins"
-                        value={coins}
-                        onChange={(e) => setCoins(e.target.value)}
-                        className="px-3 py-2 rounded-md bg-gray-800 text-gray-200 placeholder-gray-400 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
-                    />
-                    <button
-                        type="submit"
-                        className="px-4 py-2 rounded-md bg-gradient-to-r from-purple-500 to-teal-400 hover:opacity-90 text-white font-semibold transition"
-                    >
-                        Reward Player
-                    </button>
-                </form>
-            </div>
+            <button
+                onClick={() =>
+                    nav("/admin/full-map-rooms/results/rewards", {
+                        state: {selectedUsers}
+                    })
+                }
+                className="bg-teal-500 hover:bg-teal-600 transition text-white font-semibold py-2 px-4 rounded shadow"
+            >
+                Reward Selected Users
+            </button>
         </div>
     );
 }

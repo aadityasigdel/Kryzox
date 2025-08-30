@@ -6,8 +6,8 @@ import Home from "../pages/Home";
 // Admin pages
 import Analytics from "../pages/admin/analytics/Analytics";
 import FullMapHandeling from "../pages/admin/full-map-rooms/FullMapHandeling";
-import FullMapReward from "../pages/admin/full-map-rooms/FullMapReward";
 import FullMapRooms from "../pages/admin/full-map-rooms/FullMapRooms";
+import FullMapReward from "../pages/admin/full-map-rooms/FullMapUserList";
 import SideNavLayout from "../pages/admin/layout/SideNavLayout";
 import LiveManagement from "../pages/admin/live-management/LiveManagement";
 import Notification from "../pages/admin/notication/Notification";
@@ -15,9 +15,11 @@ import Overview from "../pages/admin/overview/Overview";
 import RoomManagement from "../pages/admin/room-management/RoomManagement";
 import TopUpManage from "../pages/admin/top-up-manage/TopUpManage";
 import Tournaments from "../pages/admin/tournaments/Tournaments";
-import UserManagement from "../pages/admin/user-management/UserManagement";
-import { UpcomingTournaments } from "../pages/admin/tournaments/pages/UpcomingTournaments";
 import { ActiveTournaments } from "../pages/admin/tournaments/pages/ActiveTournaments";
+import { UpcomingTournaments } from "../pages/admin/tournaments/pages/UpcomingTournaments";
+import UserManagement from "../pages/admin/user-management/UserManagement";
+import RewardWinners from "../pages/admin/full-map-rooms/RewardWinners";
+
 
 // Auth pages
 import LoginPage from "../components/auth/Login";
@@ -88,6 +90,8 @@ const RouteHandler = () => {
         <Route path="full-map-rooms/results/:fullmapId" element={< FullMapReward/>} />
         <Route path="room-management" element={<RoomManagement />} />
         <Route path="live-management" element={<LiveManagement />} />
+        <Route path="full-map-rooms/results/rewards" element={<RewardWinners />} />
+        
 
         {/* Tournament Pages */}
         <Route path="tournaments">
