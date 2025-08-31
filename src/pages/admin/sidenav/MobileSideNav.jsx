@@ -54,7 +54,7 @@ const SideNavLink = ({ icon, label, url }) => {
   return (
     <div
       className={clsx(
-        " group relative h-[53px] w-[241px] flex items-center gap-3 pl-6 hover:bg-[#4D8ACA] hover:rounded-2xl hover:text-[#80FFDB]  transition-all duration-500",
+        " group relative h-[53px] w-[95px] flex items-center gap-3 pl-6 hover:bg-[#4D8ACA] hover:rounded-2xl hover:text-[#80FFDB]  transition-all duration-500",
         (pathname === url || pathname === url + "/") && 
           "bg-[#4D8ACA] text-[#80FFDB] rounded-2xl"
       )}
@@ -62,7 +62,7 @@ const SideNavLink = ({ icon, label, url }) => {
       <div className="h-5 w-5 rounded-full grid place-content-center text-[18px]">
         <img src={icon} alt={label} height={25} width={25} />
       </div>
-      <div className="text-white  group-hover:text-[#80FFDB] ">{label}</div> 
+      {/* <div className="text-white  group-hover:text-[#80FFDB] ">{label}</div>  */}
     </div>
   );
 };

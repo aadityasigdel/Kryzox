@@ -3,7 +3,6 @@ import { X } from "lucide-react";
 import "./style.css";
 import { Link, useLocation } from "react-router-dom";
 import clsx from "clsx";
-import MobileSideNav from "./MobileSideNav";
 const NavData = [
   {
     label: "Overview",
@@ -112,13 +111,4 @@ const SideNav = () => {
     </div>
   );
 };
-
-const SideNavStructure=()=>{
-   return(
-    <>
-    <div className="hidden md:block"><SideNav /></div>
-    <div className="block md:hidden"><MobileSideNav /></div>
-    </>
-   )
-}
-export default SideNavStructure;
+export default SideNav;

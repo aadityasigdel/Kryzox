@@ -1,5 +1,6 @@
 import React from "react";
-import SideNavStructure from "../sidenav/SideNav";
+import Sidenav from "../sidenav/SideNav";
+import MobileSideNav from "../sidenav/MobileSideNav";
 import { Outlet } from "react-router-dom";
 import "./style.css";
 // admin homepage
@@ -13,8 +14,11 @@ const SideNavLayout = () => {
     // </div>
     <div className="max-w-[1600px] h-screen m-auto flex overflow-hidden">
       {/* Sidebar (left) */}
-      <div className="w-[292px] bg-[#212121] overflow-y-scroll hide-scrollbar">
-        <SideNavStructure />
+      <div className="block md:hidden">
+      <MobileSideNav />
+      </div>
+      <div className="hidden md:block w-[292px] bg-[#212121] overflow-y-scroll hide-scrollbar">
+        <Sidenav />
       </div>
 
       {/* Main content (right) */}
