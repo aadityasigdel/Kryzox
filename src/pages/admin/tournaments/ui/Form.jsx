@@ -81,7 +81,7 @@ const SelectGame = ({ setSelectIds }) => {
           <SelectGroup>
             <SelectLabel>GAMES</SelectLabel>
             {result?.map((item) => (
-              <SelectItem key={item?.gameId} value={item?.gameId}>
+              <SelectItem key={item?.gameId} value={String(item?.gameId)}>
                 {item?.gameTitle}
               </SelectItem>
             ))}
@@ -134,7 +134,7 @@ const SelectGameMode = ({ setSelectIds }) => {
           <SelectLabel>Game mode</SelectLabel>
           {result.map((item) => {
             return (
-              <SelectItem value={item?.modeId}>{item?.modeName}</SelectItem>
+              <SelectItem key={item.mapId} value={String(item?.modeId)}>{item?.modeName}</SelectItem>
             );
           })}
         </SelectGroup>
@@ -184,7 +184,7 @@ const SelectMap = ({ setSelectIds }) => {
           <SelectLabel>MAPS</SelectLabel>
           {result?.map((item) => {
             return (
-              <SelectItem value={item?.mapId}>{item?.mapTitle}</SelectItem>
+              <SelectItem key={item.mapId} value={String(item?.mapId)}>{item?.mapTitle}</SelectItem>
             );
           })}
         </SelectGroup>
@@ -455,7 +455,7 @@ export function TournamentCreationForm({ setIsTournamentCreated }) {
                   >
                     Select Game
                   </Label>
-                  <SelectGame setSelectIds={setSelectIds} className="w-full" />
+                  <SelectGame setSelectIds={setSelectIds} className="w-full text-white" />
                 </div>
                 <div className="grid gap-2">
                   <Label
