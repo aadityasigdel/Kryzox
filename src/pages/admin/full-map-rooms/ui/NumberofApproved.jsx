@@ -21,8 +21,6 @@ const NumberofApproved = () => {
         }
     }, [result]);
 
-    console.log(count);
-
     if (loading) return <span>...</span>;
 
     return <span>{count}</span>;
