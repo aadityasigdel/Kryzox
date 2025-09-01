@@ -8,6 +8,7 @@ import Analytics from "../pages/admin/analytics/Analytics";
 import FullMapHandeling from "../pages/admin/full-map-rooms/FullMapHandeling";
 import FullMapRooms from "../pages/admin/full-map-rooms/FullMapRooms";
 import FullMapReward from "../pages/admin/full-map-rooms/FullMapUserList";
+import RewardWinners from "../pages/admin/full-map-rooms/RewardWinners";
 import SideNavLayout from "../pages/admin/layout/SideNavLayout";
 import LiveManagement from "../pages/admin/live-management/LiveManagement";
 import Notification from "../pages/admin/notication/Notification";
@@ -18,7 +19,6 @@ import Tournaments from "../pages/admin/tournaments/Tournaments";
 import { ActiveTournaments } from "../pages/admin/tournaments/pages/ActiveTournaments";
 import { UpcomingTournaments } from "../pages/admin/tournaments/pages/UpcomingTournaments";
 import UserManagement from "../pages/admin/user-management/UserManagement";
-import RewardWinners from "../pages/admin/full-map-rooms/RewardWinners";
 
 
 // Auth pages
@@ -90,7 +90,7 @@ const RouteHandler = () => {
         <Route path="full-map-rooms/results/:fullmapId" element={< FullMapReward/>} />
         <Route path="room-management" element={<RoomManagement />} />
         <Route path="live-management" element={<LiveManagement />} />
-        <Route path="full-map-rooms/results/rewards" element={<RewardWinners />} />
+        <Route path="full-map-rooms/results/rewards/:fullmapId" element={<RewardWinners />} />
         
 
         {/* Tournament Pages */}

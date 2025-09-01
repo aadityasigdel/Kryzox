@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useGetData from "../../../../hooks/getData.js";
+import usePostData from "../../../../hooks/postData.js";
 
 export default function ApprovedUsers() {
     const { fullmapId } = useParams();
     const { getData, result, loading, responseError } = useGetData();
+    const { postData, loading: postLoading, error: postError } = usePostData();
     const [selectedUsers, setSelectedUsers] = useState([]);
     const nav = useNavigate();
 
@@ -37,9 +39,22 @@ export default function ApprovedUsers() {
         );
     };
 
+    const handleReward = async () => {
+        if (!selectedUsers.length) return;
+
+        try {
+            await postData(`fullmap/${fullmapId}/winners`, selectedUsers);
+
+            nav(`/admin/full-map-rooms/results/rewards/${fullmapId}`, {
+                state: { selectedUsers },
+            });
+        } catch (err) {
+            console.error("Error rewarding users:", err);
+        }
+    };
+
     return (
         <div className="p-6 text-white flex flex-col gap-6 h-full">
-            <h2 className="text-2xl font-bold text-teal-300">Approved Users</h2>
 
             {loading && <p className="text-gray-400">Loading users...</p>}
             {responseError && <p className="text-red-400">{responseError}</p>}
@@ -48,7 +63,6 @@ export default function ApprovedUsers() {
                 <p className="text-gray-400">No users found.</p>
             )}
 
-            {/* Scrollable user list container */}
             <div className="max-h-96 overflow-y-auto">
                 <ul className="space-y-3">
                     {users.map((user) => (
@@ -79,15 +93,16 @@ export default function ApprovedUsers() {
             </div>
 
             <button
-                onClick={() =>
-                    nav("/admin/full-map-rooms/results/rewards", {
-                        state: {selectedUsers}
-                    })
-                }
-                className="bg-teal-500 hover:bg-teal-600 transition text-white font-semibold py-2 px-4 rounded shadow"
+                onClick={handleReward}
+                disabled={postLoading || !selectedUsers.length}
+                className="bg-teal-500 hover:bg-teal-600 transition text-white font-semibold py-2 px-4 rounded shadow disabled:opacity-50"
             >
-                Reward Selected Users
+                {postLoading ? "Rewarding..." : "Reward Selected Users"}
             </button>
+
+            {postError && (
+                <p className="text-red-400 mt-2">{postError.message}</p>
+            )}
         </div>
     );
 }
