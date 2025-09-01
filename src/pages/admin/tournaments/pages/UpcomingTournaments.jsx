@@ -280,7 +280,7 @@ export function UpcomingTournaments() {
   }, [getResponseError]);
 
   // Remove tournament after accept/reject
-  const handleRemoveTournament =  (deleteId) => {
+  const onRemove =  (deleteId) => {
     setTournaments(prev=>{
       const removeData=prev.filter(ele=>ele.postId!==deleteId);
       return removeData;
@@ -372,7 +372,7 @@ export function UpcomingTournaments() {
             <UpcomingTournamentsCard
               key={tournament.postId}
               tournament={tournament}
-              onRemove={handleRemoveTournament}
+              onRemove={onRemove}
             />
           ))}
         </div>

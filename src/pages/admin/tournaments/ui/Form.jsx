@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./form.style.css"; // Import the CSS file for custom styles
 import { Button } from "@/components/shadcn-ui/button";
 import {
   Dialog,
@@ -63,13 +64,8 @@ const SelectGame = ({ setSelectIds }) => {
         onValueChange={(id) => {
           handleIds(id);
         }}
-        className="text-white"
       >
-        <SelectTrigger
-          className="w-full bg-[#1B1230]  border border-purple-500/30 
-                   text-white placeholder-purple-400 
-                  focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
-        >
+        <SelectTrigger className="w-full !h-[50px] bg-[#202020] border-none rounded-lg text-[#B05BDB]  select-white-icon">
           {" "}
           {/* Updated width */}
           <SelectValue
@@ -81,7 +77,7 @@ const SelectGame = ({ setSelectIds }) => {
           <SelectGroup>
             <SelectLabel>GAMES</SelectLabel>
             {result?.map((item) => (
-              <SelectItem key={item?.gameId} value={item?.gameId}>
+              <SelectItem key={item?.gameId} value={String(item?.gameId)}>
                 {item?.gameTitle}
               </SelectItem>
             ))}
@@ -122,11 +118,7 @@ const SelectGameMode = ({ setSelectIds }) => {
         handleIds(id);
       }}
     >
-      <SelectTrigger
-        className="w-full bg-[#1B1230]  border border-purple-500/30 
-                   text-white placeholder-purple-400 
-                  focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
-      >
+      <SelectTrigger className="w-full !h-[50px] bg-[#202020] border-none rounded-lg text-[#B05BDB]  ">
         <SelectValue placeholder="Select a game mode" className="text-white" />
       </SelectTrigger>
       <SelectContent>
@@ -134,7 +126,9 @@ const SelectGameMode = ({ setSelectIds }) => {
           <SelectLabel>Game mode</SelectLabel>
           {result.map((item) => {
             return (
-              <SelectItem value={item?.modeId}>{item?.modeName}</SelectItem>
+              <SelectItem key={item.mapId} value={String(item?.modeId)}>
+                {item?.modeName}
+              </SelectItem>
             );
           })}
         </SelectGroup>
@@ -172,11 +166,7 @@ const SelectMap = ({ setSelectIds }) => {
         handleIds(id);
       }}
     >
-      <SelectTrigger
-        className="w-full bg-[#1B1230]  border border-purple-500/30 
-                   text-white placeholder-purple-400 
-                  focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
-      >
+      <SelectTrigger className="w-full !h-[50px] bg-[#202020] border-none rounded-lg text-[#B05BDB]  ">
         <SelectValue placeholder="Select a map" />
       </SelectTrigger>
       <SelectContent>
@@ -184,7 +174,9 @@ const SelectMap = ({ setSelectIds }) => {
           <SelectLabel>MAPS</SelectLabel>
           {result?.map((item) => {
             return (
-              <SelectItem value={item?.mapId}>{item?.mapTitle}</SelectItem>
+              <SelectItem key={item.mapId} value={String(item?.mapId)}>
+                {item?.mapTitle}
+              </SelectItem>
             );
           })}
         </SelectGroup>
@@ -272,23 +264,23 @@ export function TournamentCreationForm({ setIsTournamentCreated }) {
   // handleinput function
   const handleInput = (e) => {
     const { name, value } = e.target;
-     if (name === "gameID") {
+    if (name === "gameID") {
       if (value.includes(".")) {
         toast.error("Game ID can only be an integer.");
         return; // Stop here and don't update state
       }
     }
-      setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const formHandler = async (e) => {
     e.preventDefault();
-      await postData(
-        `/user/${loggedInUserInfo?.id || 1}/game/${selectIds.gameId}/gamemode/${
-          selectIds.modeId
-        }/map/${selectIds.mapId}/posts`,
-        formData
-      );
+    await postData(
+      `/user/${loggedInUserInfo?.id || 1}/game/${selectIds.gameId}/gamemode/${
+        selectIds.modeId
+      }/map/${selectIds.mapId}/posts`,
+      formData
+    );
   };
 
   return (
@@ -298,42 +290,41 @@ export function TournamentCreationForm({ setIsTournamentCreated }) {
       </DialogTrigger>
 
       <DialogContent
-        className="sm:max-w-3xl w-full bg-gradient-to-b from-[#2a1d47] to-[#1B1230] 
-       border border-purple-500/30 rounded-2xl 
-       p-8 space-y-8 text-white 
+        className="sm:max-w-3xl w-full  rounded-2xl 
+       p-8 space-y-8 text-white bg-black
        max-h-[90vh] overflow-y-auto my-2
        scrollbar-thin scrollbar-thumb-purple-500/40 scrollbar-track-transparent"
       >
         <form className="text-white" onSubmit={formHandler}>
           <DialogHeader className="text-center md:text-left">
-            <DialogTitle
-              className="text-xl font-semibold md:text-3xl"
-              style={{
-                background: "linear-gradient(45deg, #c84de5, #79a5d5, #5e41a1)",
-                WebkitBackgroundClip: "text",
-                color: "transparent",
-              }}
-            >
-              Create Tournament
+            <DialogTitle>
+              <h1 className="text-[30px] md:text-5xl font-bold mb-2 relative">
+                <span
+                  className="text-transparent bg-clip-text"
+                  style={{
+                    background: "linear-gradient(45deg, #80FFDB, #B05BDB)",
+                    WebkitBackgroundClip: "text",
+                  }}
+                >
+                  Create Tournament
+                </span>
+              </h1>
             </DialogTitle>
-            <DialogDescription className="text-sm text-[#d9cbcb] md:text-base pb-5">
+            <DialogDescription className="text-[18px] text-[#B05BDB] md:text-base pb-5">
               Fill in the details for your new tournament.
             </DialogDescription>
           </DialogHeader>
 
           {/* ---------------- Basic Tournament Info ---------------- */}
           <div className="space-y-5 my-5">
-            <h2 className="text-purple-300 font-semibold text-lg">
+            <h2 className="text-[#80FFDB] font-semibold text-lg">
               Basic Tournament Info
             </h2>
-            <div className="grid gap-6">
+            <div className="grid gap-6 text-[#80FFDB]">
               {/* Tournament Title + Fee */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="grid gap-2">
-                  <Label
-                    htmlFor="title"
-                    className="text-sm font-medium text-purple-200"
-                  >
+                  <Label htmlFor="title" className="text-sm font-medium">
                     Tournament Title
                   </Label>
                   <Input
@@ -343,16 +334,11 @@ export function TournamentCreationForm({ setIsTournamentCreated }) {
                     onChange={handleInput}
                     value={formData.title}
                     required
-                    className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 
-                  rounded-xl text-white placeholder-purple-400 
-                  focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
+                    className="w-full h-[50px] px-4 bg-[#202020] border-none rounded-lg text-white "
                   />
                 </div>
                 <div className="grid gap-2">
-                  <Label
-                    htmlFor="entryFee"
-                    className="text-sm font-medium text-purple-200"
-                  >
+                  <Label htmlFor="entryFee" className="text-sm font-medium ">
                     Entry Fee
                   </Label>
                   <Input
@@ -364,19 +350,14 @@ export function TournamentCreationForm({ setIsTournamentCreated }) {
                     value={formData.entryFee}
                     step="1"
                     required
-                    className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 
-                  rounded-xl text-white placeholder-purple-400 
-                  focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
+                    className="w-full h-[50px] px-4 bg-[#202020] border-none rounded-lg text-white "
                   />
                 </div>
               </div>
 
               {/* Description Full Width */}
               <div className="grid gap-2">
-                <Label
-                  htmlFor="content"
-                  className="text-sm font-medium text-purple-200"
-                >
+                <Label htmlFor="content" className="text-sm font-medium">
                   Description
                 </Label>
                 <Textarea
@@ -387,29 +368,24 @@ export function TournamentCreationForm({ setIsTournamentCreated }) {
                   onChange={handleInput}
                   value={formData.content}
                   required
-                  className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 
-                rounded-xl text-white placeholder-purple-400 
-                focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
+                  className="w-full h-[70px] px-4 bg-[#202020] border-none rounded-lg text-white "
                 />
               </div>
             </div>
           </div>
 
           {/* ---------------- Tournament Settings ---------------- */}
-          <div className="space-y-6 mt-10">
+          <div className="space-y-6 mt-10 text-[#80FFDB]">
             {" "}
             {/* Margin-top for separation */}
-            <h2 className="text-purple-300 font-semibold text-lg">
+            <h2 className=" font-semibold text-lg">
               Tournament Settings
             </h2>
             <div className="grid gap-6">
               {/* Game ID + Game Pw */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="grid gap-2">
-                  <Label
-                    htmlFor="gameID"
-                    className="text-sm font-medium text-purple-200"
-                  >
+                  <Label htmlFor="gameID" className="text-sm font-medium ">
                     Game ID
                   </Label>
                   <Input
@@ -420,16 +396,11 @@ export function TournamentCreationForm({ setIsTournamentCreated }) {
                     onChange={handleInput}
                     value={formData.gameID}
                     required
-                    className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 
-                  rounded-xl text-white placeholder-purple-400 
-                  focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
+                    className="w-full h-[50px] px-4 bg-[#202020] border-none rounded-lg text-white "
                   />
                 </div>
                 <div className="grid gap-2">
-                  <Label
-                    htmlFor="gamePw"
-                    className="text-sm font-medium text-purple-200"
-                  >
+                  <Label htmlFor="gamePw" className="text-sm font-medium ">
                     Game Pw
                   </Label>
                   <Input
@@ -439,9 +410,7 @@ export function TournamentCreationForm({ setIsTournamentCreated }) {
                     onChange={handleInput}
                     value={formData.gamePw}
                     required
-                    className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 
-                  rounded-xl text-white placeholder-purple-400 
-                  focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
+                    className="w-full h-[50px] px-4 bg-[#202020] border-none rounded-lg text-white "
                   />
                 </div>
               </div>
@@ -449,44 +418,32 @@ export function TournamentCreationForm({ setIsTournamentCreated }) {
               {/* Select Game + Mode */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="grid gap-2">
-                  <Label
-                    htmlFor="selectGame"
-                    className="text-sm font-medium text-purple-200"
-                  >
+                  <Label htmlFor="selectGame" className="text-sm font-medium ">
                     Select Game
                   </Label>
-                  <SelectGame setSelectIds={setSelectIds} className="w-full" />
+                  <SelectGame setSelectIds={setSelectIds} />
                 </div>
                 <div className="grid gap-2">
                   <Label
                     htmlFor="selectGameMode"
-                    className="text-sm font-medium text-purple-200"
+                    className="text-sm font-medium "
                   >
                     Select Game Mode
                   </Label>
-                  <SelectGameMode
-                    setSelectIds={setSelectIds}
-                    className="w-full"
-                  />
+                  <SelectGameMode setSelectIds={setSelectIds} />
                 </div>
               </div>
 
               {/* Select Map + Start Time */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="grid gap-2">
-                  <Label
-                    htmlFor="selectMap"
-                    className="text-sm font-medium text-purple-200"
-                  >
+                  <Label htmlFor="selectMap" className="text-sm font-medium">
                     Select Map
                   </Label>
-                  <SelectMap setSelectIds={setSelectIds} className="w-full" />
+                  <SelectMap setSelectIds={setSelectIds} />
                 </div>
                 <div className="grid gap-2">
-                  <Label
-                    htmlFor="startTime"
-                    className="text-sm font-medium text-purple-200"
-                  >
+                  <Label htmlFor="startTime" className="text-sm font-medium ">
                     Start Time
                   </Label>
                   <Input
@@ -497,9 +454,7 @@ export function TournamentCreationForm({ setIsTournamentCreated }) {
                     onChange={handleInput}
                     value={formData.startTime}
                     required
-                    className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 
-                  rounded-xl text-white placeholder-purple-400 
-                  focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all [&::-webkit-calendar-picker-indicator]:invert"
+                    className="w-full h-[50px] px-4 bg-[#202020] border-none rounded-lg text-white [&::-webkit-calendar-picker-indicator]:invert"
                   />
                 </div>
               </div>
