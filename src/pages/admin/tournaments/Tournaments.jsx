@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import TournamentCard from "./ui/TournamentCard";
-import { TournamentCreationForm } from "./ui/Form";
+import { TournamentCreationForm } from "./ui/TournamentCreationForm";
 import useGetData from "../../../hooks/getData";
 import { NavLink } from "react-router-dom";
+import TabHeading from "./ui/TabHeading";
+import TabSection from "./ui/TabSection";
 
 // static data
 const baseTournamentCardData = [
@@ -244,6 +246,11 @@ const Tournaments = () => {
             />
           </NavLink>
         ))}
+      </section>
+      {/*  tab section */}
+      <section>
+        <TabHeading />
+        <TabSection />
       </section>
     </div>
   );
