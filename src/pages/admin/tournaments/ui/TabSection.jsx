@@ -114,7 +114,7 @@ const DataTable = () => {
                   {item.status}
                 </button>
               </td>
-              <td className="py-3 px-4">{item.participants}</td>
+              <td className="py-3 px-4 flex"><p>{item.participants}</p><p className="text-gray-400">/100</p></td>
               <td className="py-3 px-4">{item.prizePool}</td>
               <td className="py-3 px-4">{item.startDateTime}</td>
               <td className="py-3 px-4">{item.endDateTime}</td>

@@ -202,7 +202,7 @@ const Tournaments = () => {
   // ================================
   return (
     <div
-      className="w-full h-full px-[72px] pt-[65px]"
+      className="w-full min-h-screen px-[72px] py-[65px] "
       style={{ background: "linear-gradient(to bottom, #000000, #202020)" }}
     >
       {/* heading section */}
@@ -248,7 +248,7 @@ const Tournaments = () => {
         ))}
       </section>
       {/*  tab section */}
-      <section>
+      <section className="w-full h-full">
         <TabHeading />
         <TabSection />
       </section>
