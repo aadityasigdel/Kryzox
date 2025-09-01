@@ -92,21 +92,21 @@ const DataTable = () => {
                 >
                   {item.status === "Ongoing" && (
                     <img
-                      src="/public/admin/tournament/tab/medal.png"
+                      src="/admin/tournament/tab/medal.png"
                       alt={item.tournamentName}
                       className="w-4 h-4 mr-2"
                     />
                   )}
                   {item.status === "Upcoming" && (
                     <img
-                      src="/public/admin/tournament/tab/calendar.png"
+                      src="/admin/tournament/tab/calendar.png"
                       alt={item.tournamentName}
                       className="w-4 h-4 mr-2"
                     />
                   )}
                   {item.status === "Completed" && (
                     <img
-                      src="/public/admin/tournament/tab/winner.png"
+                      src="/admin/tournament/tab/winner.png"
                       alt={item.tournamentName}
                       className="w-4 h-4 mr-2"
                     />
