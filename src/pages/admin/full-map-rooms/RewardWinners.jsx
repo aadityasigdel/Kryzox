@@ -1,113 +1,120 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import useGetData from "../../../hooks/getData.js";
 import useUpdateData from "../../../hooks/updateData.js";
+import WinnersList from "./ui/WinnersList";
+import WinnerCard from "./ui/WinnerCard";
 
 export default function RewardWinners() {
-    const location = useLocation();
-    const selectedUsers = location.state?.selectedUsers || [];
+    const { fullmapId } = useParams();
     const { updateData, loading, error } = useUpdateData();
+    const { getData, result = [], responseError } = useGetData();
 
+    const [winnerData, setWinnerData] = useState({});
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [successMessages, setSuccessMessages] = useState([]); // <-- added
 
-    const [winnerData, setWinnerData] = useState(
-        selectedUsers.reduce((acc, id) => {
-            acc[id] = { position: "", message: "" };
-            return acc;
-        }, {})
-    );
+    useEffect(() => {
+        if (fullmapId) getData(`fullmap/${fullmapId}/winners`);
+    }, [fullmapId, getData]);
 
-    const handleChange = (userId, field, value) => {
+    useEffect(() => {
+        if (result.length) {
+            setWinnerData((prev) => {
+                const merged = { ...prev };
+                result.forEach((w) => {
+                    if (!merged[w.user.id]) {
+                        merged[w.user.id] = {
+                            position: w.position ?? null,
+                            message: w.message ?? "",
+                        };
+                    }
+                });
+                return merged;
+            });
+        }
+    }, [result]);
+
+    if (!result.length)
+        return <p className="text-white p-6">No winners found.</p>;
+
+    const currentUser = result[currentIndex];
+
+    const handlePositionSelect = (pos) =>
         setWinnerData((prev) => ({
             ...prev,
-            [userId]: { ...prev[userId], [field]: value },
+            [currentUser.user.id]: {
+                ...prev[currentUser.user.id],
+                position: Number(pos),
+            },
         }));
+
+    const handleMessageChange = (msg) =>
+        setWinnerData((prev) => ({
+            ...prev,
+            [currentUser.user.id]: {
+                ...prev[currentUser.user.id],
+                message: msg,
+            },
+        }));
+
+    // Submit all winners one by one and track success
+    const handleSubmitAll = async () => {
+        const newSuccessMessages = [];
+
+        for (const [userId, data] of Object.entries(winnerData)) {
+            const body = {
+                position: data.position,
+                message: data.message,
+            };
+
+            try {
+                await updateData(`winners/${userId}`, body);
+                newSuccessMessages.push(`User ${userId} rewarded successfully!`);
+            } catch (err) {
+                console.error("Failed to update user", userId, err);
+            }
+        }
+
+        setSuccessMessages(newSuccessMessages);
+
+        // Refetch updated data
+        if (fullmapId) getData(`fullmap/${fullmapId}/winners`);
     };
 
-    const handleSubmit = () => {
-        const payload = Object.entries(winnerData).map(([userId, data]) => ({
-            userId,
-            ...data,
-        }));
-
-        console.log("Submitting:", payload);
-        updateData("/api/v1/winners", payload);
+    const handleNext = async () => {
+        if (currentIndex < result.length - 1) {
+            setCurrentIndex(currentIndex + 1);
+        } else {
+            await handleSubmitAll();
+        }
     };
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 h-screen">
-            <div className="border border-white/20 rounded-xl p-6 shadow-lg flex flex-col justify-start text-white bg-black/70">
-                <h1 className="text-4xl font-bold bg-gradient-to-br from-teal-300 to-purple-500 bg-clip-text text-transparent mb-6">
-                    Selected Users
-                </h1>
+        <section className="w-full min-h-screen px-[72px] pt-[65px] bg-gradient-to-b from-black to-gray-900">
+            <h1 className="text-4xl font-bold bg-gradient-to-br from-teal-300 to-purple-500 bg-clip-text text-transparent mb-8">
+                Reward Winners
+            </h1>
 
-                {selectedUsers.length === 0 ? (
-                    <p className="text-gray-400">No users selected.</p>
-                ) : (
-                    <ul className="space-y-3">
-                        {selectedUsers.map((id) => (
-                            <li
-                                key={id}
-                                className="bg-white/5 border border-white/20 rounded-lg p-3 shadow-sm"
-                            >
-                                <span className="text-teal-300 font-semibold">
-                                    User ID:
-                                </span>{" "}
-                                {id}
-                            </li>
-                        ))}
-                    </ul>
-                )}
+            <div className="flex gap-10 bg-gray-600 rounded-2xl h-[500px] p-6">
+                <WinnersList
+                    winners={result}
+                    currentIndex={currentIndex}
+                    setCurrentIndex={setCurrentIndex}
+                />
+
+                <WinnerCard
+                    user={currentUser.user}
+                    winnerData={winnerData[currentUser.user.id] || {}}
+                    onSelectPosition={handlePositionSelect}
+                    onChangeMessage={handleMessageChange}
+                    onNext={handleNext}
+                    isLast={currentIndex === result.length - 1}
+                    loading={loading}
+                    error={error || responseError}
+                    successMessages={successMessages} 
+                />
             </div>
-
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6 shadow-lg text-white overflow-y-auto">
-                <h2 className="text-4xl font-bold bg-gradient-to-br from-teal-300 to-purple-500 bg-clip-text text-transparent mb-6">
-                    Reward Winners
-                </h2>
-
-                {selectedUsers.map((id) => (
-                    <div
-                        key={id}
-                        className="mb-6 p-4 bg-black/40 border border-white/20 rounded-lg shadow space-y-4"
-                    >
-                        <h3 className="text-lg font-semibold text-teal-300">
-                            User ID: {id}
-                        </h3>
-
-                        <input
-                            type="text"
-                            placeholder="Enter position"
-                            value={winnerData[id]?.position || ""}
-                            onChange={(e) =>
-                                handleChange(id, "position", e.target.value)
-                            }
-                            className="w-full bg-black/60 text-white border border-white/30 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-teal-400"
-                        />
-
-                        <input
-                            type="text"
-                            placeholder="Enter message"
-                            value={winnerData[id]?.message || ""}
-                            onChange={(e) =>
-                                handleChange(id, "message", e.target.value)
-                            }
-                            className="w-full bg-black/60 text-white border border-white/30 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                        />
-                    </div>
-                ))}
-
-                {selectedUsers.length > 0 && (
-                    <button
-                        onClick={handleSubmit}
-                        disabled={loading}
-                        className="mt-4 bg-gradient-to-r from-teal-400 to-purple-500 text-white font-semibold py-2 px-6 rounded-xl shadow-lg hover:opacity-90 transition"
-                    >
-                        {loading ? "Saving..." : "Save Winners"}
-                    </button>
-                )}
-
-                {error && (
-                    <p className="text-red-400 mt-4">Error: {error.message}</p>
-                )}
-            </div>
-        </div>
+        </section>
     );
 }

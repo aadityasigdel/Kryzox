@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import ClipLoader from "react-spinners/ClipLoader";
+import React, { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import useUpdateData from "../../../../hooks/updateData";
 import useDeleteData from "../../../../hooks/deleteData";
 import useGetData from "../../../../hooks/getData";
-import useUpdateData from "../../../../hooks/updateData";
+import toast from "react-hot-toast";
+import ClipLoader from "react-spinners/ClipLoader";
 
 import {
   Select,
