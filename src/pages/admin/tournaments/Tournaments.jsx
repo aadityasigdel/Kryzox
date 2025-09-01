@@ -231,7 +231,7 @@ const Tournaments = () => {
       </div>
 
       {/* tournament card section */}
-      <section className="flex gap-10 mt-10">
+      <section className="flex justify-between mt-10">
         {baseTournamentCardData.map((item, index) => (
           <NavLink to={item.path}>
             <TournamentCard
@@ -248,7 +248,7 @@ const Tournaments = () => {
         ))}
       </section>
       {/*  tab section */}
-      <section className="w-full h-full">
+      <section className="mt-20 w-full px-5 pt-5 rounded-[12px]" style={{ background: "linear-gradient(to bottom, #000000, #202020)" }} >
         <TabHeading />
         <TabSection />
       </section>

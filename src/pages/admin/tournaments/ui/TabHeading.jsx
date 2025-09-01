@@ -87,7 +87,7 @@ const SelectGame = ({ setGameId }) => {
 const TabHeading = () => {
   const [gameId, setGameId] = useState(777);
   return (
-    <div className="w-full flex justify-between mt-10">
+    <div className="w-full flex justify-between">
       {/* heading text section */}
       <div className="w-full flex justify-between items-center">
         <div>
