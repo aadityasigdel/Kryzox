@@ -1,11 +1,16 @@
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import { PiDotsThreeVerticalBold } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
+import usePostData from "../../../../hooks/postData";
+import toast, { Toaster } from "react-hot-toast";
 
 const UserTable = ({ users = [] }) => {
     const nav = useNavigate();
     const [searchQuery, setSearchQuery] = useState("");
     const [openMenuUserId, setOpenMenuUserId] = useState(null);
+    const [loadingUserId, setLoadingUserId] = useState(null);
+
+    const { postData, responseError } = usePostData();
 
     const toggleMenu = (userId) => {
         setOpenMenuUserId(openMenuUserId === userId ? null : userId);
@@ -21,6 +26,26 @@ const UserTable = ({ users = [] }) => {
         );
     }, [searchQuery, users]);
 
+    const handleChangeRole = async (user) => {
+        const confirmChange = window.confirm(
+            `Are you sure you want to make ${user.name} an Admin?`
+        );
+        if (!confirmChange) return;
+
+        setLoadingUserId(user.id);
+        setOpenMenuUserId(null);
+
+        const url = `users/addRole/email/${user.email}/role/ROLE_ADMIN`;
+        await postData(url);
+        setLoadingUserId(null);
+
+        if (!responseError) {
+            toast.success(`${user.name} is now an Admin ✅`);
+        } else {
+            toast.error(`Failed to update role: ${responseError}`);
+        }
+    };
+
     return (
         <div
             className="h-[493px] rounded-tl-2xl rounded-tr-2xl mb-20"
@@ -28,6 +53,8 @@ const UserTable = ({ users = [] }) => {
                 background: "linear-gradient(to bottom, #000000, #202020)",
             }}
         >
+            <Toaster position="top-right" />
+
             {/* Search */}
             <div
                 className="sticky top-0 z-20 h-[110px] w-full flex justify-between items-center px-9"
@@ -64,7 +91,7 @@ const UserTable = ({ users = [] }) => {
                 </button>
             </div>
 
-            {/*  table */}
+            {/* Table */}
             <div className="overflow-y-auto max-h-[380px]">
                 <table className="min-w-full border-collapse">
                     <thead className="text-white border-b border-purple-500 text-2xl font-extrabold sticky top-0 bg-[#000]">
@@ -125,12 +152,15 @@ const UserTable = ({ users = [] }) => {
                                             <button
                                                 className="w-full text-left px-4 py-2 hover:bg-gray-700"
                                                 onClick={() =>
-                                                    nav(
-                                                        `/users/${user.id}/change-role`
-                                                    )
+                                                    handleChangeRole(user)
+                                                }
+                                                disabled={
+                                                    loadingUserId === user.id
                                                 }
                                             >
-                                                Change Role
+                                                {loadingUserId === user.id
+                                                    ? "Updating..."
+                                                    : "Make Admin"}
                                             </button>
                                         </div>
                                     )}
