@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import TournamentCard from "./ui/TournamentCard";
-import { TournamentCreationForm } from "./ui/Form";
+import { TournamentCreationForm } from "./ui/TournamentCreationForm";
 import useGetData from "../../../hooks/getData";
 import { NavLink } from "react-router-dom";
+import TabHeading from "./ui/TabHeading";
+import TabSection from "./ui/TabSection";
 
 // static data
 const baseTournamentCardData = [
@@ -200,7 +202,7 @@ const Tournaments = () => {
   // ================================
   return (
     <div
-      className="w-full h-full px-[72px] pt-[65px]"
+      className="w-full min-h-screen px-[72px] py-[65px] "
       style={{ background: "linear-gradient(to bottom, #000000, #202020)" }}
     >
       {/* heading section */}
@@ -229,7 +231,7 @@ const Tournaments = () => {
       </div>
 
       {/* tournament card section */}
-      <section className="flex gap-10 mt-10">
+      <section className="flex justify-between mt-10">
         {baseTournamentCardData.map((item, index) => (
           <NavLink to={item.path}>
             <TournamentCard
@@ -244,6 +246,11 @@ const Tournaments = () => {
             />
           </NavLink>
         ))}
+      </section>
+      {/*  tab section */}
+      <section className="mt-20 w-full px-5 pt-5 rounded-[12px]" style={{ background: "linear-gradient(to bottom, #000000, #202020)" }} >
+        <TabHeading />
+        <TabSection />
       </section>
     </div>
   );
