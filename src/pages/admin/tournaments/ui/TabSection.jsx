@@ -5,9 +5,9 @@ import useGetData from "../../../../hooks/getData";
 import ClipLoader from "react-spinners/ClipLoader";
 const TabHeading = [
   { heading: "All Tournaments", key: "All-Tournaments" },
-  { heading: "Upcoming", key: "Upcoming" },
-  { heading: "Ongoing", key: "Ongoing" },
-  { heading: "Completed", key: "Completed" },
+  { heading: "Upcoming", key: "PENDING" },
+  { heading: "Ongoing", key: "ONGOING" },
+  { heading: "Completed", key: "COMPLETED" },
 ];
 
 const TableHeading = [
@@ -20,85 +20,44 @@ const TableHeading = [
   { heading: "End Date & Time", key: "End-Date-Time" },
   { heading: "Actions", key: "Actions" },
 ];
-const TableContent = [
-  {
-    tournamentName: "Tournament 2",
-    game: "Game B",
-    status: "Ongoing",
-    participants: 32,
-    prizePool: "$2000",
-    startDateTime: "2023-10-02 11:00 AM",
-    endDateTime: "2023-10-02 03:00 PM",
-  },
-  {
-    tournamentName: "Tournament 1",
-    game: "Game A",
-    status: "Upcoming",
-    participants: 16,
-    prizePool: "$1000",
-    startDateTime: "2023-10-01 10:00 AM",
-    endDateTime: "2023-10-01 02:00 PM",
-  },
-  {
-    tournamentName: "Tournament 3",
-    game: "Game C",
-    status: "Completed",
-    participants: 64,
-    prizePool: "$3000",
-    startDateTime: "2023-09-30 09:00 AM",
-    endDateTime: "2023-09-30 01:00 PM",
-  },
-];
-const DataTable = ({ setLoading }) => {
-  const [tableContent, setTableContent] = useState([]);
-  const {
-    getData,
-    result,
-    responseError,
-    setResponseError,
-    loading,
-    errorCode,
-    statusCode,
-  } = useGetData();
-
-  useEffect(() => {
-    (async () => {
-      await getData("/posts");
-    })();
-  }, []);
-  // display the result
-  useEffect(() => {
-    if (result.content) {
-      console.log({ result: result.content });
-      setTableContent(result.content);
-    }
-    if (responseError) {
-      console.log({ responseError });
-    }
-  }, [result, responseError]);
-
-  const formatDate = (timestamp) => {
-    // If it's seconds (10 digits), convert to milliseconds
-    const date = new Date(Number(timestamp) * 1000);
-
-    return date.toLocaleString("en-US", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    });
-  };
-
+// const TableContent = [
+//   {
+//     tournamentName: "Tournament 2",
+//     game: "Game B",
+//     status: "Ongoing",
+//     participants: 32,
+//     prizePool: "$2000",
+//     startDateTime: "2023-10-02 11:00 AM",
+//     endDateTime: "2023-10-02 03:00 PM",
+//   },
+//   {
+//     tournamentName: "Tournament 1",
+//     game: "Game A",
+//     status: "Upcoming",
+//     participants: 16,
+//     prizePool: "$1000",
+//     startDateTime: "2023-10-01 10:00 AM",
+//     endDateTime: "2023-10-01 02:00 PM",
+//   },
+//   {
+//     tournamentName: "Tournament 3",
+//     game: "Game C",
+//     status: "Completed",
+//     participants: 64,
+//     prizePool: "$3000",
+//     startDateTime: "2023-09-30 09:00 AM",
+//     endDateTime: "2023-09-30 01:00 PM",
+//   },
+// ];
+const DataTable = ({ tableContent, loading }) => {
   return (
-    <div className="w-full overflow-x-auto">
+    <div className="relative w-full h-[400px]  overflow-y-scroll overflow-x-auto">
       {loading ? (
         <div className="h-[100px] w-full flex items-center justify-center">
           <ClipLoader color="white" />
         </div>
       ) : (
-        <table className="min-w-full bg-white">
+        <table className="w-full bg-white">
           <thead className="table-heading h-[74px] w-full sticky top-0 bg-[#242424] text-[#fff] ">
             <tr className="text-center">
               {TableHeading.map((item, index) => (
@@ -109,7 +68,7 @@ const DataTable = ({ setLoading }) => {
             </tr>
           </thead>
           <tbody
-            className=""
+            className="block h-[400px] overflow-y-scroll w-full"
             style={{
               background: "linear-gradient(to bottom, #000000, #202020)",
             }}
@@ -226,9 +185,50 @@ const DataTable = ({ setLoading }) => {
 };
 const TabSection = () => {
   const [activeTab, setActiveTab] = useState("All-Tournaments");
+  const [tableContent, setTableContent] = useState([]);
+  // this one is for fetching all tournament data
+  const {
+    getData,
+    result,
+    responseError,
+    setResponseError,
+    loading,
+    errorCode,
+    statusCode,
+  } = useGetData();
+  // display the result
+
+  useEffect(() => {
+    if (result?.content || result) {
+      console.log({ result: result?.content || result });
+      setTableContent(result?.content || result);
+    }
+    if (responseError) {
+      console.log({ responseError });
+    }
+  }, [result, responseError]);
+
+  // fetch tournament data according to their status
+  const fetchStatusData = async (status) => {
+    if (status === "All-Tournaments") {
+      await getData("/posts");
+    } else {
+      await getData(`/posts?status=${status}`);
+    }
+  };
+  useEffect(() => {
+    fetchStatusData(activeTab);
+  }, [activeTab]);
   const changeTab = (key) => {
     setActiveTab(key);
   };
+  if (responseError) {
+    return (
+      <div className="w-full h-[300px] flex items-center justify-center text-red-700">
+        Something went wrong
+      </div>
+    );
+  }
   return (
     <div
       className="w-full h-auto"
@@ -250,7 +250,7 @@ const TabSection = () => {
         ))}
       </div>
       {/* table section */}
-      <DataTable />
+      <DataTable tableContent={tableContent} loading={loading} />
     </div>
   );
 };

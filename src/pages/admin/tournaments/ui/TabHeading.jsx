@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import useGetData from "../../../../hooks/getData";
 import {
   Select,
@@ -9,8 +10,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/shadcn-ui/select";
+import {
+  setFilteredTournaments,
+  setIsTyping,
+  setSearchInput,
+  setTournamentLoading,
+  setTournaments,
+} from "../../../../store/slices/tournament.slice";
 
 const SearchComponent = () => {
+  const [input, setInput] = useState("");
+  const dispatch = useDispatch();
+  const { tournaments, searchInput, isTyping } = useSelector(
+    (state) => state.tournament
+  );
+  const HandleChange = (e) => {
+    console.log({ isTyping });
+    if (isTyping === false) {
+      dispatch(setIsTyping(true));
+    }
+    setInput(e.target.value);
+  };
+  useEffect(() => {
+    const filtered = tournaments.filter(
+      (tournament) =>
+        tournament?.title.toLowerCase().includes(input.toLowerCase()) ||
+        tournament?.game.gameTitle.toLowerCase().includes(input.toLowerCase())
+    );
+    dispatch(setFilteredTournaments(filtered));
+  }, [input]);
   return (
     <div className="relative bg-[#121417]  border border-[#21252B] w-[256px] h-[50px] rounded-[6px]">
       <img
@@ -21,6 +49,7 @@ const SearchComponent = () => {
       <input
         type="text"
         placeholder="Search tournaments..."
+        onChange={HandleChange}
         className="absolute inset-0 w-full h-full text-white placeholder:text-[#C0C0C0] pl-16 pr-4 outline-none"
         style={{
           borderRadius: "6.61px",
@@ -30,7 +59,8 @@ const SearchComponent = () => {
   );
 };
 
-const SelectGame = ({ setGameId }) => {
+const SelectGame = () => {
+  const { tournamentLoading } = useSelector((state) => state.tournament);
   const {
     getData: getGames,
     result,
@@ -41,6 +71,17 @@ const SelectGame = ({ setGameId }) => {
     statusCode,
   } = useGetData();
 
+  const {
+    getData: getSortData,
+    result: sortResult,
+    responseError: sortResponseError,
+    setResponseError: setSortResponseError,
+    loading: sortLoading,
+    errorCode: sortErrorCode,
+    statusCode: sortStatusCode,
+  } = useGetData();
+  const [gameId, setGameId] = useState(777); // Default to "all"
+  const dispatch = useDispatch();
   useEffect(() => {
     (async () => {
       await getGames("/games/");
@@ -49,22 +90,40 @@ const SelectGame = ({ setGameId }) => {
 
   // to display the result of the games
   useEffect(() => {
-    if (result) console.log({ games: result });
-  }, [result]);
+    if (sortResult?.content || sortResult) {
+      dispatch(setTournaments(sortResult?.content || sortResult));
+    }
+  }, [sortResult]);
 
-  const handleIds = (id) => {
-    setGameId(id);
-  };
+  // fetch tournament by gameId
+  useEffect(() => {
+    console.log({ gameId });
+    (async () => {
+      if (gameId !== 777) {
+        await getSortData(`/game/${gameId}/posts`);
+      } else {
+        await getSortData(`/posts`);
+      }
+    })();
+  }, [gameId]);
+
+  // to set global loading state
+  useEffect(() => {
+    dispatch(setTournamentLoading(sortLoading));
+  }, [sortLoading]);
+  useEffect(() => {
+    console.log({ tournamentLoading });
+  }, [tournamentLoading]);
 
   return (
     <div className="">
       <Select
         onValueChange={(id) => {
-          handleIds(id);
+          setGameId(Number(id));
         }}
         className=""
       >
-        <SelectTrigger className="w-full !h-[50px] bg-[#202020] border-none rounded-lg text-white ">
+        <SelectTrigger className="min-w-[128px] !h-[50px] bg-[#202020] border-none rounded-lg text-white ">
           {" "}
           {/* Updated width */}
           <SelectValue placeholder="Select a game" className=" w-full " />
@@ -72,7 +131,7 @@ const SelectGame = ({ setGameId }) => {
         <SelectContent>
           <SelectGroup>
             <SelectLabel>GAMES</SelectLabel>
-            <SelectItem value={777}>all</SelectItem>
+            <SelectItem value={String(777)}>Select All</SelectItem>
             {result?.map((item) => (
               <SelectItem key={item?.gameId} value={String(item?.gameId)}>
                 {item?.gameTitle}

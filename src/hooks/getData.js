@@ -11,6 +11,7 @@ const useGetData = () => {
   const getData = async (url) => {
     try {
       setLoading(true);
+      setResponseError(null);
       const res = await axiosInstance.get(url);
       setStatusCode(res.status);
       setResult(res.data);
