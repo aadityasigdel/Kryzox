@@ -2,55 +2,57 @@ import React from "react";
 import Button from "./Button";
 
 const HeadingSection = ({
-  heading,
-  subheading,
-  btn1Content=undefined,
-  btn2Content = undefined,
-  icon1: Icon1,
-  icon2: Icon2,
-  onBtn1Click,
-  component,
+    heading,
+    subheading,
+    btn1Content = undefined,
+    btn2Content = undefined,
+    icon1: Icon1,
+    icon2: Icon2,
+    onBtn1Click,
+    component,
 }) => {
-  return (
-    <div className="h-auto w-full">
-      {/* heading */}
-      <h1 className="text-4xl md:text-5xl font-bold mb-6 relative">
-        <span
-          className="text-transparent bg-clip-text"
-          style={{
-            background: "linear-gradient(45deg, #80FFDB, #B05BDB)",
-            WebkitBackgroundClip: "text",
-          }}
-        >
-          {heading}
-        </span>
-      </h1>
-      <section className="w-full flex flex-wrap justify-between">
-        <p className="text-[18px] text-[#B05BDB] font-semibold">{subheading}</p>
-        {/* buttons section */}
-        <div className="flex gap-5">
-          {btn1Content && (
-            <Button func={onBtn1Click}>
-              {component === "overview" && (
-                <span>
-                  <Icon1 size={18} />
+    return (
+        <div className="h-auto w-full">
+            {/* heading */}
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 relative">
+                <span
+                    className="text-transparent bg-clip-text"
+                    style={{
+                        background: "linear-gradient(45deg, #80FFDB, #B05BDB)",
+                        WebkitBackgroundClip: "text",
+                    }}
+                >
+                    {heading}
                 </span>
-              )}
-              <span>{btn1Content}</span>
-            </Button>
-          )}
-          {component === "overview" && btn2Content && Icon2 && (
-            <Button>
-              <span>
-                <Icon2 size={18} />
-              </span>
-              <span>{btn2Content}</span>
-            </Button>
-          )}
+            </h1>
+            <section className="w-full flex flex-wrap justify-between">
+                <p className="text-[18px] text-[#B05BDB] font-semibold">
+                    {subheading}
+                </p>
+                {/* buttons section */}
+                <div className="flex gap-5 transition-transform duration-200 ease-in-out hover:scale-105">
+                    {btn1Content && (
+                        <Button func={onBtn1Click}>
+                            {component === "overview" && (
+                                <span>
+                                    <Icon1 size={18} />
+                                </span>
+                            )}
+                            <span>{btn1Content}</span>
+                        </Button>
+                    )}
+                    {component === "overview" && btn2Content && Icon2 && (
+                        <Button>
+                            <span>
+                                <Icon2 size={18} />
+                            </span>
+                            <span>{btn2Content}</span>
+                        </Button>
+                    )}
+                </div>
+            </section>
         </div>
-      </section>
-    </div>
-  );
+    );
 };
 
 export default HeadingSection;
