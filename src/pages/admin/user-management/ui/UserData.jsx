@@ -3,6 +3,7 @@ import { PiDotsThreeVerticalBold } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import usePostData from "../../../../hooks/postData";
 import toast, { Toaster } from "react-hot-toast";
+import UserImage from "../ui/UserImage.jsx";
 
 const UserTable = ({ users = [] }) => {
     const nav = useNavigate();
@@ -96,6 +97,7 @@ const UserTable = ({ users = [] }) => {
                 <table className="min-w-full border-collapse">
                     <thead className="text-white border-b border-purple-500 text-2xl font-extrabold sticky top-0 bg-[#000]">
                         <tr>
+                            <th className="py-3 px-4 text-left">Profile Pic</th>
                             <th className="py-3 px-4 text-left">User</th>
                             <th className="py-3 px-4 text-left">Mobile</th>
                             <th className="py-3 px-4 text-left">Balance</th>
@@ -107,6 +109,14 @@ const UserTable = ({ users = [] }) => {
                         {filteredUsers.map((user) => (
                             <tr key={user.id}>
                                 <td className="py-4 px-4">
+                                    <UserImage
+                                        imagename={user.imageName}
+                                        alt={user.name}
+                                         size={48}
+                                    />
+                                </td>
+
+                                <td className="py-4 px-4">
                                     <span className="text-[#0DBDB1] font-extrabold text-2xl">
                                         {user.name}
                                     </span>
@@ -115,6 +125,7 @@ const UserTable = ({ users = [] }) => {
                                         {user.email}
                                     </span>
                                 </td>
+
                                 <td className="py-4 px-4">{user.mobileNo}</td>
                                 <td className="py-4 px-4">{user.balance}</td>
                                 <td className="py-4 px-4">

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useGetData from "../../../hooks/getData.js";
 import NoProfile from "../../../assets/Profile/NoProfile.jpg";
+import UserImage from "./ui/UserImage.jsx";
 
 export default function UserProfile() {
     const { id } = useParams();
@@ -52,11 +53,11 @@ export default function UserProfile() {
                 <div className="w-full max-w-4xl bg-[#111] rounded-3xl shadow-xl p-10 flex flex-col space-y-8">
                     <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-8">
                         {user.imageName ? (
-                            <img
-                                src={user.imageName}
-                                alt="User Profile"
-                                className="w-40 h-40 rounded-full object-cover border-4 border-[#B05BDB]"
-                            />
+                             <UserImage
+                                        imagename={user.imageName}
+                                        alt={user.name}
+                                         size={160}
+                                    />
                         ) : (
                             <img
                                 src={NoProfile} 
