@@ -198,7 +198,9 @@ const TestTabSection = () => {
   const [activeTab, setActiveTab] = useState("All-Tournaments");
   const [tableContent, setTableContent] = useState([]);
   const dispatch = useDispatch();
-  const { tournaments } = useSelector((state) => state.tournament);
+  const { tournaments, filteredTournaments } = useSelector(
+    (state) => state.tournament
+  );
   // this one is for fetching all tournament data
   const {
     getData,
@@ -256,12 +258,17 @@ const TestTabSection = () => {
           </button>
         ))}
       </div>
+
       {responseError ? (
         <div className="w-full h-[300px] flex items-center justify-center text-red-700">
           Something went wrong
         </div>
+      ) : !loading &&
+        (tournaments.length === 0 || filteredTournaments.length === 0) ? (
+        <div className="w-full h-[300px] flex items-center justify-center text-red-700">
+          No data found
+        </div>
       ) : (
-        // table section
         <DataTable tableContent={tournaments} loading={loading} />
       )}
     </div>

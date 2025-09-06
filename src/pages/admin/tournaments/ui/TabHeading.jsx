@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useGetData from "../../../../hooks/getData";
 import {
@@ -17,28 +17,52 @@ import {
   setTournamentLoading,
   setTournaments,
 } from "../../../../store/slices/tournament.slice";
-
+let x = 0;
 const SearchComponent = () => {
-  const [input, setInput] = useState("");
   const dispatch = useDispatch();
-  const { tournaments, searchInput, isTyping } = useSelector(
+  const { tournaments, searchInput, isTyping, tournamentLoading } = useSelector(
     (state) => state.tournament
   );
+
+  // filter tournaments based on search input
+  const {
+    getData: getFilteredData,
+    result: filteredResult,
+    responseError: filterResponeError,
+    setResponseError: setFilterResponseError,
+    loading: filterLoading,
+    errorCode: filterErrorCode,
+  } = useGetData();
+
+  const debounce = (func, delay) => {
+    let timer;
+    return function (...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, delay);
+    };
+  };
+  const debouncedSearch = useCallback(
+    debounce((query) => {
+        getFilteredData(`/posts/search/${query}`);
+    }, 500),
+    []
+  );
   const HandleChange = (e) => {
-    console.log({ isTyping });
+    console.log("input changed", x++);
     if (isTyping === false) {
       dispatch(setIsTyping(true));
     }
-    setInput(e.target.value);
+    debouncedSearch(e.target.value);
   };
   useEffect(() => {
-    const filtered = tournaments.filter(
-      (tournament) =>
-        tournament?.title.toLowerCase().includes(input.toLowerCase()) ||
-        tournament?.game.gameTitle.toLowerCase().includes(input.toLowerCase())
-    );
-    dispatch(setFilteredTournaments(filtered));
-  }, [input]);
+    if (filteredResult) dispatch(setFilteredTournaments(filteredResult));
+  }, [filteredResult]);
+  useEffect(() => {
+    console.log({ tournamentLoading, filterLoading });
+    dispatch(setTournamentLoading(filterLoading));
+  }, [filterLoading]);
   return (
     <div className="relative bg-[#121417]  border border-[#21252B] w-[256px] h-[50px] rounded-[6px]">
       <img
