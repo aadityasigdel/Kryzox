@@ -5,6 +5,7 @@ import useGetData from "../../../hooks/getData";
 import { NavLink } from "react-router-dom";
 import TabHeading from "./ui/TabHeading";
 import TabSection from "./ui/TabSection";
+import TestTabSection from "./ui/TestTabSection";
 
 // static data
 const baseTournamentCardData = [
@@ -14,7 +15,7 @@ const baseTournamentCardData = [
     heading: "Active Tournaments",
     icon: "/admin/tournament/medal.png",
     bottomContent: "Currently running",
-    path:"/admin/tournaments/active-tournaments"
+    path: "/admin/tournaments/active-tournaments",
   },
   {
     key: "total-participant",
@@ -22,7 +23,7 @@ const baseTournamentCardData = [
     heading: "Total Participants",
     icon: "/admin/tournament/group.png",
     bottomContent: "Across all tournaments",
-    path:"/admin/tournaments/total-participants"
+    path: "/admin/tournaments/total-participants",
   },
   {
     key: "upcoming",
@@ -30,7 +31,7 @@ const baseTournamentCardData = [
     heading: "Upcoming",
     icon: "/admin/tournament/event.png",
     bottomContent: "Starting this month",
-    path:"/admin/tournaments/upcoming-tournaments"
+    path: "/admin/tournaments/upcoming-tournaments",
   },
   {
     key: "prize-pool",
@@ -38,7 +39,7 @@ const baseTournamentCardData = [
     heading: "Prize Pool",
     icon: "/admin/tournament/dollar.png",
     bottomContent: "Total active pools",
-    path:"/admin/tournaments/prize-pool"
+    path: "/admin/tournaments/prize-pool",
   },
 ];
 
@@ -248,9 +249,13 @@ const Tournaments = () => {
         ))}
       </section>
       {/*  tab section */}
-      <section className="mt-20 w-full px-5 pt-5 rounded-[12px]" style={{ background: "linear-gradient(to bottom, #000000, #202020)" }} >
+      <section
+        className="mt-20 w-full px-5 pt-5 rounded-[12px]"
+        style={{ background: "linear-gradient(to bottom, #000000, #202020)" }}
+      >
         <TabHeading />
-        <TabSection />
+        {/* <TabSection /> */}
+        <TestTabSection />
       </section>
     </div>
   );
