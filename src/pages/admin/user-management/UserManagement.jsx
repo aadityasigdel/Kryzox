@@ -53,20 +53,31 @@ const UserManagement = () => {
                 subheading={"Manage your gaming community members"}
                 btn1Content={"Add New User"}
                 component={"user-management"}
-                onBtn1Click={() => setOpenAddUser(true)} 
+                onBtn1Click={() => setOpenAddUser(true)}
             />
-
             <section className="flex gap-10 mt-10">
-                {CardData.map((item, index) => (
-                    <Card
-                        key={index}
-                        gradientColor={item.gradientColor}
-                        heading={item.heading}
-                        totalData={item.totalData}
-                        icon={item.icon}
-                        component={"user-management"}
-                    />
-                ))}
+                {loading
+                    ? CardData.map((_, index) => (
+                          <div
+                              key={index}
+                              className="w-52 h-32 rounded-xl bg-[#1c1c1c] animate-pulse"
+                          >
+                              <div className="flex flex-col justify-between p-4 h-full">
+                                  <div className="h-6 bg-[#2a2a2a] rounded w-3/4 mb-2"></div>
+                                  <div className="h-4 bg-[#2a2a2a] rounded w-1/2"></div>
+                              </div>
+                          </div>
+                      ))
+                    : CardData.map((item, index) => (
+                          <Card
+                              key={index}
+                              gradientColor={item.gradientColor}
+                              heading={item.heading}
+                              totalData={item.totalData}
+                              icon={item.icon}
+                              component="user-management"
+                          />
+                      ))}
             </section>
 
             {!loading && !responseError && <UserTable users={usersData} />}
