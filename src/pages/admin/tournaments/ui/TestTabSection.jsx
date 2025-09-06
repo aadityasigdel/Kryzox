@@ -198,7 +198,7 @@ const TestTabSection = () => {
   const [activeTab, setActiveTab] = useState("All-Tournaments");
   const [tableContent, setTableContent] = useState([]);
   const dispatch = useDispatch();
-  const { tournaments, filteredTournaments } = useSelector(
+  const { tournaments, filterTournaments } = useSelector(
     (state) => state.tournament
   );
   // this one is for fetching all tournament data
@@ -211,6 +211,7 @@ const TestTabSection = () => {
     errorCode,
     statusCode,
   } = useGetData();
+  const { tournamentLoading } = useSelector((state) => state.tournament);
   // display the result
 
   useEffect(() => {
@@ -264,6 +265,7 @@ const TestTabSection = () => {
           Something went wrong
         </div>
       ) : !loading &&
+        tournamentLoading &&
         (tournaments.length === 0 || filteredTournaments.length === 0) ? (
         <div className="w-full h-[300px] flex items-center justify-center text-red-700">
           No data found
