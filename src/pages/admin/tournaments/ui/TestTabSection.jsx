@@ -211,7 +211,7 @@ const TestTabSection = () => {
     errorCode,
     statusCode,
   } = useGetData();
-  const { tournamentLoading } = useSelector((state) => state.tournament);
+  const { tournamentLoading,filteredTournaments } = useSelector((state) => state.tournament);
   // display the result
 
   useEffect(() => {
