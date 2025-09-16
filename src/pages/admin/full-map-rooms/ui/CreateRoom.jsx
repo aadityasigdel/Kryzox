@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import usePostData from "../../../../hooks/postData.js";
 import Button from "../../ui/shared/Button";
 
@@ -42,6 +42,11 @@ const defaultForm = {
     maxplayer: "",
     roomId: "",
     roomPw: "",
+    winnerRewards: {
+        top5: "",
+        top10: "",
+        top15: "",
+    },
 };
 
 // Required fields
@@ -55,6 +60,7 @@ const requiredFields = [
     "maxplayer",
     "roomId",
     "roomPw",
+    "winnerRewards",
 ];
 
 const CreateFullMapRoom = ({ open, setOpen, onCreate }) => {
@@ -63,13 +69,29 @@ const CreateFullMapRoom = ({ open, setOpen, onCreate }) => {
     const [selectedModeId, setSelectedModeId] = useState("");
     const [selectedMapId, setSelectedMapId] = useState("");
     const [feedback, setFeedback] = useState({ type: "", message: "" });
-
     const { postData, loading, responseError, statusCode } = usePostData();
+    const [userId, setUserId] = useState(null);
+
+    useEffect(() => {
+        const storedUserId = localStorage.getItem("userId");
+        if (storedUserId) setUserId(JSON.parse(storedUserId));
+    }, []);
 
     if (!open) return null;
 
     const handleChange = (field) => (e) => {
         setFormData({ ...formData, [field]: e.target.value });
+        setFeedback({ type: "", message: "" });
+    };
+
+    const handleRewardChange = (key) => (e) => {
+        setFormData({
+            ...formData,
+            winnerRewards: {
+                ...formData.winnerRewards,
+                [key]: e.target.value,
+            },
+        });
         setFeedback({ type: "", message: "" });
     };
 
@@ -90,39 +112,51 @@ const CreateFullMapRoom = ({ open, setOpen, onCreate }) => {
             return;
         }
 
-        // Extract selected values
-        const selectedGame = games.find(
-            (g) => g.id === Number(selectedGameId)
-        ).name;
+        // Convert winner rewards to string
+        const rewardsString = Object.entries(formData.winnerRewards)
+            .filter(([_, value]) => value)
+            .map(([key, value]) => {
+                if (key === "top5") return `5:${value}`;
+                if (key === "top10") return `10:${value}`;
+                if (key === "top15") return `15:${value}`;
+            })
+            .join(",");
 
-        const selectedMode = modes.find(
-            (m) => m.id === Number(selectedModeId)
-        ).name;
+        if (!rewardsString) {
+            setFeedback({
+                type: "error",
+                message: "Please set at least one winner reward",
+            });
+            return;
+        }
 
-        const selectedMap = gameMaps[selectedGameId].find(
-            (m) => m.mapId === Number(selectedMapId)
-        ).mapTitle;
+        const payload = {
+            title: formData.title,
+            content: formData.content,
+            entryFee: Number(formData.entryFee),
+            startTime: new Date(formData.startTime).toISOString(),
+            duration: Number(formData.duration),
+            pricePool: Number(formData.pricePool),
+            maxplayer: Number(formData.maxplayer),
+            roomId: formData.roomId,
+            roomPw: formData.roomPw,
+            winnerRewards: rewardsString,
+        };
 
         try {
             // Save locally
             const saved = JSON.parse(
                 localStorage.getItem("tournaments") || "[]"
             );
-            saved.push({
-                ...formData,
-                game: selectedGame,
-                mode: selectedMode,
-                map: selectedMap,
-            });
+            saved.push(payload);
             localStorage.setItem("tournaments", JSON.stringify(saved));
 
-            // Post to API
             await postData(
-                `/user/1/game/${selectedGameId}/gamemode/${selectedModeId}/map/${selectedMapId}/fullmaps`,
-                formData
+                `/user/${userId}/game/${selectedGameId}/gamemode/${selectedModeId}/map/${selectedMapId}/fullmaps`,
+                payload
             );
 
-            if (onCreate) onCreate(formData);
+            if (onCreate) onCreate(payload);
 
             // Reset form
             setFormData(defaultForm);
@@ -136,6 +170,7 @@ const CreateFullMapRoom = ({ open, setOpen, onCreate }) => {
             });
             setTimeout(() => setOpen(false), 1000);
         } catch (error) {
+            console.error("Error creating room:", error);
             setFeedback({ type: "error", message: "Failed to create room." });
         }
     };
@@ -202,6 +237,50 @@ const CreateFullMapRoom = ({ open, setOpen, onCreate }) => {
                             onChange={handleChange("pricePool")}
                             className={inputClass}
                         />
+
+                        <div className="mb-6 mt-6 col-span-2">
+                            <h3 className="text-[#80FFDB] font-semibold mb-3 flex items-center gap-2">
+                                🏆 Winner Rewards
+                            </h3>
+                            <div className="grid grid-cols-3 gap-4">
+                                <div className="flex flex-col">
+                                    <label className="text-sm text-gray-400 mb-1">
+                                        Top 5
+                                    </label>
+                                    <input
+                                        type="text"
+                                        placeholder="Reward"
+                                        value={formData.winnerRewards.top5}
+                                        onChange={handleRewardChange("top5")}
+                                        className={inputClass}
+                                    />
+                                </div>
+                                <div className="flex flex-col">
+                                    <label className="text-sm text-gray-400 mb-1">
+                                        Top 10
+                                    </label>
+                                    <input
+                                        type="text"
+                                        placeholder="Reward"
+                                        value={formData.winnerRewards.top10}
+                                        onChange={handleRewardChange("top10")}
+                                        className={inputClass}
+                                    />
+                                </div>
+                                <div className="flex flex-col">
+                                    <label className="text-sm text-gray-400 mb-1">
+                                        Top 15
+                                    </label>
+                                    <input
+                                        type="text"
+                                        placeholder="Reward"
+                                        value={formData.winnerRewards.top15}
+                                        onChange={handleRewardChange("top15")}
+                                        className={inputClass}
+                                    />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -223,7 +302,6 @@ const CreateFullMapRoom = ({ open, setOpen, onCreate }) => {
                                 </option>
                             ))}
                         </select>
-
                         <select
                             value={selectedModeId}
                             onChange={(e) => setSelectedModeId(e.target.value)}
@@ -236,7 +314,6 @@ const CreateFullMapRoom = ({ open, setOpen, onCreate }) => {
                                 </option>
                             ))}
                         </select>
-
                         <select
                             value={selectedMapId}
                             onChange={(e) => setSelectedMapId(e.target.value)}
