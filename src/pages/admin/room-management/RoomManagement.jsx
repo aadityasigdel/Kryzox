@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import useGetData from "../../../hooks/getData";
 import HeadingSection from "../ui/shared/HeadingSection";
 import "./style.css";
@@ -7,16 +8,8 @@ import CompletedRoomCard from "./ui/CompletedRoomCard";
 import RoomManagementCard from "./ui/RoomManagementCard";
 
 const RoomManagement = () => {
-    // RUNNING rooms
-    const {
-        getData: getRunningRooms,
-        result: runningRooms,
-        loading: loadingRunning,
-        responseError: errorRunning,
-        statusCode: runningStatus,
-        errorCode: runningErrorCode,
-    } = useGetData();
 
+    const nav = useNavigate();
     // SCHEDULED rooms
     const {
         getData: getScheduledRooms,
@@ -37,51 +30,38 @@ const RoomManagement = () => {
         errorCode: completedErrorCode,
     } = useGetData();
 
+
     useEffect(() => {
         getScheduledRooms("rooms/status?status=PENDING");
+        getCompletedRooms("rooms/status?status=PRIVATE");
     }, []);
 
+    // Debug logs
     useEffect(() => {
-        console.log(
-            "✅ Running Rooms:",
-            runningRooms,
-            "📡 Status:",
-            runningStatus,
-            "❌ ErrorCode:",
-            runningErrorCode
-        );
-    }, [runningRooms, runningStatus, runningErrorCode]);
+        console.log("✅ Scheduled Rooms:", scheduledRooms);
+    }, [scheduledRooms]);
 
     useEffect(() => {
-        console.log(
-            "✅ Scheduled Rooms:",
-            scheduledRooms,
-            "📡 Status:",
-            scheduledStatus,
-            "❌ ErrorCode:",
-            scheduledErrorCode
-        );
-    }, [scheduledRooms, scheduledStatus, scheduledErrorCode]);
+        console.log("✅ Completed Rooms:", completedRooms);
+    }, [completedRooms]);
 
-    useEffect(() => {
-        console.log(
-            "✅ Completed Rooms:",
-            completedRooms,
-            "📡 Status:",
-            completedStatus,
-            "❌ ErrorCode:",
-            completedErrorCode
-        );
-    }, [completedRooms, completedStatus, completedErrorCode]);
+    // Helper to format addedDate
+    const formatDate = (arr) => {
+        if (!Array.isArray(arr)) return "—";
+        const [y, m, d, h, min, s] = arr;
+        return new Date(y, m - 1, d, h, min, s).toLocaleString();
+    };
+
+    // ==================== MAPPERS ====================
 
     const mapToCardData = (room) => [
-        { left: "Room Name", right: room.status },
-        { left: "User ID:", right: room.userId },
-        { left: "Game:", right: room.gameName },
-        { left: "Players:", right: room.players },
-        { left: "Creator", right: room.creator },
-        { left: "Entry Fee:", right: `$${room.entryFee}` },
-        { left: "Prize:", right: `$${room.prize}` },
+        { left: "Room ID", right: room.roomId },
+        { left: "Status", right: room.status },
+        { left: "Game", right: room.game?.gameTitle },
+        { left: "Game Type", right: room.gameType },
+        { left: "Creator", right: room.user?.name },
+        { left: "Entry Fee", right: `$${room.entryFee}` },
+        { left: "Prize", right: `$${room.wining}` },
         {
             left: "/admin/room-management/setting.png",
             right: "/admin/room-management/trash.png",
@@ -89,22 +69,23 @@ const RoomManagement = () => {
     ];
 
     const mapCompletedRoomLeft = (room) => [
-        { left: "Room Name", right: room.status },
-        { left: "User ID:", right: room.userId },
-        { left: "Game:", right: room.gameName },
-        { left: "Players:", right: room.players },
-        { left: "Creator/player1", right: room.creator },
-        { left: "Prize:", right: `$${room.prize}` },
-        { left: "Time:", right: room.time || "—" },
+        { left: "Room ID", right: room.roomId },
+        { left: "Creator/Player1", right: room.user?.name },
+        { left: "Game", right: room.game?.gameTitle },
+        { left: "Game Type", right: room.gameType },
+        { left: "Prize", right: `$${room.wining}` },
+        { left: "Time", right: formatDate(room.addedDate) },
     ];
 
     const mapCompletedRoomRight = (room) => [
-        { left: "User ID:", right: room.opponentId },
-        { left: "Game Name:", right: room.opponentName },
-        { left: "Player2:", right: room.opponent },
-        { left: "Prize:", right: `$${room.prize}` },
-        { left: "Time:", right: room.time || "—" },
+        { left: "Player2", right: "—" },
+        { left: "Game", right: room.game?.gameTitle },
+        { left: "Game Type", right: room.gameType },
+        { left: "Prize", right: `$${room.wining}` },
+        { left: "Time", right: formatDate(room.addedDate) },
     ];
+
+    // ==================== RENDER ====================
 
     return (
         <div
@@ -117,45 +98,6 @@ const RoomManagement = () => {
                 heading="Room Management"
                 subheading="Manage multiplayer gaming sessions and rooms and payment"
             />
-
-            {/* ================= RUNNING ROOMS ================= */}
-            <div className="w-full">
-                <div className="flex my-10 gap-5">
-                    <img
-                        src="/admin/room-management/star.png"
-                        alt="star_image"
-                    />
-                    <h1 className="text-[22px] text-[#80FFDB]">
-                        Running Rooms
-                    </h1>
-                </div>
-
-             
-
-                <div className="flex flex-wrap gap-6 justify-center md:justify-between">
-                    {loadingRunning && (
-                        <p className="text-gray-400 text-sm">
-                            Loading running rooms...
-                        </p>
-                    )}
-                    {errorRunning && (
-                        <p className="text-red-500 text-sm">{errorRunning}</p>
-                    )}
-
-                    {runningRooms?.length > 0
-                        ? runningRooms.map((room) => (
-                              <RoomManagementCard
-                                  key={room.id}
-                                  cardData={mapToCardData(room)}
-                              />
-                          ))
-                        : !loadingRunning && (
-                              <p className="text-gray-400 text-sm">
-                                  No running rooms
-                              </p>
-                          )}
-                </div>
-            </div>
 
             {/* ================= SCHEDULED ROOMS ================= */}
             <div className="w-full">
@@ -170,8 +112,6 @@ const RoomManagement = () => {
                     </h1>
                 </div>
 
-   
-
                 <div className="flex flex-wrap gap-6 justify-center md:justify-between">
                     {loadingScheduled && (
                         <p className="text-gray-400 text-sm">
@@ -185,7 +125,8 @@ const RoomManagement = () => {
                     {scheduledRooms?.length > 0
                         ? scheduledRooms.map((room) => (
                               <RoomManagementCard
-                                  key={room.id}
+                                  key={room.roomId}
+                                   onClick={() => {nav(`room-rewards/${room.roomId}`)}}
                                   cardData={mapToCardData(room)}
                               />
                           ))
@@ -210,7 +151,6 @@ const RoomManagement = () => {
                     </h1>
                 </div>
 
-
                 <div className="flex flex-wrap gap-6 justify-center md:justify-between">
                     {loadingCompleted && (
                         <p className="text-gray-400 text-sm">
@@ -223,7 +163,7 @@ const RoomManagement = () => {
 
                     {completedRooms?.length > 0
                         ? completedRooms.map((room) => (
-                              <div key={room.id} className="flex gap-6">
+                              <div key={room.roomId} className="flex gap-6">
                                   <CompletedRoomCard
                                       cardData={mapCompletedRoomLeft(room)}
                                       completedRoomValidator="left"
@@ -256,7 +196,7 @@ const RoomManagement = () => {
                 </div>
 
                 <div className="flex justify-center my-10">
-                    <Button onclick={() => {}}> Select the Winner</Button>
+                    <Button onClick={() => {}}> Select the Winner</Button>
                 </div>
 
                 <div className="h-auto w-full flex justify-between">
@@ -273,7 +213,7 @@ const RoomManagement = () => {
                 </div>
 
                 <div className="flex justify-center mt-10 pb-10">
-                    <Button onclick={() => {}}> Confirm the payment</Button>
+                    <Button onClick={() => {}}> Confirm the payment</Button>
                 </div>
             </div>
         </div>

@@ -54,8 +54,6 @@ const FullMapRooms = () => {
     const [selectedTab, setSelectedTab] = useState("Scheduled");
 
     useEffect(() => {
-        console.log("Fetching tournaments for tab:", selectedTab);
-
         setTournaments([]);
 
         let url = "/fullmaps/status/PENDING";
@@ -68,7 +66,6 @@ const FullMapRooms = () => {
     // Map API results
     useEffect(() => {
         if (result?.content) {
-            console.log("Raw API result:", result.content);
 
             const apiTournaments = result.content.map((item) => ({
                 fullmapId: item.fullmapId,
@@ -91,11 +88,9 @@ const FullMapRooms = () => {
                         : statusMap[item.status] || "Scheduled",
             }));
 
-            console.log("Mapped tournaments:", apiTournaments);
 
             setTournaments(apiTournaments);
         } else {
-            console.log("No content from API");
             setTournaments([]);
         }
     }, [result, selectedTab]);
@@ -104,10 +99,7 @@ const FullMapRooms = () => {
     const filteredTournaments = tournaments.filter(
         (t) => t.status === selectedTab
     );
-    console.log(
-        `Filtered tournaments for ${selectedTab}:`,
-        filteredTournaments
-    );
+
 
     const getTabCardData = (tournament) => [
         { left: "Title:", right: tournament.title },

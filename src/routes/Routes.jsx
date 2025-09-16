@@ -14,6 +14,7 @@ import LiveManagement from "../pages/admin/live-management/LiveManagement";
 import Notification from "../pages/admin/notication/Notification";
 import Overview from "../pages/admin/overview/Overview";
 import RoomManagement from "../pages/admin/room-management/RoomManagement";
+import RoomRewards from "../pages/admin/room-management/RoomRewards";
 import TopUpManage from "../pages/admin/top-up-manage/TopUpManage";
 import Tournaments from "../pages/admin/tournaments/Tournaments";
 import { ActiveTournaments } from "../pages/admin/tournaments/pages/ActiveTournaments";
@@ -39,6 +40,7 @@ import CountryComplianceMatrix from "../components/Footer/pages/CountryComplianc
 import Disclaimer from "../components/Footer/pages/Disclaimer";
 import PrivacyPolicy from "../components/Footer/pages/PrivacyPolicy";
 import UserAgreement from "../components/Footer/pages/UserAgreement";
+
 
 // Optional: import AdminProtection if you want to protect admin routes
 // import AdminProtection from "../components/auth/AdminProtection";
@@ -101,6 +103,8 @@ const RouteHandler = () => {
                 />
                 <Route path="room-management" element={<RoomManagement />} />
                 <Route path="live-management" element={<LiveManagement />} />
+                <Route path="room-management/room-rewards/:roomId" element={<RoomRewards />} />
+                
                 <Route
                     path="full-map-rooms/results/rewards/:fullmapId"
                     element={<RewardWinners />}
