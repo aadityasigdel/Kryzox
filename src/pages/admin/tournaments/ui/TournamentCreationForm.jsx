@@ -209,6 +209,7 @@ export function TournamentCreationForm({ setIsTournamentCreated }) {
   const [formData, setFormData] = useState({
     title: "",
     content: "",
+     winingPrices: "",
     entryFee: "",
     gameID: "",
     gamePw: "",
@@ -248,6 +249,7 @@ export function TournamentCreationForm({ setIsTournamentCreated }) {
       setFormData({
         title: "",
         content: "",
+         winingPrices: "",
         entryFee: "",
         gameID: "",
         gamePw: "",
@@ -354,7 +356,24 @@ export function TournamentCreationForm({ setIsTournamentCreated }) {
                   />
                 </div>
               </div>
-
+              {/* winningPrices */}
+              <div className="grid gap-2">
+                <Label htmlFor="winingPrices" className="text-sm font-medium">
+                  winingPrices
+                </Label>
+                  <Input
+                    id="winingPrices"
+                    name="winingPrices"
+                    type="number"
+                    placeholder="@example 500"
+                    onChange={handleInput}
+                    value={formData.winingPrices}
+                    step="1"
+                    required
+                    className="w-full h-[50px] px-4 bg-[#202020] border-none rounded-lg text-white "
+                  />
+                </div>
+              </div>
               {/* Description Full Width */}
               <div className="grid gap-2">
                 <Label htmlFor="content" className="text-sm font-medium">
@@ -372,15 +391,13 @@ export function TournamentCreationForm({ setIsTournamentCreated }) {
                 />
               </div>
             </div>
-          </div>
+        
 
           {/* ---------------- Tournament Settings ---------------- */}
           <div className="space-y-6 mt-10 text-[#80FFDB]">
             {" "}
             {/* Margin-top for separation */}
-            <h2 className=" font-semibold text-lg">
-              Tournament Settings
-            </h2>
+            <h2 className=" font-semibold text-lg">Tournament Settings</h2>
             <div className="grid gap-6">
               {/* Game ID + Game Pw */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

@@ -115,6 +115,8 @@ const SelectGame = () => {
   // to display the result of the games
   useEffect(() => {
     if (sortResult?.content || sortResult) {
+      console.log("sorted result", sortResult);
+      console.log("all tournaments", sortResult?.content);
       dispatch(setTournaments(sortResult?.content || sortResult));
     }
   }, [sortResult]);
