@@ -51,13 +51,13 @@ const TableHeading = [
 //     endDateTime: "2023-09-30 01:00 PM",
 //   },
 // ];
-const DataTable = ({ tableContent, loading }) => {
-  const { isTyping, filteredTournaments, tournamentLoading } = useSelector(
+const DataTable = () => {
+  const { tournaments, tournamentLoading } = useSelector(
     (state) => state.tournament
   );
   return (
     <div className="w-full overflow-x-auto">
-      {loading || tournamentLoading ? (
+      {tournamentLoading ? (
         <div className="h-[100px] w-full flex items-center justify-center">
           <ClipLoader color="white" />
         </div>
@@ -79,7 +79,7 @@ const DataTable = ({ tableContent, loading }) => {
             }}
           >
             {/* Table rows will go here */}
-            {(isTyping ? filteredTournaments : tableContent)?.map(
+            {tournaments?.map(
               (item, index) => (
                 <tr
                   key={index}
@@ -211,7 +211,7 @@ const TestTabSection = () => {
     errorCode,
     statusCode,
   } = useGetData();
-  const { tournamentLoading,filteredTournaments } = useSelector((state) => state.tournament);
+  const { tournamentLoading } = useSelector((state) => state.tournament);
   // display the result
 
   useEffect(() => {
@@ -266,12 +266,12 @@ const TestTabSection = () => {
         </div>
       ) : !loading &&
         tournamentLoading &&
-        (tournaments.length === 0 || filteredTournaments.length === 0) ? (
+        (tournaments.length === 0) ? (
         <div className="w-full h-[300px] flex items-center justify-center text-red-700">
           No data found
         </div>
       ) : (
-        <DataTable tableContent={tournaments} loading={loading} />
+        <DataTable />
       )}
     </div>
   );
