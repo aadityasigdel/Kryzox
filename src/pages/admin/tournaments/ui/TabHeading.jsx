@@ -11,8 +11,6 @@ import {
   SelectValue,
 } from "@/components/shadcn-ui/select";
 import {
-  setFilteredTournaments,
-  setIsTyping,
   setSearchInput,
   setTournamentLoading,
   setTournaments,
@@ -20,7 +18,7 @@ import {
 let x = 0;
 const SearchComponent = () => {
   const dispatch = useDispatch();
-  const { tournaments, searchInput, isTyping, tournamentLoading } = useSelector(
+  const { tournaments, searchInput, tournamentLoading } = useSelector(
     (state) => state.tournament
   );
 
@@ -45,19 +43,17 @@ const SearchComponent = () => {
   };
   const debouncedSearch = useCallback(
     debounce((query) => {
-        getFilteredData(`/posts/search/${query}`);
+      getFilteredData(`/posts/search/${query}`);
     }, 500),
     []
   );
+
   const HandleChange = (e) => {
     console.log("input changed", x++);
-    if (isTyping === false) {
-      dispatch(setIsTyping(true));
-    }
     debouncedSearch(e.target.value);
   };
   useEffect(() => {
-    if (filteredResult) dispatch(setFilteredTournaments(filteredResult));
+    if (filteredResult) dispatch(setTournaments(filteredResult));
   }, [filteredResult]);
   useEffect(() => {
     console.log({ tournamentLoading, filterLoading });
