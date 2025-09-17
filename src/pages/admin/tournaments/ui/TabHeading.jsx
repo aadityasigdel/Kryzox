@@ -43,7 +43,11 @@ const SearchComponent = () => {
   };
   const debouncedSearch = useCallback(
     debounce((query) => {
-      getFilteredData(`/posts/search/${query}`);
+      if (query.length === 0) {
+        getFilteredData(`/posts/search`);
+      } else {
+        getFilteredData(`/posts/search?keywords=${query}`);
+      }
     }, 500),
     []
   );
@@ -110,7 +114,11 @@ const SelectGame = () => {
 
   // to display the result of the games
   useEffect(() => {
-    if (sortResult?.content || sortResult) {
+    // if (sortResult?.content || sortResult) {
+    //   console.log("sorted result", sortResult);
+    //   console.log("all tournaments", sortResult?.content);
+    //   dispatch(setTournaments(sortResult?.content || sortResult));
+    if(sortResult) {
       console.log("sorted result", sortResult);
       console.log("all tournaments", sortResult?.content);
       dispatch(setTournaments(sortResult?.content || sortResult));

@@ -170,6 +170,13 @@ const UpcomingTournamentsCard = ({ tournament, onRemove }) => {
             </p>
 
             <p className="flex items-center gap-2 text-[#d1d1d1]">
+              <span className="font-semibold text-[#c084fc]">
+                winning price:
+              </span>{" "}
+              {tournament.winingPrices}
+            </p>
+
+            <p className="flex items-center gap-2 text-[#d1d1d1]">
               <span className="font-semibold text-[#c084fc]">Start Time:</span>{" "}
               {new Date(
                 tournament.startTime[0],
@@ -179,6 +186,7 @@ const UpcomingTournamentsCard = ({ tournament, onRemove }) => {
                 tournament.startTime[4]
               ).toLocaleString()}
             </p>
+
             <p className="flex items-center gap-2 text-[#d1d1d1]">
               <span className="font-semibold text-[#c084fc]">Status:</span>{" "}
               {tournament.status}
@@ -280,9 +288,9 @@ export function UpcomingTournaments() {
   }, [getResponseError]);
 
   // Remove tournament after accept/reject
-  const onRemove =  (deleteId) => {
-    setTournaments(prev=>{
-      const removeData=prev.filter(ele=>ele.postId!==deleteId);
+  const onRemove = (deleteId) => {
+    setTournaments((prev) => {
+      const removeData = prev.filter((ele) => ele.postId !== deleteId);
       return removeData;
     });
   };

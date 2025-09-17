@@ -128,10 +128,10 @@ const DataTable = () => {
                     </button>
                   </td>
                   <td className="py-3 px-4 flex">
-                    <p>{item?.participants || 60}</p>
+                    <p>{item?.totalParticipant}</p>
                     <p className="text-gray-400">/100</p>
                   </td>
-                  <td className="py-3 px-4">{item?.prizePool || "$200"}</td>
+                  <td className="py-3 px-4">{item?.winingPrices}</td>
                   <td className="py-3 px-4">
                     {Array.isArray(item?.startTime) &&
                     item.startTime.length >= 5
@@ -264,8 +264,8 @@ const TestTabSection = () => {
         <div className="w-full h-[300px] flex items-center justify-center text-red-700">
           Something went wrong
         </div>
-      ) : !loading &&
-        tournamentLoading &&
+      ) :
+        !tournamentLoading &&
         (tournaments.length === 0) ? (
         <div className="w-full h-[300px] flex items-center justify-center text-red-700">
           No data found
