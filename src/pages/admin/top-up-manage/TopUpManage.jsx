@@ -1,24 +1,40 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import useGetData from "../../../hooks/getData.js";
 import RequestTable from "./ui/RequestTable";
 import StatsGrid from "./ui/StatsGrid";
-import useGetData from "../../../hooks/getData.js";
 
 const TopUpManage = () => {
   const [status, setStatus] = useState("PENDING");
   const [searchTerm, setSearchTerm] = useState("");
   const [gameFilter, setGameFilter] = useState("All Games");
+  const [notice, setNotice] = useState(null);
 
   const { getData, result: requests = [], loading, responseError } = useGetData();
 
-  useEffect(() => {
+ 
+  const fetchRequests = () => {
     if (status) {
       getData(`topup/status/${status}`);
     }
+  };
+
+  useEffect(() => {
+    fetchRequests();
   }, [status]);
 
- 
+  const handleUpdate = (id, newStatus, success = true) => {
+    setNotice({
+      type: success ? "success" : "error",
+      message: `Request ${id} ${success ? "updated" : "failed"} to ${newStatus}`,
+    });
+
+    setTimeout(() => setNotice(null), 3000);
+
+    fetchRequests();
+  };
+
   const filteredRequests = requests.filter((req) => {
     const matchesSearch =
       searchTerm === "" ||
@@ -35,7 +51,7 @@ const TopUpManage = () => {
 
   return (
     <div
-      className="w-full px-[72px] pt-[65px] min-h-screen"
+      className="w-full px-[72px] pt-[65px] min-h-screen relative"
       style={{ background: "linear-gradient(to bottom, #000000, #202020)" }}
     >
       <h1 className="text-3xl font-bold text-[#7d5cff]">Top-Up Management</h1>
@@ -62,7 +78,7 @@ const TopUpManage = () => {
           >
             <option>All Games</option>
             <option>Free Fire</option>
-            <option>PUBG</option>
+            <option>Pubg</option>
             <option>BGMI</option>
           </select>
 
@@ -72,7 +88,7 @@ const TopUpManage = () => {
             className="bg-[#111] px-4 py-2 rounded-md text-white"
           >
             <option value="PENDING">Pending</option>
-            <option value="APPROVED">Approved</option>
+            <option value="Approved">Approved</option>
             <option value="REJECTED">Rejected</option>
           </select>
         </div>
@@ -85,12 +101,23 @@ const TopUpManage = () => {
         ) : (
           <RequestTable
             requests={filteredRequests}
-            onUpdate={(id, newStatus) =>
-              console.log(`Request ${id} updated to ${newStatus}`)
-            }
+            onUpdate={handleUpdate} // Pass notice-enabled handler
           />
         )}
       </div>
+
+      {/* Notice / Toast */}
+      {notice && (
+        <div
+          className={`fixed bottom-5 right-5 px-4 py-3 rounded shadow-lg text-white font-semibold transition-transform transform ${
+            notice.type === "success"
+              ? "bg-green-600"
+              : "bg-red-600"
+          }`}
+        >
+          {notice.message}
+        </div>
+      )}
     </div>
   );
 };

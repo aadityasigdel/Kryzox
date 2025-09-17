@@ -49,6 +49,12 @@ const NavData = [
     link: "/admin/analytics",
     icon: "/admin/adminsidebaricons/analytics.png",
   },
+ {
+  label: "Redeem",                          
+  link: "/admin/redeem-management",        
+  icon: "/admin/adminsidebaricons/Redeem.png",
+}
+
 ];
 
 // Gaming hub management section
