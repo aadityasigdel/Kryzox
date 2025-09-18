@@ -51,13 +51,13 @@ const TableHeading = [
 //     endDateTime: "2023-09-30 01:00 PM",
 //   },
 // ];
-const DataTable = () => {
+const DataTable = ({loading}) => {
   const { tournaments, tournamentLoading } = useSelector(
     (state) => state.tournament
   );
   return (
     <div className="w-full overflow-x-auto">
-      {tournamentLoading ? (
+      {loading || tournamentLoading ? (
         <div className="h-[100px] w-full flex items-center justify-center">
           <ClipLoader color="white" />
         </div>
@@ -79,115 +79,112 @@ const DataTable = () => {
             }}
           >
             {/* Table rows will go here */}
-            {tournaments?.map(
-              (item, index) => (
-                <tr
-                  key={index}
-                  className="border-b text-white text-[14px] border-gray-700 hover:bg-gray-800"
-                >
-                  <td className="py-3 px-4">{item.title}</td>
-                  <td className="py-3 px-4">
-                    <button className="px-4 py-2 rounded-4xl bg-[#33CCFF33] text-[#33CCFF] whitespace-nowrap">
-                      <p className="inline-block">{item.game?.gameTitle}</p>
-                    </button>
-                  </td>
-                  <td className="py-3 px-4">
-                    <button
-                      className={clsx(
-                        "px-4 py-2 rounded-4xl border flex items-center justify-center", // 👈 added flex + items-center
-                        item.status === "ONGOING" &&
-                          "bg-[#22C55E33] text-[#4ADE80] border-[#22C55E33]",
-                        item.status === "PENDING" &&
-                          "bg-[#3B82F633] border-[#3B82F633] text-[#60A5FA]",
-                        item.status === "COMPLETED" &&
-                          "bg-[#A855F733] border-[#A855F733] text-[#C084FC]"
-                      )}
-                    >
-                      {item.status === "ONGOING" && (
-                        <img
-                          src="/admin/tournament/tab/medal.png"
-                          alt={item.title}
-                          className="w-4 h-4 mr-2"
-                        />
-                      )}
-                      {item.status === "PENDING" && (
-                        <img
-                          src="/admin/tournament/tab/calendar.png"
-                          alt={item.title}
-                          className="w-4 h-4 mr-2"
-                        />
-                      )}
-                      {item.status === "COMPLETED" && (
-                        <img
-                          src="/admin/tournament/tab/winner.png"
-                          alt={item.title}
-                          className="w-4 h-4 mr-2"
-                        />
-                      )}
-                      {item.status}
-                    </button>
-                  </td>
-                  <td className="py-3 px-4 flex">
-                    <p>{item?.participants || 60}</p>
-                    <p className="text-gray-400">/100</p>
-                  </td>
-                  <td className="py-3 px-4">{item?.prizePool || "$200"}</td>
-                  <td className="py-3 px-4">
-                    {Array.isArray(item?.startTime) &&
-                    item.startTime.length >= 5
-                      ? new Date(
-                          item.startTime[0],
-                          item.startTime[1] - 1,
-                          item.startTime[2],
-                          item.startTime[3],
-                          item.startTime[4]
-                        ).toLocaleString()
-                      : "N/A"}
-                  </td>
+            {tournaments?.map((item, index) => (
+              <tr
+                key={index}
+                className="border-b text-white text-[14px] border-gray-700 hover:bg-gray-800"
+              >
+                <td className="py-3 px-4">{item.title}</td>
+                <td className="py-3 px-4">
+                  <button className="px-4 py-2 rounded-4xl bg-[#33CCFF33] text-[#33CCFF] whitespace-nowrap">
+                    <p className="inline-block">{item.game?.gameTitle}</p>
+                  </button>
+                </td>
+                <td className="py-3 px-4">
+                  <button
+                    className={clsx(
+                      "px-4 py-2 rounded-4xl border flex items-center justify-center", // 👈 added flex + items-center
+                      item.status === "ONGOING" &&
+                        "bg-[#22C55E33] text-[#4ADE80] border-[#22C55E33]",
+                      item.status === "PENDING" &&
+                        "bg-[#3B82F633] border-[#3B82F633] text-[#60A5FA]",
+                      item.status === "COMPLETED" &&
+                        "bg-[#A855F733] border-[#A855F733] text-[#C084FC]"
+                    )}
+                  >
+                    {item.status === "ONGOING" && (
+                      <img
+                        src="/admin/tournament/tab/medal.png"
+                        alt={item.title}
+                        className="w-4 h-4 mr-2"
+                      />
+                    )}
+                    {item.status === "PENDING" && (
+                      <img
+                        src="/admin/tournament/tab/calendar.png"
+                        alt={item.title}
+                        className="w-4 h-4 mr-2"
+                      />
+                    )}
+                    {item.status === "COMPLETED" && (
+                      <img
+                        src="/admin/tournament/tab/winner.png"
+                        alt={item.title}
+                        className="w-4 h-4 mr-2"
+                      />
+                    )}
+                    {item.status}
+                  </button>
+                </td>
+                <td className="py-3 px-4 flex">
+                  <p>{item?.totalParticipant}</p>
+                  <p className="text-gray-400">/100</p>
+                </td>
+                <td className="py-3 px-4">{item?.winingPrices}</td>
+                <td className="py-3 px-4">
+                  {Array.isArray(item?.startTime) && item.startTime.length >= 5
+                    ? new Date(
+                        item.startTime[0],
+                        item.startTime[1] - 1,
+                        item.startTime[2],
+                        item.startTime[3],
+                        item.startTime[4]
+                      ).toLocaleString()
+                    : "N/A"}
+                </td>
 
-                  <td className="py-3 px-4">
-                    {item?.endDateTime || "2023-09-30 01:00 PM"}
-                  </td>
-                  <td className="py-3 px-4 flex gap-2">
-                    <Link
-                      to="#"
-                      className="h-[30px] bg-[#121417] border border-[#21252B] rounded-[6px] flex gap-2 items-center justify-center px-4 py-4"
-                    >
-                      {/* view section */}
-                      <img src="/admin/tournament/tab/eye.png" alt="view" />
-                      <p className="text-[#33CCFF] text-[14px]">View</p>
-                    </Link>
-                    {/* setting or manage */}
-                    <Link
-                      to="#"
-                      className=" h-[30px] bg-[#121417] border border-[#21252B] rounded-[6px] flex gap-2 items-center justify-center px-4 py-4"
-                    >
-                      {item.status === "Completed" ? (
-                        <img
-                          src="/admin/tournament/tab/winner.png"
-                          alt="manage"
-                        />
-                      ) : (
-                        <img
-                          src="/admin/tournament/tab/setting.png"
-                          alt="manage"
-                        />
+                <td className="py-3 px-4">
+                  {item?.endDateTime || "2023-09-30 01:00 PM"}
+                </td>
+                <td className="py-3 px-4 flex gap-2">
+                  <Link
+                    to="#"
+                    className="h-[30px] bg-[#121417] border border-[#21252B] rounded-[6px] flex gap-2 items-center justify-center px-4 py-4"
+                  >
+                    {/* view section */}
+                    <img src="/admin/tournament/tab/eye.png" alt="view" />
+                    <p className="text-[#33CCFF] text-[14px]">View</p>
+                  </Link>
+                  {/* setting or manage */}
+                  <Link
+                    to="#"
+                    className=" h-[30px] bg-[#121417] border border-[#21252B] rounded-[6px] flex gap-2 items-center justify-center px-4 py-4"
+                  >
+                    {item.status === "Completed" ? (
+                      <img
+                        src="/admin/tournament/tab/winner.png"
+                        alt="manage"
+                      />
+                    ) : (
+                      <img
+                        src="/admin/tournament/tab/setting.png"
+                        alt="manage"
+                      />
+                    )}
+                    <p
+                      className={clsx(
+                        "text-[14px]",
+                        item.status === "Completed"
+                          ? "text-[#C084FC]"
+                          : "text-[#33CCFF]"
                       )}
-                      <p
-                        className={clsx(
-                          "text-[14px]",
-                          item.status === "Completed"
-                            ? "text-[#C084FC]"
-                            : "text-[#33CCFF]"
-                        )}
-                      >
-                        {item.status === "Completed" ? "Results" : "Manage"}
-                      </p>
-                    </Link>
-                  </td>
-                </tr>
-              )
-            )}
+                    >
+                      {item.status === "Completed" ? "Results" : "Manage"}
+                    </p>
+                  </Link>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       )}
@@ -215,13 +212,15 @@ const TestTabSection = () => {
   // display the result
 
   useEffect(() => {
-    if (result?.content || result) {
-      console.log({ result: result?.content || result });
-      dispatch(setTournaments(result?.content || result));
-    }
     if (responseError) {
       console.log({ responseError });
       dispatch(setTournaments([]));
+      return; // stop here, don’t process result
+    }
+
+    if (result) {
+      console.log({ result: result?.content || result });
+      dispatch(setTournaments(result?.content || result));
     }
   }, [result, responseError]);
 
@@ -259,19 +258,16 @@ const TestTabSection = () => {
           </button>
         ))}
       </div>
-
       {responseError ? (
         <div className="w-full h-[300px] flex items-center justify-center text-red-700">
           Something went wrong
         </div>
-      ) : !loading &&
-        tournamentLoading &&
-        (tournaments.length === 0) ? (
+      ) : (!loading || !tournamentLoading) && tournaments.length === 0 ? (
         <div className="w-full h-[300px] flex items-center justify-center text-red-700">
           No data found
         </div>
       ) : (
-        <DataTable />
+        <DataTable loading={loading}/>
       )}
     </div>
   );
