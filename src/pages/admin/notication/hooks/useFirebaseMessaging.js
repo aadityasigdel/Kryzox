@@ -1,10 +1,10 @@
 "use client";
 
+import { getToken, onMessage } from "firebase/messaging";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { messaging } from "../firebase";
-// import { getToken, onMessage } from "firebase/messaging";
 import usePostData from "../../../../hooks/postData.js";
+import { messaging } from "../firebase";
 
 export default function useFirebaseMessaging(active = true) {
   const [messages, setMessages] = useState(() => {
