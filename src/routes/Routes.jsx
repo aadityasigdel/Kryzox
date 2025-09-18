@@ -21,6 +21,7 @@ import { ActiveTournaments } from "../pages/admin/tournaments/pages/ActiveTourna
 import { UpcomingTournaments } from "../pages/admin/tournaments/pages/UpcomingTournaments";
 import UserManagement from "../pages/admin/user-management/UserManagement";
 import UserProfile from "../pages/admin/user-management/UserProfile";
+import RedeemManage from "../pages/admin/redeem/RedeemManage";
 
 // Auth pages
 import LoginPage from "../components/auth/Login";
@@ -104,7 +105,9 @@ const RouteHandler = () => {
                 <Route path="room-management" element={<RoomManagement />} />
                 <Route path="live-management" element={<LiveManagement />} />
                 <Route path="room-management/room-rewards/:roomId" element={<RoomRewards />} />
-                
+
+                <Route path="redeem-management" element={<RedeemManage />} />
+
                 <Route
                     path="full-map-rooms/results/rewards/:fullmapId"
                     element={<RewardWinners />}
@@ -112,7 +115,7 @@ const RouteHandler = () => {
                 {/* Users Pages */}
                 <Route path="user-management" element={<UserManagement />} />
                 <Route path="user-management/users/:id/profile" element={<UserProfile />} />
-                
+
                 {/* Tournament Pages */}
                 <Route path="tournaments">
                     <Route index element={<Tournaments />} />
