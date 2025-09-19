@@ -17,7 +17,7 @@ const WinnerImg = ({ user, creator_SS, player_SS }) => {
                 setLoading(true);
                 try {
                     const res = await axiosInstance.get(
-                        `/rooms/download/${imagename}`,
+                        `/rooms/image/${imagename}`,
                         {
                             responseType: "blob",
                         }

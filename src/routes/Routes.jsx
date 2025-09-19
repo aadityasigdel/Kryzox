@@ -13,6 +13,8 @@ import SideNavLayout from "../pages/admin/layout/SideNavLayout";
 import LiveManagement from "../pages/admin/live-management/LiveManagement";
 import Notification from "../pages/admin/notication/Notification";
 import Overview from "../pages/admin/overview/Overview";
+import RedeemManage from "../pages/admin/redeem/RedeemManage";
+import RoomDetails from "../pages/admin/room-management/RoomDetails";
 import RoomManagement from "../pages/admin/room-management/RoomManagement";
 import RoomRewards from "../pages/admin/room-management/RoomRewards";
 import TopUpManage from "../pages/admin/top-up-manage/TopUpManage";
@@ -21,7 +23,6 @@ import { ActiveTournaments } from "../pages/admin/tournaments/pages/ActiveTourna
 import { UpcomingTournaments } from "../pages/admin/tournaments/pages/UpcomingTournaments";
 import UserManagement from "../pages/admin/user-management/UserManagement";
 import UserProfile from "../pages/admin/user-management/UserProfile";
-import RedeemManage from "../pages/admin/redeem/RedeemManage";
 
 // Auth pages
 import LoginPage from "../components/auth/Login";
@@ -105,6 +106,8 @@ const RouteHandler = () => {
                 <Route path="room-management" element={<RoomManagement />} />
                 <Route path="live-management" element={<LiveManagement />} />
                 <Route path="room-management/room-rewards/:roomId" element={<RoomRewards />} />
+                <Route path="room-management/room-detail/:roomId" element={<RoomDetails />} />
+                
 
                 <Route path="redeem-management" element={<RedeemManage />} />
 
