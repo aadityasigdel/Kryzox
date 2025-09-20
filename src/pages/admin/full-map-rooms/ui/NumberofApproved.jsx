@@ -1,8 +1,9 @@
+// hook
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useGetData from "../../../../hooks/getData.js";
 
-const NumberofApproved = () => {
+export const useNumberofApproved = () => {
     const { fullmapId } = useParams();
     const { getData, result } = useGetData();
     const [count, setCount] = useState(0);
@@ -21,9 +22,5 @@ const NumberofApproved = () => {
         }
     }, [result]);
 
-    if (loading) return <span>...</span>;
-
-    return <span>{count}</span>;
+    return { count, loading };
 };
-
-export default NumberofApproved;

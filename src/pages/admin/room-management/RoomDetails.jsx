@@ -56,7 +56,7 @@ const RoomDetails = () => {
 };
 
 const Detail = ({ label, value }) => (
-    <div className="flex justify-between items-center text-sm py-1.5 border-b border-gray-700 last:border-b-0">
+    <div className="flex justify-between items-center text-sm py-1.5 ">
         <span className="text-gray-400">{label}</span>
         <span className="text-white font-medium">{value}</span>
     </div>

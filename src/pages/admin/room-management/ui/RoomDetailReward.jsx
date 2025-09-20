@@ -4,13 +4,13 @@ import { useParams } from "react-router-dom";
 import useGetData from "../../../../hooks/getData.js";
 import WinnerImg from "./WinnerImg.jsx";
 
-const RoomDetails = () => {
+const RoomDetailReward = () => {
     const { roomId } = useParams();
     const { getData, result, loading, responseError } = useGetData();
 
     useEffect(() => {
         if (roomId) {
-            getData(`rooms/${roomId}`);
+            getData(`roomApp/room/${roomId}/approvals?status=CREATOR_APPROVED`);
         }
     }, [roomId]);
 
@@ -38,6 +38,12 @@ const RoomDetails = () => {
         const [y, m, d, hh, mm] = dateArray;
         return new Date(y, m - 1, d, hh, mm).toLocaleString();
     };
+
+    // Define both players
+    const players = [
+        { name: user?.name, ss: creator_SS },
+        { name: "Opponent", ss: player_SS },
+    ];
 
     return (
         <div className="p-6 bg-gradient-to-b from-[#1a1a1a] to-[#202020] text-white rounded-xl shadow-2xl space-y-6">
@@ -96,22 +102,26 @@ const RoomDetails = () => {
                 </div>
             </div>
 
+            {/* Winner Images */}
             <WinnerImg
                 user={user}
                 creator_SS={creator_SS || null}
                 player_SS={player_SS || null}
             />
 
-            {/* Actions */}
+            {/* Action Buttons */}
             <div className="flex flex-col items-center gap-4">
                 <div className="flex gap-4">
-                    <button className="px-5 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-teal-400">
-                        Player1
-                    </button>
-                    <button className="px-5 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-teal-400">
-                        Player2
-                    </button>
+                    {players.map((player, idx) => (
+                        <button
+                            key={idx}
+                            className="px-5 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-teal-400"
+                        >
+                            {player.name || `Player ${idx + 1}`}
+                        </button>
+                    ))}
                 </div>
+
                 <button className="px-6 py-2 rounded-lg bg-gradient-to-r from-green-500 to-teal-400">
                     Confirm Payment
                 </button>
@@ -120,4 +130,4 @@ const RoomDetails = () => {
     );
 };
 
-export default RoomDetails;
+export default RoomDetailReward;

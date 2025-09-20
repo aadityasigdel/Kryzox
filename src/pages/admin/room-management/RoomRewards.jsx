@@ -1,6 +1,4 @@
-import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import RoomDetails from "./ui/RoomDetails";
+import RoomDetailReward from "./ui/RoomDetailReward";
 
 const RoomRewards = () => {
     return (
@@ -9,7 +7,7 @@ const RoomRewards = () => {
                 Room Rewards
             </h2>
 
-            <RoomDetails />
+            <RoomDetailReward />
         </div>
     );
 };
