@@ -41,8 +41,6 @@ const WinnerImg = ({ user, creator_SS, player_SS }) => {
             };
         }, [imagename]);
 
-        console.log("creator_SS:", creator_SS, "player_SS:", player_SS);
-
         if (loading)
             return (
                 <div className="mt-3 h-48 w-full bg-gray-700 animate-pulse rounded-lg" />
@@ -56,16 +54,15 @@ const WinnerImg = ({ user, creator_SS, player_SS }) => {
 
         return (
             <img
-                src={imgUrl || null}
-                alt={alt}
-                className="rounded-lg mt-3 h-48 w-full object-cover"
+                src={imgUrl}
+                alt={alt || "Image"}
+                className="rounded-lg mt-3 max-h-50 bg-cover w-full object-scale-down"
             />
         );
     };
 
     return (
         <div className="grid md:grid-cols-2 gap-6">
-            {/* Creator */}
             <div className="bg-[#2a2a2a]/60 p-4 rounded-lg">
                 <p className="text-sm">
                     <span className="font-bold">Player1:</span>{" "}
@@ -83,7 +80,6 @@ const WinnerImg = ({ user, creator_SS, player_SS }) => {
                 )}
             </div>
 
-            {/* Opponent */}
             <div className="bg-[#2a2a2a]/60 p-4 rounded-lg">
                 <p className="text-sm">
                     <span className="font-bold">Player2:</span> TBD

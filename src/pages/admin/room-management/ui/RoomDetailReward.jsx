@@ -1,12 +1,15 @@
 "use client";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import useGetData from "../../../../hooks/getData.js";
 import WinnerImg from "./WinnerImg.jsx";
+import RoomInfoGrid from "./RoomInfoGrid.jsx";
 
 const RoomDetailReward = () => {
     const { roomId } = useParams();
+    const nav = useNavigate(); // ✅ useNavigate hook
     const { getData, result, loading, responseError } = useGetData();
+    const [selectedUserId, setSelectedUserId] = useState(null);
 
     useEffect(() => {
         if (roomId) {
@@ -16,33 +19,13 @@ const RoomDetailReward = () => {
 
     if (loading) return <p className="text-gray-400">Loading...</p>;
     if (responseError) return <p className="text-red-500">{responseError}</p>;
-    if (!result || !result.roomId) return <p>No room data found.</p>;
+    if (!result || result.length === 0) return <p>No room data found.</p>;
 
-    const {
-        totalParticipant,
-        entryFee,
-        wining,
-        gameType,
-        status,
-        round,
-        game,
-        user,
-        addedDate,
-        creator_SS,
-        player_SS,
-    } = result;
+    const { room, user: requestingUser, status: approvalStatus } = result[0];
 
-    // Format date nicely
-    const formatDate = (dateArray) => {
-        if (!dateArray) return "N/A";
-        const [y, m, d, hh, mm] = dateArray;
-        return new Date(y, m - 1, d, hh, mm).toLocaleString();
-    };
-
-    // Define both players
     const players = [
-        { name: user?.name, ss: creator_SS },
-        { name: "Opponent", ss: player_SS },
+        { id: room.user?.id, name: room.user?.name || "Creator" },
+        { id: requestingUser?.id, name: requestingUser?.name || "Opponent" },
     ];
 
     return (
@@ -50,79 +33,57 @@ const RoomDetailReward = () => {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold text-[#80FFDB]">
-                    Room #{result.roomId}
+                    Room #{room.roomId}
                 </h2>
                 <span
                     className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                        status === "PENDING"
+                        approvalStatus === "PENDING"
                             ? "bg-yellow-600/20 text-yellow-400 border border-yellow-500/40"
-                            : status === "COMPLETED"
+                            : approvalStatus === "COMPLETED"
                             ? "bg-green-600/20 text-green-400 border border-green-500/40"
                             : "bg-gray-600/20 text-gray-400 border border-gray-500/40"
                     }`}
                 >
-                    {status}
+                    {approvalStatus}
                 </span>
             </div>
 
-            {/* Info Grid */}
-            <div className="grid md:grid-cols-2 gap-4 text-sm">
-                <div className="bg-[#2a2a2a]/60 p-4 rounded-lg">
-                    <p>
-                        <span className="font-bold">Game Type:</span> {gameType}
-                    </p>
-                    <p>
-                        <span className="font-bold">Round:</span> {round}
-                    </p>
-                    <p>
-                        <span className="font-bold">Players:</span>{" "}
-                        {totalParticipant}
-                    </p>
-                    <p>
-                        <span className="font-bold">Date:</span>{" "}
-                        {formatDate(addedDate)}
-                    </p>
-                </div>
-                <div className="bg-[#2a2a2a]/60 p-4 rounded-lg">
-                    <p>
-                        <span className="font-bold">Entry Fee:</span>{" "}
-                        <span className="text-yellow-400">${entryFee}</span>
-                    </p>
-                    <p>
-                        <span className="font-bold">Winning:</span>{" "}
-                        <span className="text-green-400">${wining}</span>
-                    </p>
-                    <p>
-                        <span className="font-bold">Game:</span>{" "}
-                        {game?.gameTitle}
-                    </p>
-                    <p>
-                        <span className="font-bold">Creator:</span> {user?.name}
-                    </p>
-                </div>
-            </div>
+            {/* Room Info */}
+            <RoomInfoGrid room={room} />
 
-            {/* Winner Images */}
+            {/* Screenshots */}
             <WinnerImg
-                user={user}
-                creator_SS={creator_SS || null}
-                player_SS={player_SS || null}
+                user={requestingUser}
+                creator_SS={room.creator_SS || null}
+                player_SS={room.player_SS || null}
             />
 
-            {/* Action Buttons */}
+            {/* Winner Selection + Payment */}
             <div className="flex flex-col items-center gap-4">
                 <div className="flex gap-4">
-                    {players.map((player, idx) => (
+                    {players.map((player) => (
                         <button
-                            key={idx}
-                            className="px-5 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-teal-400"
+                            key={player.id}
+                            onClick={() => setSelectedUserId(player.id)}
+                            className={`px-5 py-2 rounded-lg transition ${
+                                selectedUserId === player.id
+                                    ? "bg-gradient-to-r from-purple-500 to-teal-400 text-white border-2 border-white scale-105"
+                                    : "bg-gray-700 hover:bg-gray-600"
+                            }`}
                         >
-                            {player.name || `Player ${idx + 1}`}
+                            {player.name}
                         </button>
                     ))}
                 </div>
 
-                <button className="px-6 py-2 rounded-lg bg-gradient-to-r from-green-500 to-teal-400">
+                <button
+                    className="px-6 py-2 rounded-lg bg-gradient-to-r from-green-500 to-teal-400 disabled:opacity-50"
+                    onClick={() => {
+                        console.log("Selected User ID:", selectedUserId);
+                        nav(`/room-payment/${roomId}/winner/${selectedUserId}`);
+                    }}
+                    disabled={!selectedUserId}
+                >
                     Confirm Payment
                 </button>
             </div>

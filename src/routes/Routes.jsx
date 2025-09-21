@@ -23,6 +23,7 @@ import { ActiveTournaments } from "../pages/admin/tournaments/pages/ActiveTourna
 import { UpcomingTournaments } from "../pages/admin/tournaments/pages/UpcomingTournaments";
 import UserManagement from "../pages/admin/user-management/UserManagement";
 import UserProfile from "../pages/admin/user-management/UserProfile";
+import RoomPayment from "../pages/admin/room-management/RoomPayment";
 
 // Auth pages
 import LoginPage from "../components/auth/Login";
@@ -42,7 +43,6 @@ import CountryComplianceMatrix from "../components/Footer/pages/CountryComplianc
 import Disclaimer from "../components/Footer/pages/Disclaimer";
 import PrivacyPolicy from "../components/Footer/pages/PrivacyPolicy";
 import UserAgreement from "../components/Footer/pages/UserAgreement";
-
 
 // Optional: import AdminProtection if you want to protect admin routes
 // import AdminProtection from "../components/auth/AdminProtection";
@@ -105,9 +105,18 @@ const RouteHandler = () => {
                 />
                 <Route path="room-management" element={<RoomManagement />} />
                 <Route path="live-management" element={<LiveManagement />} />
-                <Route path="room-management/room-rewards/:roomId" element={<RoomRewards />} />
-                <Route path="room-management/room-detail/:roomId" element={<RoomDetails />} />
-                
+                <Route
+                    path="room-management/room-rewards/:roomId"
+                    element={<RoomRewards />}
+                />
+                <Route
+                    path="room-management/room-detail/:roomId"
+                    element={<RoomDetails />}
+                />
+                <Route
+                    path="room-management/room-payment/:roomId"
+                    element={<RoomPayment />}
+                />
 
                 <Route path="redeem-management" element={<RedeemManage />} />
 
@@ -117,7 +126,10 @@ const RouteHandler = () => {
                 />
                 {/* Users Pages */}
                 <Route path="user-management" element={<UserManagement />} />
-                <Route path="user-management/users/:id/profile" element={<UserProfile />} />
+                <Route
+                    path="user-management/users/:id/profile"
+                    element={<UserProfile />}
+                />
 
                 {/* Tournament Pages */}
                 <Route path="tournaments">
