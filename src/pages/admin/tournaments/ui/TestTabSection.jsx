@@ -157,7 +157,7 @@ const DataTable = ({loading}) => {
                   </Link>
                   {/* setting or manage */}
                   <Link
-                    to="#"
+                    to={`/admin/tournaments/manage/${item.postId} || 1`}
                     className=" h-[30px] bg-[#121417] border border-[#21252B] rounded-[6px] flex gap-2 items-center justify-center px-4 py-4"
                   >
                     {item.status === "Completed" ? (

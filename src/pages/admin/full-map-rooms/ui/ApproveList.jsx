@@ -12,7 +12,7 @@ const formatDateArray = (arr) => {
         .toString()
         .padStart(2, "0")} ${hour.toString().padStart(2, "0")}:${minute
         .toString()
-        .padStart(2, "0")}`;
+        .padStart(2, "0")}`; 
 };
 
 export default function ApproveList() {
