@@ -1,13 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useGetData from "../../../../hooks/getData.js";
-import WinnerImg from "./WinnerImg.jsx";
 import RoomInfoGrid from "./RoomInfoGrid.jsx";
+import WinnerImg from "./WinnerImg.jsx";
 
 const RoomDetailReward = () => {
     const { roomId } = useParams();
-    const nav = useNavigate(); // ✅ useNavigate hook
+    const nav = useNavigate(); // 
     const { getData, result, loading, responseError } = useGetData();
     const [selectedUserId, setSelectedUserId] = useState(null);
 
@@ -80,7 +80,7 @@ const RoomDetailReward = () => {
                     className="px-6 py-2 rounded-lg bg-gradient-to-r from-green-500 to-teal-400 disabled:opacity-50"
                     onClick={() => {
                         console.log("Selected User ID:", selectedUserId);
-                        nav(`/room-payment/${roomId}/winner/${selectedUserId}`);
+                        nav(`/admin/room-management/room-payment/${roomId}/winner/${selectedUserId}`);
                     }}
                     disabled={!selectedUserId}
                 >

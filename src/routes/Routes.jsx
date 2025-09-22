@@ -114,7 +114,7 @@ const RouteHandler = () => {
                     element={<RoomDetails />}
                 />
                 <Route
-                    path="room-management/room-payment/:roomId"
+                    path="room-management/room-payment/:roomId/winner/:userId"
                     element={<RoomPayment />}
                 />
 

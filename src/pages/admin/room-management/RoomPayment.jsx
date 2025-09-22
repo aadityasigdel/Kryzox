@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 const Payment = ({ roomId, selectedUserId }) => {
-    const [position, setPosition] = useState(1); 
+    const [position, setPosition] = useState(1);
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
