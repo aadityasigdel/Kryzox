@@ -10,6 +10,8 @@ const Compete = () => {
     const [infoMessage, setInfoMessage] = useState("");
     const [showConfirm, setShowConfirm] = useState(false);
 
+
+
     const handleComplete = () => {
         setShowConfirm(true);
     };
