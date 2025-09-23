@@ -4,7 +4,6 @@ import { Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
 
 // Admin pages
-import AdminLogin from "../pages/admin/Login/Login";
 import Analytics from "../pages/admin/analytics/Analytics";
 import FullMapHandeling from "../pages/admin/full-map-rooms/FullMapHandeling";
 import FullMapRooms from "../pages/admin/full-map-rooms/FullMapRooms";
@@ -108,7 +107,6 @@ const RouteHandler = () => {
                 />
                 <Route path="room-management" element={<RoomManagement />} />
                 <Route path="live-management" element={<LiveManagement />} />
-                <Route path="admin-login" element={<AdminLogin />} />
                 
 
                 <Route
