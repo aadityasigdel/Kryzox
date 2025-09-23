@@ -1,191 +1,146 @@
-import { Anvil } from "lucide-react";
-import { Plus } from "lucide-react";
+"use client";
+import { Anvil, Plus } from "lucide-react";
+import { useEffect, useState } from "react";
+import useGetData from "../../../hooks/getData";
 import Card from "../ui/shared/Card";
+import HeadingSection from "../ui/shared/HeadingSection";
+import "./style.css";
 import AnalyticsChart from "./ui/Chart";
 import RecentActivities from "./ui/RecentActivities";
-import "./style.css";
-import HeadingSection from "../ui/shared/HeadingSection";
-
-// static datas
-const CardData = [
-  {
-    gradientColor: { color1: "#B05BDB", color2: "#202020" },
-    heading: "Active Users",
-    totalData: "12,000",
-    totalPercentage: "+ 10%",
-    icon: "/admin/overview/icon1.png",
-  },
-  {
-    gradientColor: { color1: "#800080", color2: "#202020" },
-    heading: "Active Rooms",
-    totalData: "1234",
-    totalPercentage: "+ 8%",
-    icon: "/admin/overview/icon2.png",
-  },
-  {
-    gradientColor: { color1: "#BA55D3", color2: "#202020" },
-    heading: "Tournaments",
-    totalData: "89",
-    totalPercentage: "+ 16%",
-    icon: "/admin/overview/icon3.png",
-  },
-  {
-    gradientColor: { color1: "#7400BB", color2: "#202020" },
-    heading: "Revenue",
-    totalData: "$24,344",
-    totalPercentage: "+ 24%",
-    icon: "/admin/overview/icon4.png",
-  },
-];
-
-const profileDetail = [
-  {
-    username: "Krisha Sharma",
-    data1: {
-      device1: "Windows PC",
-      location1: "Jhapa District, Nepal",
-      datetime1: "23 June at 04:34",
-    },
-    data2: {
-      device2: "Acer Nitro 5",
-      location2: "Jhapa District, Nepal",
-      datetime2: "23 June at 04:34",
-    },
-  },
-];
-
-// profile section design
-const Profile = () => {
-  return (
-    <section className="flex items-center justify-evenly mt-5">
-      {/* left section */}
-      <div className="h-[70px] w-[70px] rounded-full overflow-hidden">
-        <img
-          src="/admin/overview/profile.jpg"
-          className="h-full w-full object-cover rounded-full"
-        />
-      </div>
-      {/* right section */}
-      <div className=" h-[70px]  w-[362px] bg-[#202020] rounded-md px-3">
-        <div>
-          <h1 className="font-semibold text-[#80FFDB]">
-            {profileDetail[0].username}
-          </h1>
-        </div>
-        {/* data1 */}
-        <div className="text-[#B05BDB] text-[12px] flex justify-between">
-          <div className="flex gap-2 items-center">
-            <div className="h-[8px] w-[8px] rounded full bg-[#85BB65]"></div>
-            <div>
-              <p>{profileDetail[0].data1.device1}</p>
-            </div>
-          </div>
-
-          <div className="flex gap-2">
-            <div>
-              <p>{profileDetail[0].data1.location1}</p>
-            </div>
-            <div>
-              <p>{profileDetail[0].data1.datetime1}</p>
-            </div>
-          </div>
-        </div>
-        {/* data2 */}
-        <div className="text-[#B05BDB] text-[12px] flex justify-between mt-2">
-          <div className="flex gap-2 items-center">
-            <div className="h-[8px] w-[8px] rounded full bg-[#85BB65]"></div>
-            <div>
-              <p>{profileDetail[0].data2.device2}</p>
-            </div>
-          </div>
-
-          <div className="flex gap-2">
-            <div>
-              <p>{profileDetail[0].data2.location2}</p>
-            </div>
-            <div>
-              <p>{profileDetail[0].data2.datetime2}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
 
 const Overview = () => {
-  return (
-    <div
-      className="w-full xl:px-[72px] pt-[65px] bg-[#000] grid place-content-center"
-      style={{
-        background: "linear-gradient(to bottom, #000000, #202020)",
-      }}
-    >
-      <HeadingSection
-        heading={"Dashboard Overview"}
-        subheading={
-          "  Welcome Back! Here’s what’s happening in your gaming hub"
-        }
-        btn1Content={"Create Room"}
-        btn2Content={"New Tournament"}
-        icon1={Plus}
-        icon2={Anvil}
-        component={"overview"}
-      />
-      {/* card section */}
-      <section className="h-auto w-full flex flex-wrap gap-10 mt-10">
-        {CardData.map((item, index) => {
-          return (
-            <Card
-              key={index}
-              gradientColor={item.gradientColor}
-              heading={item.heading}
-              totalData={item.totalData}
-              totalPercentage={item.totalPercentage}
-              icon={item.icon}
-              component={"overview"}
+    const {
+        getData: getUsers,
+        result: users,
+        loading: loadingUsers,
+        responseError: errorUsers,
+        statusCode: usersStatus,
+    } = useGetData();
+
+    const {
+        getData: getRooms,
+        result: rooms,
+        loading: loadingRooms,
+        responseError: errorRooms,
+        statusCode: roomsStatus,
+    } = useGetData();
+
+    const {
+        getData: getTournaments,
+        result: tournaments,
+        loading: loadingTournaments,
+        responseError: errorTournaments,
+        statusCode: tournamentsStatus,
+    } = useGetData();
+
+    const {
+        getData: getRevenue,
+        result: revenue,
+        loading: loadingRevenue,
+        responseError: errorRevenue,
+        statusCode: revenueStatus,
+    } = useGetData();
+
+    const [totalUsers, setTotalUsers] = useState(0);
+    const [activeRooms, setActiveRooms] = useState(0);
+    const [totalTournaments, setTotalTournaments] = useState(0);
+    const [monthlyRevenue, setMonthlyRevenue] = useState(0);
+
+    useEffect(() => {
+        getUsers("users/");
+        getRooms("rooms/status?status=ALL_DONE");
+        getTournaments("posts");
+        getRevenue("revenue/monthly");
+    }, [getUsers, getRooms, getTournaments, getRevenue]);
+
+    useEffect(() => {
+        if (users) setTotalUsers(Array.isArray(users) ? users.length : 0);
+    }, [users]);
+
+    useEffect(() => {
+        if (rooms) setActiveRooms(Array.isArray(rooms) ? rooms.length : 0);
+        console.log(rooms);
+    }, [rooms]);
+
+    useEffect(() => {
+        if (tournaments)
+            setTotalTournaments(
+                Array.isArray(tournaments.content)
+                    ? tournaments.content.length
+                    : 0
+            );
+    }, [tournaments]);
+
+    useEffect(() => {
+        if (revenue)
+            setMonthlyRevenue(
+                Array.isArray(revenue) && revenue.length > 0
+                    ? revenue[0].amount
+                    : 0
+            );
+    }, [revenue]);
+
+    // CARD DATA
+    const CardData = [
+        {
+            gradientColor: { color1: "#B05BDB", color2: "#202020" },
+            heading: "Total Users",
+            totalData: totalUsers,
+            totalPercentage: "+ 10%",
+            icon: "/admin/overview/icon1.png",
+        },
+        {
+            gradientColor: { color1: "#800080", color2: "#202020" },
+            heading: "Completed Rooms",
+            totalData: activeRooms,
+            totalPercentage: "+ 8%",
+            icon: "/admin/overview/icon2.png",
+        },
+        {
+            gradientColor: { color1: "#BA55D3", color2: "#202020" },
+            heading: "Tournaments",
+            totalData: totalTournaments,
+            totalPercentage: "+ 16%",
+            icon: "/admin/overview/icon3.png",
+        },
+        {
+            gradientColor: { color1: "#7400BB", color2: "#202020" },
+            heading: "Monthly Revenue",
+            totalData: `$${monthlyRevenue}`,
+            totalPercentage: "+ 24%",
+            icon: "/admin/overview/icon4.png",
+        },
+    ];
+
+    return (
+        <div
+            className="w-full xl:px-[72px] pt-[65px] bg-[#000] grid place-content-center"
+            style={{
+                background: "linear-gradient(to bottom, #000000, #202020)",
+            }}
+        >
+            <HeadingSection
+                heading="Dashboard Overview"
+                subheading="Welcome Back! Here’s what’s happening in your gaming hub"
+                btn1Content="Create Room"
+                btn2Content="New Tournament"
+                icon1={Plus}
+                icon2={Anvil}
+                component="overview"
             />
-          );
-        })}
-      </section>
-      {/* chart or analytical section */}
-      <section className="h-auto w-full mt-10 flex flex-wrap justify-between">
-        <AnalyticsChart />
-        <RecentActivities />
-      </section>
-      {/* profile section */}
-      <section
-        className=" min-h-[236px] w-full border my-10 flex text-center profile relative"
-        style={{
-          borderRadius: "12px",
-          backgroundImage: "linear-gradient(to bottom,#000000,#202020)",
-        }}
-      >
-        <div className="flex-1 h-full pt-5 mb-5">
-          <h1 className="admin-heading relative text-[28px] font-semibold text-[#80FFDB]">
-            Admin
-          </h1>
-          <div>
-            <Profile />
-          </div>
-          <div>
-            <Profile />
-          </div>
+
+            <section className="h-auto w-full flex flex-wrap gap-10 mt-10">
+                {CardData.map((item, index) => (
+                    <Card key={index} {...item} component="overview" />
+                ))}
+            </section>
+
+            <section className="h-auto w-full mt-10 flex flex-wrap justify-between">
+                <AnalyticsChart revenue={{ monthly: monthlyRevenue }} />
+                <RecentActivities />
+            </section>
         </div>
-        <div className="flex-1 border pt-5">
-          <h1 className="admin-heading relative text-[28px] font-semibold text-[#80FFDB]">
-            KX-Assist
-          </h1>
-          <div>
-            <Profile />
-          </div>
-          <div>
-            <Profile />
-          </div>
-        </div>
-      </section>
-    </div>
-  );
+    );
 };
 
 export default Overview;
