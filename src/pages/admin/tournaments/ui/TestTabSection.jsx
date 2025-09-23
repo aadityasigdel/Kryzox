@@ -148,7 +148,7 @@ const DataTable = ({loading}) => {
                 </td>
                 <td className="py-3 px-4 flex gap-2">
                   <Link
-                    to="#"
+                    to={`/admin/tournaments/view/${item.postId}`}
                     className="h-[30px] bg-[#121417] border border-[#21252B] rounded-[6px] flex gap-2 items-center justify-center px-4 py-4"
                   >
                     {/* view section */}
@@ -157,7 +157,7 @@ const DataTable = ({loading}) => {
                   </Link>
                   {/* setting or manage */}
                   <Link
-                    to="#"
+                    to={`/admin/tournaments/manage/${item.postId}`}
                     className=" h-[30px] bg-[#121417] border border-[#21252B] rounded-[6px] flex gap-2 items-center justify-center px-4 py-4"
                   >
                     {item.status === "Completed" ? (

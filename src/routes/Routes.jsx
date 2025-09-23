@@ -43,6 +43,8 @@ import CountryComplianceMatrix from "../components/Footer/pages/CountryComplianc
 import Disclaimer from "../components/Footer/pages/Disclaimer";
 import PrivacyPolicy from "../components/Footer/pages/PrivacyPolicy";
 import UserAgreement from "../components/Footer/pages/UserAgreement";
+import TournamentManagePage from "../pages/admin/tournaments/pages/ManageTournament";
+import ViewTournament from "../pages/admin/tournaments/pages/View";
 
 // Optional: import AdminProtection if you want to protect admin routes
 // import AdminProtection from "../components/auth/AdminProtection";
@@ -138,6 +140,8 @@ const RouteHandler = () => {
                         path="active-tournaments"
                         element={<ActiveTournaments />}
                     />
+                    <Route path="view/:tournamentId" element={<ViewTournament />} />
+                    <Route path="manage/:tounamentId" element={<TournamentManagePage />} />
                     <Route
                         path="upcoming-tournaments"
                         element={<UpcomingTournaments />}
