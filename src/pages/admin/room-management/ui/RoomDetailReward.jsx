@@ -7,7 +7,7 @@ import WinnerImg from "./WinnerImg.jsx";
 
 const RoomDetailReward = () => {
     const { roomId } = useParams();
-    const nav = useNavigate(); // 
+    const nav = useNavigate();
     const { getData, result, loading, responseError } = useGetData();
     const [selectedUserId, setSelectedUserId] = useState(null);
 
@@ -24,9 +24,22 @@ const RoomDetailReward = () => {
     const { room, user: requestingUser, status: approvalStatus } = result[0];
 
     const players = [
-        { id: room.user?.id, name: room.user?.name || "Creator" },
-        { id: requestingUser?.id, name: requestingUser?.name || "Opponent" },
-    ];
+        room.user?.id && {
+            id: room.user.id,
+            name: room.user.name || "Creator",
+        },
+        requestingUser?.id && {
+            id: requestingUser.id,
+            name: requestingUser.name || "Opponent",
+        },
+    ].filter(Boolean); // remove nulls
+
+    const handleConfirm = () => {
+        if (!selectedUserId) return;
+        nav(
+            `/admin/room-management/room-payment/${roomId}/winner/${selectedUserId}`
+        );
+    };
 
     return (
         <div className="p-6 bg-gradient-to-b from-[#1a1a1a] to-[#202020] text-white rounded-xl shadow-2xl space-y-6">
@@ -53,7 +66,7 @@ const RoomDetailReward = () => {
 
             {/* Screenshots */}
             <WinnerImg
-                user={requestingUser}
+                users={players}
                 creator_SS={room.creator_SS || null}
                 player_SS={room.player_SS || null}
             />
@@ -76,12 +89,18 @@ const RoomDetailReward = () => {
                     ))}
                 </div>
 
+                {selectedUserId && (
+                    <p className="text-sm text-gray-300">
+                        Selected Winner:{" "}
+                        <span className="text-[#80FFDB] font-semibold">
+                            {players.find((p) => p.id === selectedUserId)?.name}
+                        </span>
+                    </p>
+                )}
+
                 <button
                     className="px-6 py-2 rounded-lg bg-gradient-to-r from-green-500 to-teal-400 disabled:opacity-50"
-                    onClick={() => {
-                        console.log("Selected User ID:", selectedUserId);
-                        nav(`/admin/room-management/room-payment/${roomId}/winner/${selectedUserId}`);
-                    }}
+                    onClick={handleConfirm}
                     disabled={!selectedUserId}
                 >
                     Confirm Payment

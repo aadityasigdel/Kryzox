@@ -36,7 +36,7 @@ const RoomManagement = () => {
 
     useEffect(() => {
         getScheduledRooms("rooms/status?status=PENDING");
-        getCompletedRooms("rooms/status?status=PRIVATE");
+        getCompletedRooms("rooms/status?status=ALL_DONE");
         getCoinTime("rooms/status?status=COIN_TIME");
     }, []);
 
