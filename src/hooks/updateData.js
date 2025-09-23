@@ -10,6 +10,7 @@ const useUpdateData = () => {
   const updateData = async (url, updateData) => {
     try {
       setLoading(true);
+      setResponseError(null);
       const res = await axiosInstance.put(url, updateData);
       setStatusCode(res.status);
       setResult(res.data);

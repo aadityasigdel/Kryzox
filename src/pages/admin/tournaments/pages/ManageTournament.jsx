@@ -3,6 +3,8 @@ import clsx from "clsx";
 import useGetData from "../../../../hooks/getData";
 import { useParams } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
+import useUpdateData from "../../../../hooks/updateData";
+import toast from "react-hot-toast";
 
 const PendingPlayers = ({ postId, result }) => {
   return (
@@ -10,20 +12,25 @@ const PendingPlayers = ({ postId, result }) => {
       <div className="text-[18px] text-[#B05BDB] font-semibold mb-5">
         Pending Players for Tournament ID: {postId}
       </div>
-      {data.length === 0 ? (
+      {result.length === 0 ? (
         <div>no pending player found</div>
       ) : (
-        result.map((index, item) => {
-          return (
-            <TournamentRequestCard key={item?.postAppId || index} data={item} />
-          );
-        })
+        <div className="w-full h-auto py-10 flex justify-between flex-wrap">
+          {result.map((index, item) => {
+            return (
+              <TournamentRequestCard
+                key={item?.postAppId || index}
+                data={item}
+              />
+            );
+          })}
+        </div>
       )}
     </div>
   );
 };
 
-const ApprovedPlayers = ({ postId,result }) => {
+const ApprovedPlayers = ({ postId, result }) => {
   return (
     <div>
       <div className="text-[18px] text-[#B05BDB] font-semibold">
@@ -32,11 +39,16 @@ const ApprovedPlayers = ({ postId,result }) => {
       {result.length === 0 ? (
         <div>no pending player found</div>
       ) : (
-        data.map((index, item) => {
-          return (
-            <TournamentRequestCard key={item?.postAppId || index} data={item} />
-          );
-        })
+        <div className="w-full h-auto py-10 flex justify-between flex-wrap">
+          {data.map((index, item) => {
+            return (
+              <TournamentRequestCard
+                key={item?.postAppId || index}
+                data={item}
+              />
+            );
+          })}
+        </div>
       )}
     </div>
   );
@@ -73,21 +85,37 @@ const TabHeading = [
   { heading: "Complete", key: "complete" },
 ];
 
-const TournamentRequestCard = ({ data }) => {
+const TournamentRequestCard = ({ data, turnmentStatus }) => {
   console.log({ dataFromTournamentRequestCard: data });
-  const { user, post, status, requestAt } = data;
+  const { user, postAppId, post, status, requestAt } = data;
   console.log({
     user,
     post,
     status,
     requestAt,
   });
+  const {
+    updateData,
+    result: updateResult,
+    responseError: updateError,
+    setResponseError: updateSetUpdateErrror,
+    loading: updateLoading,
+    statusCode: updateStatusCode,
+  } = useUpdateData();
 
+  useEffect(() => {
+    if (updateError) toast.error(updateError || "something went wrong");
+  }, [updateError]);
   // Format date from array
   const formatDate = (arr) => {
     if (!arr) return "";
     const [year, month, day, hour, minute] = arr;
     return `${year}-${month}-${day} ${hour}:${minute}`;
+  };
+
+  // approved the user
+  const approveUser = async () => {
+    await updateData(`/turnmentApp/approve/${postAppId}`);
   };
 
   return (
@@ -167,14 +195,20 @@ const TournamentRequestCard = ({ data }) => {
       </div>
 
       {/* Footer Actions */}
-      <div className="flex justify-between text-white gap-2 mt-6">
-        <button className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded-md text-sm">
-          Reject
-        </button>
-        <button className="bg-green-600 hover:bg-green-700 px-3 py-1 rounded-md text-sm">
-          Approve
-        </button>
-      </div>
+      {turnmentStatus === "pending" && (
+        <div className="flex justify-between text-white gap-2 mt-6">
+          <button className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded-md text-sm">
+            Reject
+          </button>
+          <button
+            className="bg-green-600 hover:bg-green-700 px-3 py-1 rounded-md text-sm"
+            disabled={updateLoading}
+            onClick={approveUser}
+          >
+            {loading ? <ClipLoader size={15} /> : "Approve"}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
@@ -274,10 +308,18 @@ export default function TournamentManagePage() {
             </div>
           ) : (
             (activeTab === "pending" && (
-              <PendingPlayers postId={postId} result={result} status="pending"/>
+              <PendingPlayers
+                postId={postId}
+                result={result}
+                turnmentStatus="pending"
+              />
             )) ||
             (activeTab === "approved" && (
-              <ApprovedPlayers postId={postId} result={result} status="approved"/>
+              <ApprovedPlayers
+                postId={postId}
+                result={result}
+                turnmentStatus="approved"
+              />
             )) ||
             (activeTab === "reward" && (
               <div>
