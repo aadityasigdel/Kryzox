@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
 
 // Admin pages
+import AdminLogin from "../pages/admin/Login/Login";
 import Analytics from "../pages/admin/analytics/Analytics";
 import FullMapHandeling from "../pages/admin/full-map-rooms/FullMapHandeling";
 import FullMapRooms from "../pages/admin/full-map-rooms/FullMapRooms";
@@ -16,6 +17,7 @@ import Overview from "../pages/admin/overview/Overview";
 import RedeemManage from "../pages/admin/redeem/RedeemManage";
 import RoomDetails from "../pages/admin/room-management/RoomDetails";
 import RoomManagement from "../pages/admin/room-management/RoomManagement";
+import RoomPayment from "../pages/admin/room-management/RoomPayment";
 import RoomRewards from "../pages/admin/room-management/RoomRewards";
 import TopUpManage from "../pages/admin/top-up-manage/TopUpManage";
 import Tournaments from "../pages/admin/tournaments/Tournaments";
@@ -23,7 +25,6 @@ import { ActiveTournaments } from "../pages/admin/tournaments/pages/ActiveTourna
 import { UpcomingTournaments } from "../pages/admin/tournaments/pages/UpcomingTournaments";
 import UserManagement from "../pages/admin/user-management/UserManagement";
 import UserProfile from "../pages/admin/user-management/UserProfile";
-import RoomPayment from "../pages/admin/room-management/RoomPayment";
 
 // Auth pages
 import LoginPage from "../components/auth/Login";
@@ -107,6 +108,9 @@ const RouteHandler = () => {
                 />
                 <Route path="room-management" element={<RoomManagement />} />
                 <Route path="live-management" element={<LiveManagement />} />
+                <Route path="admin-login" element={<AdminLogin />} />
+                
+
                 <Route
                     path="room-management/room-rewards/:roomId"
                     element={<RoomRewards />}

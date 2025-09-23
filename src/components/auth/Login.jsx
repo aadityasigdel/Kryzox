@@ -1,10 +1,10 @@
+"use client";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-// import { toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
 import toast from "react-hot-toast";
+import { Eye, EyeOff } from "lucide-react";
 import usePostData from "../../hooks/postData";
 import { login, setLoggedData, setRole } from "../../store/slices/auth.slice";
 import Footer from "../Footer/Footer";
@@ -15,6 +15,7 @@ export default function LoginPage() {
         username: "",
         password: "",
     });
+    const [showPassword, setShowPassword] = useState(false);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -23,7 +24,6 @@ export default function LoginPage() {
     const [isSuccess, setIsSuccess] = useState(false);
 
     useEffect(() => {
-        console.log({ responseError });
         if (statusCode === 200) {
             localStorage.setItem(
                 "token",
@@ -42,7 +42,6 @@ export default function LoginPage() {
             return () => clearTimeout(timer);
         }
         if (responseError) {
-            console.log("responseerror occured");
             toast.error(responseError || "Failed to login");
         }
     }, [responseError, result]);
@@ -58,7 +57,7 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="">
+        <div>
             <NavBar />
             <div className="w-full min-h-screen bg-[#241B3A] flex items-center justify-center py-16 px-4 mt-[80px]">
                 <div className="w-full max-w-2xl bg-[#241B3A] p-10 rounded-3xl shadow-lg border border-purple-500/20 space-y-6">
@@ -106,8 +105,8 @@ export default function LoginPage() {
                             />
                         </div>
 
-                        {/* Password */}
-                        <div>
+                        {/* Password with Show/Hide */}
+                        <div className="relative">
                             <label
                                 htmlFor="password"
                                 className="block text-sm font-medium text-purple-200 mb-2"
@@ -115,13 +114,19 @@ export default function LoginPage() {
                                 Password
                             </label>
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 name="password"
                                 placeholder="••••••••"
                                 onChange={handleInput}
                                 required
-                                className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 rounded-xl text-white placeholder-purple-400 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
+                                className="w-full px-4 py-3 bg-[#1B1230] border border-purple-500/30 rounded-xl text-white placeholder-purple-400 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all pr-12"
                             />
+                            <div
+                                className="absolute right-3 top-[70%] -translate-y-1/2 cursor-pointer text-gray-400"
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? <EyeOff /> : <Eye />}
+                            </div>
                         </div>
 
                         {/* Submit */}
