@@ -6,87 +6,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 import useUpdateData from "../../../../hooks/updateData";
 import toast from "react-hot-toast";
 
-const PendingPlayers = ({ postId, result }) => {
-  return (
-    <div>
-      <div className="text-[18px] text-[#B05BDB] font-semibold mb-5">
-        Pending Players for Tournament ID: {postId}
-      </div>
-      {result.length === 0 ? (
-        <div>no pending player found</div>
-      ) : (
-        <div className="w-full h-auto py-10 flex justify-between flex-wrap">
-          {result.map((index, item) => {
-            return (
-              <TournamentRequestCard
-                key={item?.postAppId || index}
-                data={item}
-              />
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
-};
-
-const ApprovedPlayers = ({ postId, result }) => {
-  return (
-    <div>
-      <div className="text-[18px] text-[#B05BDB] font-semibold">
-        Approved Players for Tournament ID: {postId}
-      </div>
-      {result.length === 0 ? (
-        <div>no pending player found</div>
-      ) : (
-        <div className="w-full h-auto py-10 flex justify-between flex-wrap">
-          {data.map((index, item) => {
-            return (
-              <TournamentRequestCard
-                key={item?.postAppId || index}
-                data={item}
-              />
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
-};
-
-const TournamentComplete = ({ postId }) => {
-  return (
-    <div className="text-[18px] text-[#B05BDB] font-semibold">
-      Tournament Completed Data for ID: {postId}
-    </div>
-  );
-};
-
-const RewardSelection = ({ postId }) => {
-  return (
-    <div className="text-[18px] text-[#B05BDB] font-semibold">
-      Reward Selection for Tournament ID: {postId}
-    </div>
-  );
-};
-
-const RewardPlayer = ({ postId }) => {
-  return (
-    <div className="text-[18px] text-[#B05BDB] font-semibold">
-      Reward Players for Tournament ID: {postId}
-    </div>
-  );
-};
-
-const TabHeading = [
-  { heading: "Pending Players", key: "pending" },
-  { heading: "Approved Players", key: "approved" },
-  { heading: "Rewards", key: "reward" },
-  { heading: "Complete", key: "complete" },
-];
-
 const TournamentRequestCard = ({ data, turnmentStatus }) => {
-  console.log({ dataFromTournamentRequestCard: data });
+  console.log({ dataFromTournamentRequestCard: data,turnmentStatus });
   const { user, postAppId, post, status, requestAt } = data;
   console.log({
     user,
@@ -205,13 +126,94 @@ const TournamentRequestCard = ({ data, turnmentStatus }) => {
             disabled={updateLoading}
             onClick={approveUser}
           >
-            {loading ? <ClipLoader size={15} /> : "Approve"}
+            {updateLoading ? <ClipLoader size={15} /> : "Approve"}
           </button>
         </div>
       )}
     </div>
   );
 };
+
+const PendingPlayers = ({ postId, result }) => {
+  return (
+    <div>
+      <div className="text-[18px] text-[#B05BDB] font-semibold mb-5">
+        Pending Players for Tournament ID: {postId}
+      </div>
+      {result.length === 0 ? (
+        <div>no pending player found</div>
+      ) : (
+        <div className="w-full h-auto py-10 flex justify-between flex-wrap">
+          {result?.map((item, index) => {
+            return (
+              <TournamentRequestCard
+                key={item?.postAppId || index}
+                data={item}
+                 turnmentStatus="pending"
+              />
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const ApprovedPlayers = ({ postId, result }) => {
+  return (
+    <div>
+      <div className="text-[18px] text-[#B05BDB] font-semibold">
+        Approved Players for Tournament ID: {postId}
+      </div>
+      {result.length === 0 ? (
+        <div>no pending player found</div>
+      ) : (
+        <div className="w-full h-auto py-10 flex justify-between flex-wrap">
+          {result?.map((item, index) => {
+            return (
+              <TournamentRequestCard
+                key={item?.postAppId || index}
+                data={item}
+                 turnmentStatus="approved"
+              />
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const TournamentComplete = ({ postId }) => {
+  return (
+    <div className="text-[18px] text-[#B05BDB] font-semibold">
+      Tournament Completed Data for ID: {postId}
+    </div>
+  );
+};
+
+const RewardSelection = ({ postId }) => {
+  return (
+    <div className="text-[18px] text-[#B05BDB] font-semibold">
+      Reward Selection for Tournament ID: {postId}
+    </div>
+  );
+};
+
+const RewardPlayer = ({ postId }) => {
+  return (
+    <div className="text-[18px] text-[#B05BDB] font-semibold">
+      Reward Players for Tournament ID: {postId}
+    </div>
+  );
+};
+
+const TabHeading = [
+  { heading: "Pending Players", key: "pending" },
+  { heading: "Approved Players", key: "approved" },
+  { heading: "Rewards", key: "reward" },
+  { heading: "Complete", key: "complete" },
+];
 
 export default function TournamentManagePage() {
   const { tounamentId: postId } = useParams();
@@ -311,14 +313,12 @@ export default function TournamentManagePage() {
               <PendingPlayers
                 postId={postId}
                 result={result}
-                turnmentStatus="pending"
               />
             )) ||
             (activeTab === "approved" && (
               <ApprovedPlayers
                 postId={postId}
                 result={result}
-                turnmentStatus="approved"
               />
             )) ||
             (activeTab === "reward" && (
