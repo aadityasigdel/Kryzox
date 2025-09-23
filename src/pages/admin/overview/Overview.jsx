@@ -1,44 +1,34 @@
 "use client";
 import { Anvil, Plus } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense, lazy } from "react";
 import useGetData from "../../../hooks/getData";
 import Card from "../ui/shared/Card";
 import HeadingSection from "../ui/shared/HeadingSection";
 import "./style.css";
-import AnalyticsChart from "./ui/Chart";
-import RecentActivities from "./ui/RecentActivities";
+
+const AnalyticsChart = lazy(() => import("./ui/Chart"));
+const RecentActivities = lazy(() => import("./ui/RecentActivities"));
 
 const Overview = () => {
     const {
         getData: getUsers,
         result: users,
         loading: loadingUsers,
-        responseError: errorUsers,
-        statusCode: usersStatus,
     } = useGetData();
-
     const {
         getData: getRooms,
         result: rooms,
         loading: loadingRooms,
-        responseError: errorRooms,
-        statusCode: roomsStatus,
     } = useGetData();
-
     const {
         getData: getTournaments,
         result: tournaments,
         loading: loadingTournaments,
-        responseError: errorTournaments,
-        statusCode: tournamentsStatus,
     } = useGetData();
-
     const {
         getData: getRevenue,
         result: revenue,
         loading: loadingRevenue,
-        responseError: errorRevenue,
-        statusCode: revenueStatus,
     } = useGetData();
 
     const [totalUsers, setTotalUsers] = useState(0);
@@ -47,70 +37,72 @@ const Overview = () => {
     const [monthlyRevenue, setMonthlyRevenue] = useState(0);
 
     useEffect(() => {
+        console.log("Fetching all dashboard data...");
         getUsers("users/");
         getRooms("rooms/status?status=ALL_DONE");
         getTournaments("posts");
         getRevenue("revenue/monthly");
-    }, [getUsers, getRooms, getTournaments, getRevenue]);
+    }, []);
 
     useEffect(() => {
-        if (users) setTotalUsers(Array.isArray(users) ? users.length : 0);
+        console.log("Users loaded:", users);
+        setTotalUsers(Array.isArray(users) ? users.length : 0);
     }, [users]);
 
     useEffect(() => {
-        if (rooms) setActiveRooms(Array.isArray(rooms) ? rooms.length : 0);
-        console.log(rooms);
+        console.log("Rooms loaded:", rooms);
+        setActiveRooms(Array.isArray(rooms) ? rooms.length : 0);
     }, [rooms]);
 
     useEffect(() => {
-        if (tournaments)
-            setTotalTournaments(
-                Array.isArray(tournaments.content)
-                    ? tournaments.content.length
-                    : 0
-            );
+        console.log("Tournaments loaded:", tournaments);
+        setTotalTournaments(tournaments?.content?.length || 0);
     }, [tournaments]);
 
     useEffect(() => {
-        if (revenue)
-            setMonthlyRevenue(
-                Array.isArray(revenue) && revenue.length > 0
-                    ? revenue[0].amount
-                    : 0
-            );
+        console.log("Revenue loaded:", revenue);
+        setMonthlyRevenue(
+            Array.isArray(revenue) && revenue.length > 0 ? revenue[0].amount : 0
+        );
     }, [revenue]);
 
-    // CARD DATA
     const CardData = [
         {
             gradientColor: { color1: "#B05BDB", color2: "#202020" },
             heading: "Total Users",
             totalData: totalUsers,
-            totalPercentage: "+ 10%",
+            totalPercentage: "+10%",
             icon: "/admin/overview/icon1.png",
         },
         {
             gradientColor: { color1: "#800080", color2: "#202020" },
             heading: "Completed Rooms",
             totalData: activeRooms,
-            totalPercentage: "+ 8%",
+            totalPercentage: "+8%",
             icon: "/admin/overview/icon2.png",
         },
         {
             gradientColor: { color1: "#BA55D3", color2: "#202020" },
             heading: "Tournaments",
             totalData: totalTournaments,
-            totalPercentage: "+ 16%",
+            totalPercentage: "+16%",
             icon: "/admin/overview/icon3.png",
         },
         {
             gradientColor: { color1: "#7400BB", color2: "#202020" },
             heading: "Monthly Revenue",
             totalData: `$${monthlyRevenue}`,
-            totalPercentage: "+ 24%",
+            totalPercentage: "+24%",
             icon: "/admin/overview/icon4.png",
         },
     ];
+
+    // Show loading only if **all** endpoints are still loading
+    const isLoading =
+        loadingUsers && loadingRooms && loadingTournaments && loadingRevenue;
+
+    if (isLoading)
+        return <div className="text-white p-10">Loading dashboard...</div>;
 
     return (
         <div
@@ -136,8 +128,22 @@ const Overview = () => {
             </section>
 
             <section className="h-auto w-full mt-10 flex flex-wrap justify-between">
-                <AnalyticsChart revenue={{ monthly: monthlyRevenue }} />
-                <RecentActivities />
+                <Suspense
+                    fallback={
+                        <div className="text-white p-4">Loading chart...</div>
+                    }
+                >
+                    <AnalyticsChart revenue={{ monthly: monthlyRevenue }} />
+                </Suspense>
+                <Suspense
+                    fallback={
+                        <div className="text-white p-4">
+                            Loading activities...
+                        </div>
+                    }
+                >
+                    <RecentActivities />
+                </Suspense>
             </section>
         </div>
     );
