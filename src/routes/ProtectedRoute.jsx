@@ -1,16 +1,20 @@
 import React from "react";
-import { useReducer } from "react";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
+
 const ProtectedRoute = ({ children }) => {
-  const { isLoggedIn } = useReducer((state) => state.auth);
-  return (
-    <div>
-      {isLoggedIn ? (
-        <children />
-      ) : (
-        <div>you need to logged in before access this service</div>
-      )}
-    </div>
-  );
+    const { isLoggedIn } = useSelector((state) => state.auth);
+
+    if (!isLoggedIn) {
+        return (
+            <div>
+                You need to be logged in before accessing this service.
+                <Navigate to="/auth/login" replace />
+            </div>
+        );
+    }
+
+    return children;
 };
 
 export default ProtectedRoute;

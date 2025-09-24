@@ -47,7 +47,7 @@ import TournamentManagePage from "../pages/admin/tournaments/pages/ManageTournam
 import ViewTournament from "../pages/admin/tournaments/pages/View";
 
 // Optional: import AdminProtection if you want to protect admin routes
-// import AdminProtection from "../components/auth/AdminProtection";
+import AdminProtection from "./AdminProtection";
 
 const RouteHandler = () => {
     return (
@@ -89,10 +89,10 @@ const RouteHandler = () => {
             <Route
                 path="/admin/*"
                 element={
-                    // Uncomment the following line to enable admin protection
-                    // <AdminProtection>
-                    <SideNavLayout />
-                    // </AdminProtection>
+                    <AdminProtection>
+                        <SideNavLayout />
+                        //{" "}
+                    </AdminProtection>
                 }
             >
                 <Route index element={<Overview />} />
@@ -107,7 +107,6 @@ const RouteHandler = () => {
                 />
                 <Route path="room-management" element={<RoomManagement />} />
                 <Route path="live-management" element={<LiveManagement />} />
-                
 
                 <Route
                     path="room-management/room-rewards/:roomId"
@@ -142,8 +141,14 @@ const RouteHandler = () => {
                         path="active-tournaments"
                         element={<ActiveTournaments />}
                     />
-                    <Route path="view/:tournamentId" element={<ViewTournament />} />
-                    <Route path="manage/:tounamentId" element={<TournamentManagePage />} />
+                    <Route
+                        path="view/:tournamentId"
+                        element={<ViewTournament />}
+                    />
+                    <Route
+                        path="manage/:tounamentId"
+                        element={<TournamentManagePage />}
+                    />
                     <Route
                         path="upcoming-tournaments"
                         element={<UpcomingTournaments />}
